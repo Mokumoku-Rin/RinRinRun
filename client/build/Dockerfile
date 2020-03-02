@@ -4,9 +4,9 @@ RUN npm install -g http-server
 
 WORKDIR /app
 
-COPY src/package*.json ./
+COPY client/src/package*.json ./
 RUN npm install
-COPY src/. .
+COPY client/src/. .
 RUN npm run build
 
 CMD [ "http-server", "dist" ]
