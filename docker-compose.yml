@@ -52,4 +52,4 @@ services:
       - python:python
     # restart: always
     volumes:
-      - ./client/src:/src
+      - ./client/src:/app
