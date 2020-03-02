@@ -16,12 +16,12 @@ services:
       MYSQL_PASSWORD: controller
     # restart: always
     volumes:
-      - ./db/data:/var/lib/mysql
-      # - ./db/backup.sql:/docker-entrypoint-initdb.d  # sqlファイルからのリストア
+      - ./db/data:/var/lib/mysql # SQL
+      - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
 
   python:
     build: ./server/build
-    # command:  # 起動コマンド
+    command: flask run --host 0.0.0.0 --port 8081
     container_name: mokumoku-python
     depends_on:
       - mariadb
