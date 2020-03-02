@@ -1,2 +1,3 @@
-# client
-mokumoku-app client vue spa!
+# Project Rin-Rin-Run
+
+Description will here
