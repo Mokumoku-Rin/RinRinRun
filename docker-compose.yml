@@ -20,7 +20,7 @@ services:
       - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
 
   python:
-    build: ./server/build
+    build: ./server
     command: flask run --host 0.0.0.0 --port 8081
     container_name: mokumoku-python
     depends_on:
@@ -38,7 +38,7 @@ services:
       - ./server/src:/src
 
   vue:
-    build: ./client/build
+    build: ./client
     # command:  # 起動コマンド
     container_name: mokumoku-vue
     depends_on:
