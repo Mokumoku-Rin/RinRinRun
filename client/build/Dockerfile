@@ -2,10 +2,11 @@ FROM node:lts-alpine
 
 RUN npm install -g http-server
 
-WORKDIR /src
+WORKDIR /app
 
-COPY package*.json ./
+COPY src/package*.json ./
 RUN npm install
-COPY . .
+COPY src/. .
 RUN npm run build
 
+CMD [ "http-server", "dist" ]
