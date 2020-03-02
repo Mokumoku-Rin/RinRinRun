@@ -9,4 +9,5 @@ RUN npm install
 COPY src/. .
 RUN npm run build
 
-CMD [ "http-server", "dist" ]
+# CMD [ "http-server", "dist" ]
+CMD ["npm", "run", "serve"]
