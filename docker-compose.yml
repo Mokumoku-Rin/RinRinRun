@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+
+  mariadb:
+    image: mariadb:10.5.1
+    # command:  # 起動コマンド
+    container_name: mokumoku-mariadb
+    expose: '3306'
+    environment:
+      TZ: Asia/Tokyo
+      MYSQL_DATABASE: mokumoku
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: controller
+      MYSQL_PASSWORD: controller
+    # restart: always
+    volumes:
+      - ./db/data:/var/lib/mysql
+      # - ./db/backup.sql:/docker-entrypoint-initdb.d  # sqlファイルからのリストア
+
+  python:
+    build: ./server/build
+    # command:  # 起動コマンド
+    container_name: mokumoku-python
+    depends_on:
+      - mariadb
+    environment:
+      TZ: Asia/Tokyo
+    expose: '8081'
+    ports:
+      - '8081:8081'  # 開発試験用
+    links: mariadb:mariadb
+    # restart: always
+    volumes: ./server/src:/src
+
+  vue:
+    build: ./client/build
+    # command:  # 起動コマンド
+    container_name: mokumoku-vue
+    depends_on:
+      - python
+    environment:
+      TZ: Asia/Tokyo
+    ports:
+      - '8080:8080'
+      # - '8443:433'
+    links:
+      - python:python
+    # restart: always
+    volume:
+      - ./client/src:/src
