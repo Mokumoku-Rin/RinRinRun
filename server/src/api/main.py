@@ -1,18 +1,25 @@
 import uvicorn
 from fastapi import FastAPI
-from routers import login, index, test
+from routers import login, session
 from middlewares import cors
+from depends import auth
 import firebase_admin
 
 app = FastAPI()
 
 app = cors.setup(app)
 
-app.include_router(index.router)
-app.include_router(login.router)
 
-# for testing
-app.include_router(test.router, prefix="/test")
+app.include_router(
+  login.router,
+  prefix="/login",
+)
+
+app.include_router(
+  session.router,
+  prefix="/session",
+  dependencies=auth.verify_firebase_token
+)
 
 if __name__ == "__main__":
   default_app = firebase_admin.initialize_app()
