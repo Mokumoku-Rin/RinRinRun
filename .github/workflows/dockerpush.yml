@@ -6,8 +6,6 @@ on:
       - Develop
 
 jobs:
-  # Run tests.
-  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   build:
     name: verify build
     runs-on: ubuntu-latest
