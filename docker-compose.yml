@@ -6,7 +6,7 @@ services:
     image: mariadb:10.5.1
     # command:  # 起動コマンド
     container_name: mokumoku-mariadb
-    expose: 
+    expose:
       - '3306'
     environment:
       TZ: 'Asia/Tokyo'
@@ -31,7 +31,7 @@ services:
       - '8081'
     ports:
       - '8081:8081'  # 開発試験用
-    links: 
+    links:
       - mariadb:mariadb
     # restart: always
     volumes:
@@ -53,3 +53,4 @@ services:
     # restart: always
     volumes:
       - ./client/src:/app
+      - /app/node_modules
