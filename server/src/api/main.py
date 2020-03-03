@@ -1,5 +1,5 @@
 import uvicorn
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from routers import login, session
 from middlewares import cors
 from depends import auth
@@ -18,7 +18,7 @@ app.include_router(
 app.include_router(
   session.router,
   prefix="/session",
-  dependencies=auth.verify_firebase_token
+  dependencies=[Depends(auth.verify_firebase_token, use_cache=False)]
 )
 
 if __name__ == "__main__":
