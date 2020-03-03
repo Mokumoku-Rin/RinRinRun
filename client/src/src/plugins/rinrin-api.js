@@ -48,6 +48,9 @@ install (Vue) {
           console.log('--------------------------------------------------')
         })
       }else{
+        if (token === null) {
+          throw new Error('getTokenをfalseにする場合はTokenを引数に与えてください')
+        }
         postToApi(path, jsonInput, token)
       }
     }
@@ -62,6 +65,9 @@ install (Vue) {
           console.log('-------------------------------------------------')
         })
       }else{
+        if (token === null) {
+          throw new Error('getTokenをfalseにする場合はTokenを引数に与えてください')
+        }
         getToApi(path, jsonInput, token)
       }
     }
