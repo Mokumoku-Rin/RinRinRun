@@ -1,7 +1,8 @@
 <template>
   <div>
     -----------------------------------------------<br>
-    <button @click="postTestButton">post test</button>
+    <button @click="postTestButton">post test</button><br>
+    <button @click="getTestButton">get test</button>
   </div>
 </template>
 
@@ -9,7 +10,10 @@
 export default {
   methods: {
     postTestButton(){ 
-      this.$sendApi('test', {name:'aaa'})
+      this.$postApi('/test', {name:'this is post test'})
+    },
+    getTestButton(){
+      this.$getApi('/test', {name:'this is get test'})
     }
   }
 }
