@@ -21,7 +21,7 @@ services:
 
   python:
     build: ./server
-    command: flask run --host 0.0.0.0 --port 8081
+    command: python api/main.py
     container_name: mokumoku-python
     depends_on:
       - mariadb
