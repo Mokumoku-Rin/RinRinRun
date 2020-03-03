@@ -6,8 +6,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import firebase from 'firebase'
 
+import RinRinApi from './plugins/rinrin-api'
+
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
+Vue.use(RinRinApi)
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVXhTVDoB3jKj_yAhtxiDU2dDxmf5v9LI",
