@@ -1,5 +1,8 @@
 version: '3'
 
+volumes:
+  node_modules:
+
 services:
 
   mariadb:
@@ -53,4 +56,4 @@ services:
     # restart: always
     volumes:
       - ./client/src:/app
-      - /app/node_modules
+      - node_modules:/app/node_modules
