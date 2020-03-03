@@ -19,7 +19,7 @@ services:
       MYSQL_PASSWORD: controller
     # restart: always
     volumes:
-      - ./db/data:/var/lib/mysql # SQL
+      # - ./db/data:/var/lib/mysql # SQL ; 二回目起動時以降にmigrationが行われないため，こいつは無効化しておく
       - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
 
   python:
