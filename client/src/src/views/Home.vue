@@ -3,6 +3,8 @@
     <span>ログイン成功</span>
     <br>
     <button @click="logout">ログアウト</button>
+
+    <apiTest/>
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -21,7 +23,12 @@
 import firebase from 'firebase/app'
 import router from '../router'
 
+import apiTest from '@/components/ApiTest.vue'
+
 export default {
+  components: {
+    apiTest
+  },
   methods: {
     logout() {
       firebase.auth().signOut().then(function() {
