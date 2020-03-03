@@ -2,6 +2,6 @@ from fastapi import APIRouter
 
 router = APIRouter()
 
-@router.get("/login/")
+@router.get("/")
 async def get_login():
-  return {"page": "login"}
+  return "get login"
