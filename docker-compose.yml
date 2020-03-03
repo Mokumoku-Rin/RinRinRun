@@ -30,6 +30,7 @@ services:
       - mariadb
     environment:
       TZ: 'Asia/Tokyo'
+      GOOGLE_APPLICATION_CREDENTIALS: '/key.json'
     expose:
       - '8081'
     ports:
@@ -39,6 +40,7 @@ services:
     # restart: always
     volumes:
       - ./server/src:/src
+      - ./server/key.json:/key.json:ro
 
   vue:
     build: ./client
