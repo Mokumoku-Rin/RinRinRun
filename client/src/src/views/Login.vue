@@ -49,16 +49,7 @@ export default {
       const provider = new firebase.auth.GoogleAuthProvider()
 
       firebase.auth().signInWithPopup(provider).then(result => {
-        console.log(result.user)
-        var idToken =  result.credential.accessToken
-        console.log(idToken)
-        axios.post('http://localhost:8081/login/', {
-          token: idToken
-        }).then(response => {
-          console.log('success');
-        }).catch(error => {
-          console.log(error);
-        })
+        this.$postApi('/login', {token: result.credential.accessToken}, false, result.credential.accessToken)
         router.push('/')
       }).catch(error => {
         console.log(error)
