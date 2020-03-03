@@ -1,18 +1,17 @@
-version: '3'
+version: "3"
 
 volumes:
   node_modules:
 
 services:
-
   mariadb:
     image: mariadb:10.5.1
     # command:  # 起動コマンド
     container_name: mokumoku-mariadb
     expose:
-      - '3306'
+      - "3306"
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
       MYSQL_DATABASE: mokumoku
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: controller
@@ -20,7 +19,7 @@ services:
     # restart: always
     volumes:
       - ./db/data:/var/lib/mysql # SQL
-      - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
+      - ./db/migration:/docker-entrypoint-initdb.d # SQL Migrations
 
   python:
     build: ./server
@@ -29,11 +28,12 @@ services:
     depends_on:
       - mariadb
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
+      FLASK_APP: "api"
     expose:
-      - '8081'
+      - "8081"
     ports:
-      - '8081:8081'  # 開発試験用
+      - "8081:8081" # 開発試験用
     links:
       - mariadb:mariadb
     # restart: always
@@ -47,9 +47,9 @@ services:
     depends_on:
       - python
     environment:
-      TZ: 'Asia/Tokyo'
+      TZ: "Asia/Tokyo"
     ports:
-      - '8080:8080'
+      - "8080:8080"
       # - '8443:433'
     links:
       - python:python
