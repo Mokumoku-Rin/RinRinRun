@@ -1,0 +1,2 @@
+-- database is automaticaly created by docker-compose
+-- CREATE DATABASE IF NOT EXISTS `rinrinrun` DEFAULT CHARACTER SET utf8mb4;
