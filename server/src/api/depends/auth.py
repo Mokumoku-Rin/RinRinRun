@@ -7,7 +7,3 @@ async def verify_firebase_token(x_token: str = Header(...)):
   if x_token == None:
     raise HTTPException(403, detail="X-Token verification error: not logged in")
   uid = verify_token(x_token)
-
-  # and then authentication is OK
-  Response.headers.append("X-Token", x_token)
-
