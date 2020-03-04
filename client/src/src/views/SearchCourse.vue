@@ -1,6 +1,6 @@
 <template>
   <div>
-    this is home page
+    this is search course page
   </div>
 </template>
 

@@ -1,18 +1,19 @@
 <template>
   <div>
+    <h1>this is mail register page</h1>
     <h2>Sign up</h2>
     <input type="text" placeholder="Username" v-model="username"><br>
     <input type="password" placeholder="Password" v-model="password"><br>
     <button @click="signUp">Register</button><br>
     <p>Do you have an account? 
-      <router-link to="/login">sign in now!!</router-link>
+      <router-link to="/login-home">sign in now!!</router-link>
     </p>
   </div>
 </template>
 
 <script>
 import firebase from 'firebase'
-import router from '../router'
+import router from '@/router'
 
 export default {
   data () {
