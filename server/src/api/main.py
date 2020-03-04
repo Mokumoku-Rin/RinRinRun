@@ -1,13 +1,14 @@
 import uvicorn
 from fastapi import FastAPI, Depends
 from routers import login, session
-from middlewares import cors
+from middlewares import cors, database
 from depends import auth
 import firebase_admin
 
 app = FastAPI()
 
 app = cors.setup(app)
+app = database.setup(app)
 
 
 app.include_router(
