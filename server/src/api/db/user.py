@@ -1,8 +1,8 @@
 import pymysql.cursors
-from usecases.connectiondb import get_db_connection
+from middlewares.database import get_db
 
-def register_user(uid):
-    conn = get_db_connection()
+def insert_user(uid):
+    conn = get_db()
     with conn.cursor() as cursor:
         sql = "INSERT INTO users VALUES(%s, default, default, default, default, default);"
         cursor.execute(sql, (uid,))
@@ -10,7 +10,7 @@ def register_user(uid):
 
 
 def get_user(uid):
-    conn = get_db_connection()
+    conn = get_db()
     with conn.cursor() as cursor:
         sql = "SELECT id FROM users WHERE id = %s"
         cursor.execute(sql, (uid,))
