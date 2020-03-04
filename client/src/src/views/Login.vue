@@ -22,6 +22,7 @@
 
 <script>
 import firebase from 'firebase/app'
+import axios from 'axios'
 import router from '../router'
 
 export default {
@@ -48,8 +49,10 @@ export default {
     googleLogin() {
       const provider = new firebase.auth.GoogleAuthProvider()
 
-      firebase.auth().signInWithPopup(provider).then(result => {
-        this.$postApi('/login', {token: result.credential.accessToken}, false, result.credential.accessToken)
+      firebase.auth().signInWithPopup(provider).then(() => {
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+          sendLoginRequest(idToken)
+        });
         router.push('/')
       }).catch(error => {
         console.log(error)
@@ -58,5 +61,20 @@ export default {
       })
     }
   }
+}
+
+function sendLoginRequest(token) {
+  const API_URL = 'http://localhost:8081'
+  const ENDPOINT = "/login"
+
+  axios.post(API_URL + ENDPOINT, {
+    token: token,
+  }).then(response => {
+    if (response.status !== 200) {
+      throw Error("Login failed by reason:" + response.data)
+    }
+  }).catch(e => {
+    throw Error(e.message)
+  });
 }
 </script>
