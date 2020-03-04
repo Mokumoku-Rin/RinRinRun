@@ -2,14 +2,16 @@ from fastapi import FastAPI
 from pymysql import Connection, err, cursors
 import os
 
-db: Connection = None
+db: Connection
 
 def get_db():
+  global db
   return db
 
 def setup(app: FastAPI):
   @app.on_event("startup")
   async def up_connection():
+    global db
     cursor_type = cursors.DictCursor
 
     try:
@@ -28,6 +30,7 @@ def setup(app: FastAPI):
 
   @app.on_event("shutdown")
   async def down_connection():
+    global db
     if db.open:
       db.close()
   
