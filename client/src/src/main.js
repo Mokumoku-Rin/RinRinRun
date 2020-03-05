@@ -6,6 +6,14 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import firebase from 'firebase'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faChevronLeft, faEnvelope, faCheck, faKey } from '@fortawesome/free-solid-svg-icons'
+// import { faCoffee } from '@fortawesome/free-regular-svg-icons'
+import { faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+library.add(faChevronLeft, faEnvelope, faCheck, faKey, faGoogle)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
 import RinRinApi from './plugins/rinrin-api'
 
 Vue.config.productionTip = false

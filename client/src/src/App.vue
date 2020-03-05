@@ -7,12 +7,16 @@
       <router-link to="/register">Register</router-link> |
     </div> -->
     <router-view/>
+    <bg/>
+    <!-- <div class="body__bg"></div> -->
   </div>
 </template>
 
 <style lang="scss">
 @import "../node_modules/bulma/bulma.sass";
+@import "@/assets/scss/_variables.scss";
 
+/*
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -20,7 +24,7 @@
   text-align: center;
   color: #2c3e50;
 }
-/* 
+
 #nav {
   padding: 30px;
 }
@@ -32,5 +36,16 @@
 
 #nav a.router-link-exact-active {
   color: #42b983;
-} */
+}
+*/
 </style>
+
+<script>
+import bg from '@/components/Background.vue'
+
+export default {
+  components: {
+    bg
+  }
+}
+</script>
