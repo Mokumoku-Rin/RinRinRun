@@ -12,9 +12,7 @@ async def get_login():
 async def post_login(loginRequest: LoginRequest):
   token = loginRequest.token
   message = await LoginService.register(token)
-  print(message)
   response: LoginRequest = {
     "result": message
   }
-
   return response
