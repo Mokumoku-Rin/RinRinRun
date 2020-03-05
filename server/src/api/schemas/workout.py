@@ -4,7 +4,7 @@ from typing import List
 
 class Route(BaseModel):
     arrive_order: int
-    landmarkL: str
+    landmark: str
     time: float
 
 
