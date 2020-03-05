@@ -12,16 +12,16 @@ app = database.setup(app)
 
 
 app.include_router(
-  login.router,
-  prefix="/login",
+    login.router,
+    prefix="/login",
 )
 
 app.include_router(
-  session.router,
-  prefix="/session",
-  dependencies=[Depends(FirebaseToken, use_cache=False)]
+    session.router,
+    prefix="/session",
+    dependencies=[Depends(FirebaseToken, use_cache=False)]
 )
 
 if __name__ == "__main__":
-  default_app = firebase_admin.initialize_app()
-  uvicorn.run(app, host="0.0.0.0", port=8081)
+    default_app = firebase_admin.initialize_app()
+    uvicorn.run(app, host="0.0.0.0", port=8081)
