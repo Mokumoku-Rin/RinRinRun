@@ -9,7 +9,6 @@ class Route(BaseModel):
 
 
 class WorkoutRequest(BaseModel):
-    token: str
     course_id: int
     move_history: str
     total_time: float

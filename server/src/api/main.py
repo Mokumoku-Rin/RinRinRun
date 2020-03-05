@@ -1,8 +1,8 @@
 import uvicorn
 from fastapi import FastAPI, Depends
-from routers import login, session, workout
+from routers import login, session
 from middlewares import cors, database
-from depends import auth
+from depends.auth import FirebaseToken
 import firebase_admin
 
 app = FastAPI()
@@ -19,12 +19,7 @@ app.include_router(
 app.include_router(
   session.router,
   prefix="/session",
-  dependencies=[Depends(auth.verify_firebase_token, use_cache=False)]
-)
-
-app.include_router(
-  workout.router,
-  prefix="/workout",
+  dependencies=[Depends(FirebaseToken, use_cache=False)]
 )
 
 if __name__ == "__main__":
