@@ -1,5 +1,8 @@
 module.exports = {
-    devServer: {
-        https: true
-    }
+  devServer: {
+    https: true
+  },
+  pwa: {
+    name: 'RinRinRun'
+  }
 }

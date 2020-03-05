@@ -7,6 +7,7 @@ import VueAxios from 'vue-axios'
 import firebase from 'firebase'
 
 import RinRinApi from './plugins/rinrin-api'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
