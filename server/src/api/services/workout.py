@@ -1,11 +1,10 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history, add_landmark_visit
+from usecases.workout import add_workout_history
 
 
 class WorkoutService:
     @staticmethod
-    async def workout_test(workout_request):
-        # uid = verify_token(workout_request.token)
+    async def workout_test(workout_request, uid):
         uid = "test"
         cource_id = workout_request.course_id
         geometry_track = workout_request.move_history

@@ -1,4 +1,4 @@
-from db.workout import insert_workout_history, insert_landmark_visit
+from db.workout import insert_workout_history
 
 
 def add_workout_history(uid, cource_id, geometry_track, time):

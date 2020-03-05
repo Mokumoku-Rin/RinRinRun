@@ -8,8 +8,7 @@ router = APIRouter()
 @router.post("/", response_model=WorkoutResponse)
 async def post_workout(workout_request: WorkoutRequest, fbToken: FirebaseToken = Depends()):
     uid = fbToken.uid
-
-    message = "workout test"
+    message = await WorkoutService.workout_test(workout_request, uid)
     response: WorkoutResponse = {
         "result": message
     }
