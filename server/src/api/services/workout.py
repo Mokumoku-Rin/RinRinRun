@@ -1,5 +1,5 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history
+from usecases.workout import add_workout_history, add_landmark_visit
 
 
 class WorkoutService:
@@ -10,4 +10,5 @@ class WorkoutService:
         time = workout_request.total_time
         route = workout_request.route
         add_workout_history(uid, cource_id, geometry_track, time)
+        add_landmark_visit(uid, cource_id, geometry_track, time, route)
         return geometry_track
