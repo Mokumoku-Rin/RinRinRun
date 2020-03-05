@@ -22,11 +22,6 @@ app.include_router(
     dependencies=[Depends(FirebaseToken, use_cache=False)]
 )
 
-app.include_router(
-    workout.router,
-    prefix="/workout",
-)
-
 if __name__ == "__main__":
     default_app = firebase_admin.initialize_app()
     uvicorn.run(app, host="0.0.0.0", port=8081)
