@@ -6,8 +6,10 @@
     "total_time": int 経過時間(ms)
   },
   "landmark_visits": [
-    "id": int,
-    "time": int
+    {
+      "id": int,
+      "time": int
+    },...
   ]
   "geo_json": {
     "type": "LineString",
