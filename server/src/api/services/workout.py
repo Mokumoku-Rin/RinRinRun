@@ -1,5 +1,5 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history, add_landmark_visit
+from usecases.workout import add_workout_history, add_landmark_visit, update_user_totaltime
 
 
 class WorkoutService:
