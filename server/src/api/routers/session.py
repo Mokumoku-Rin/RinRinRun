@@ -11,7 +11,7 @@ router.include_router(
 
 router.include_router(
     image.router,
-    prefix="/image",
+    prefix="/landmark",
 )
 
 
