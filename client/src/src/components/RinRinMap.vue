@@ -103,6 +103,7 @@ export default {
     },
     clearGPSHistory(){
       this.$store.commit('clearMyGPSLocation')
+      this.$store.commit('clearMyRunTimeList')
     },
     showGPSHistory(){
       console.log(this.$store.state.myGPSLocations)
@@ -159,6 +160,8 @@ export default {
       zoomOffset: -1,
       accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
      }).addTo(this.map);
+
+     this.clearGPSHistory()
   },
   destroyed: function () {
     this.stopGetGPS()
