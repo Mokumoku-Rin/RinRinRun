@@ -4,6 +4,13 @@
     "total_distance": int ランニング距離(m),
     "total_time": int 経過時間(ms)
   },
+  "landmark_visits": [
+    "1": {
+      "id": int,
+      "time": int,
+    },
+    ...
+  ]
   "geo_json": {
     "type": "LineString",
     "coordinates": [
@@ -46,7 +53,18 @@
       "time_list": [int 経過時間(ms), int 経過時間(ms),...],
       "position_list": [[float, float], [float, float],....],
       "total_distance": int ランニング距離(m),
-      "rating": int ユーザのレーティングポイント //なくてもいいかも
+      "rating": int, ユーザのレーティングポイント //なくてもいいかも
+      "landmark_visits":[
+        "1":{
+          "id": int,
+          "time": int, (ms)
+        },
+        "2":{
+          "id": int,
+          "time": int, (ms)
+        },
+        ... 
+      ]
     },
     {
       "name": string ユーザ名,
@@ -54,8 +72,20 @@
       "time_list": [int 経過時間(ms), int 経過時間(ms),...],
       "position_list": [[float, float], [float, float],....],
       "total_distance": int ランニング距離(m),
-      "rating": int ユーザのレーティングポイント //なくてもいいかも
+      "rating": int ユーザのレーティングポイント, //なくてもいいかも
+      "landmark_visits":[ 到達のやつ
+        "1":{
+          "id": int,
+          "time": int, (ms)
+        },
+        "2":{
+          "id": int,
+          "time": int, (ms)
+        },
+        ... 
+      ]
     }
+    ...
   ]
 }
 
