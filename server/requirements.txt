@@ -2,3 +2,5 @@ fastapi
 uvicorn
 firebase-admin
 PyMySQL
+opencv-python
+requests
