@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import firebase from 'firebase'
 
+import 'leaflet/dist/leaflet.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft, faEnvelope, faCheck, faKey } from '@fortawesome/free-solid-svg-icons'
 // import { faCoffee } from '@fortawesome/free-regular-svg-icons'
