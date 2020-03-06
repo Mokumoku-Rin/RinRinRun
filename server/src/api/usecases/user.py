@@ -8,5 +8,5 @@ def is_existed_user(uid):
     return False
 
 
-def add_user(uid):
-    insert_user(uid)
+def add_user(uid, name, img_url):
+    insert_user(uid, name, img_url)
