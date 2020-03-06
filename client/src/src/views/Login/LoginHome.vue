@@ -65,12 +65,8 @@
 import firebase from 'firebase/app'
 import axios from 'axios'
 import router from '@/router'
-import CameraView from "@/components/CameraView"
 
 export default {
-  components: {
-    CameraView,
-  },
   methods: {
     googleLogin() {
       const provider = new firebase.auth.GoogleAuthProvider()
