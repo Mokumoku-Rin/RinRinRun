@@ -7,9 +7,6 @@
     <button @click="clearGPSHistory">クリア</button>
     <button @click="showGPSHistory">GPS計測結果</button>
     <button @click="sendGPSHistory">計測結果を送信</button>
-    <br>
-    <button @click="test">test func</button>
-
   </div>
 </template>
 
@@ -147,9 +144,6 @@ export default {
       }
       console.log(postJson)
       this.$postApi('/session/workout', postJson)
-    },
-    test(){
-      console.log(calDistance([[36.10377477777778, 140.08785502777778], [35.65502847222223, 139.74475044444443]]))
     }
   },
   mounted: function () {
