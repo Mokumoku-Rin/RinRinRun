@@ -7,6 +7,7 @@
       </div>
       <router-link to="/mail-login">メールアドレスでログイン</router-link><br>
       <router-link to="/mail-register">メールアドレスで登録</router-link>
+      <CameraView></CameraView>
     </div>
   </div>
 </template>
@@ -21,8 +22,12 @@
 import firebase from 'firebase/app'
 import axios from 'axios'
 import router from '@/router'
+import CameraView from "@/components/CameraView"
 
 export default {
+  components: {
+    CameraView,
+  },
   methods: {
     googleLogin() {
       const provider = new firebase.auth.GoogleAuthProvider()
