@@ -15,13 +15,14 @@
 
 コース情報
 {
+  "id": int コースID
   "name": string コース名,
   "discription": string コースの説明
   "mean_distance": int 平均ランニング距離(m),
   "mean_time": int 平均でかかった時間(m),
   "landmarks": [
     { 
-      "id": string ランドマークのID
+      "id": int ランドマークのID
       "name": string ランドマーク名,
       "positoin": [float, float],
       "img_url: string imgのURL,
