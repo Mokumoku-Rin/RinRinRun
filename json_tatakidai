@@ -66,3 +66,11 @@
     img_uel: string: “”,
     name: string: “”
  }
+
+
+画像検証時
+{
+  "landmark_id": int ランドマークID,
+  "course_id": int コースID,
+  "img": base64 検証用の画像
+}
