@@ -77,8 +77,10 @@ export default {
 
       firebase.auth().signInWithPopup(provider).then(() => {
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          sendLoginRequest(idToken)
-        });
+          firebase.auth().currentUser.providerData.forEach(function (profile) {
+            sendLoginRequest(idToken, profile.displayName, profile.photoURL)
+          })
+        })
         router.push('/')
       }).catch(error => {
         console.log(error)
@@ -89,18 +91,19 @@ export default {
   }
 }
 
-function sendLoginRequest(token) {
+function sendLoginRequest(token, userName, photoURL) {
   const API_URL = 'http://localhost:8081'
   const ENDPOINT = "/login"
-
   axios.post(API_URL + ENDPOINT, {
     token: token,
+    img_url: photoURL,
+    name: userName
   }).then(response => {
     if (response.status !== 200) {
       throw Error("Login failed by reason:" + response.data)
     }
   }).catch(e => {
     throw Error(e.message)
-  });
+  })
 }
 </script>
