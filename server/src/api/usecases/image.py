@@ -1,22 +1,29 @@
 import cv2
 import numpy as np
+import requests
 import base64
 from db.landmarks import get_image_url
 
 
-def decode_base64_image(image):
-    img_binary = base64.b64decode(image)
-    npimg = np.fromstring(img_binary, dtype=np.uint8)
+def binary_convert_img(binary):
+    npimg = np.fromstring(binary, dtype=np.uint8)
     img = cv2.imdecode(npimg, 1)
     return img
 
 
-def compare_image(user_image, landmark_id):
-    # database_image = get_image_url(landmark_id)
-    database_image = decode_base64_image(user_image)
+def decode_base64_image(image):
+    img_binary = base64.b64decode(image)
+    img = binary_convert_img(img_binary)
+    return img
 
-    # FIXME: テスト段階だとuser_imageを先に変えるとdatabase_imageで死ぬ
+
+def compare_image(user_image, landmark_id):
+
     user_image = decode_base64_image(user_image)
+
+    database_image_url = get_image_url(landmark_id)['img_url']
+    database_image_binary = requests.get(database_image_url).content
+    database_image = binary_convert_img(database_image_binary)
 
     # A-KAZEとかいう検出器を使う
     akaze = cv2.AKAZE_create()
