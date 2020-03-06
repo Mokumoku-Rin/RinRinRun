@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from depends.auth import FirebaseToken
-from routers.sessions import workout, image
+from routers.sessions import workout, landmark
 
 router = APIRouter()
 
@@ -10,7 +10,7 @@ router.include_router(
 )
 
 router.include_router(
-    image.router,
+    landmark.router,
     prefix="/landmark",
 )
 
