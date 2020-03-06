@@ -84,6 +84,7 @@
 <script>
 import firebase from 'firebase/app'
 import router from '@/router'
+import axios from 'axios'
 
 export default {
   data() {

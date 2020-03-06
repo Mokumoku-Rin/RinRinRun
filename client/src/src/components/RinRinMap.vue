@@ -144,7 +144,7 @@ export default {
         "geo_json":geoJson
       }
       console.log(postJson)
-      this.$postApi('/session/workout', postJson)
+      this.$postApi('/session/workout/', postJson)
     }
   },
   mounted: function () {
