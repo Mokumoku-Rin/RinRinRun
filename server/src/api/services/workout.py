@@ -1,5 +1,8 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history, add_landmark_visit, update_user_totaltime
+from usecases.workout import add_workout_history, add_landmark_visit
+from usecases.user import update_user_record
+
+from schemas.workout import WorkoutRequest
 
 
 class WorkoutService:
@@ -12,3 +15,11 @@ class WorkoutService:
         add_workout_history(uid, cource_id, geometry_track, time)
         add_landmark_visit(uid, cource_id, geometry_track, time, route)
         return geometry_track
+
+    @staticmethod
+    async def new_record(uid: str, workout_request: WorkoutRequest):
+        props = workout_request.properties
+        geo = workout_request.geo_json
+        visits =workout_request.landmark_visits
+
+        update_user_record(props.dict()["total_time"])
