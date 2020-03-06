@@ -1,7 +1,8 @@
 {
   "properties":{
     "time_list": [int 経過時間(ms), "1": int 経過時間(ms), 2....],
-    "total_distance": int ランニング距離(m)
+    "total_distance": int ランニング距離(m),
+    "total_time": int 経過時間(ms)
   },
   "geo_json": {
     "type": "LineString",
