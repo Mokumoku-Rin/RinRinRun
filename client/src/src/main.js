@@ -6,6 +6,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import firebase from 'firebase'
 
+import 'leaflet/dist/leaflet.css'
+
 import RinRinApi from './plugins/rinrin-api'
 
 Vue.config.productionTip = false
