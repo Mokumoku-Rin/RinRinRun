@@ -2,9 +2,6 @@ from firebase_admin import auth, exceptions
 from fastapi import HTTPException, status
 
 def verify_token(token: str):
-
-  print("received token:" + token)
-
   try:
     dec_token = auth.verify_id_token(token)
     return dec_token["uid"]

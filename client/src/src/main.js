@@ -9,6 +9,7 @@ import firebase from 'firebase'
 import 'leaflet/dist/leaflet.css'
 
 import RinRinApi from './plugins/rinrin-api'
+import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
