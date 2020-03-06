@@ -55,3 +55,11 @@
     }
   ]
 }
+
+
+ユーザ登録時
+{
+    token: string token,
+    img_uel: string: “”,
+    name: string: “”
+ }
