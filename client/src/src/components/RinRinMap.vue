@@ -12,7 +12,6 @@
 </template>
 
 <script>
-// import { LMap, LTileLayer } from 'vue2-leaflet'
 import L from 'leaflet'
 
 // デフォルトマーカーアイコン設定
@@ -72,32 +71,30 @@ export default {
       coordinates += ']' 
 
       let geoJson = ` { "type": "LineString",
-                      "crs": { "type": "name",
-                        "properties": {
-                          "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-                          }
+                      "crs": { "type": "name"
                       },`;      
       geoJson += '"coordinates":' + coordinates + '}'
 
       console.log(geoJson)
       // TODO 送信処理 
+      // TODO total timeとかを追加する
+      // ランドマークを回ったタイミングを出すには、それぞれのtimeが必要になる
     }
   },
   mounted: function () {
+    const mapDefaultZoomLevel = 17
     //MAP読み込み
-    this.map = L.map('map').setView(SOJO_GPS_POSITION, 17);
+    this.map = L.map('map').setView(SOJO_GPS_POSITION, mapDefaultZoomLevel);
 
-    //map pane
+    //map boxを現在使用しているが、より良いものがあったら変える
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 20,
-      id: 'mapbox/streets-v10',
+      id: 'mapbox/streets-v10', //v11もあるがv10の方が詳細な地図が出るためv10を使う
       tileSize: 512,
       zoomOffset: -1,
       accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
      }).addTo(this.map);
-
-    //  L.marker(SOJO_GPS_POSITION).addTo(this.map);
   },
   destroyed: function () {
     this.stopGetGPS()
