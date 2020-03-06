@@ -34,7 +34,7 @@ def compare_image(user_image, landmark_id):
 
     bf = cv2.BFMatcher()
 
-    # 特徴量ベクトル同士をBrute-Force＆KNNでマッチング
+    # 特徴量ベクトル同士をBrute-Forceでマッチング
     matches = bf.match(des1, des2)
 
     dist = [m.distance for m in matches]
