@@ -26,6 +26,9 @@ export default {
     emailLogin() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
         console.log(result)
+        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
+          sendLoginRequest(idToken)
+        })
         router.push('/')
       }).catch(error => {
         console.log(error)
@@ -34,5 +37,22 @@ export default {
       })
     }
   }
+}
+
+function sendLoginRequest(token) {
+  const API_URL = 'http://localhost:8081'
+  const ENDPOINT = "/login"
+
+  axios.post(API_URL + ENDPOINT, {
+    token: token,
+    img_uel: "",
+    name: ""
+  }).then(response => {
+    if (response.status !== 200) {
+      throw Error("Login failed by reason:" + response.data)
+    }
+  }).catch(e => {
+    throw Error(e.message)
+  })
 }
 </script>
