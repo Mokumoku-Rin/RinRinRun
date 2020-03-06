@@ -1,0 +1,17 @@
+.button {
+  display: block;
+  height: auto;
+  width: 100%;
+  padding: .9rem;
+  font-weight: $weight-bold;
+  background: $white;
+  color: $orange;
+  svg {
+    margin-right: .5rem;
+  }
+}
+
+.button.is-reverse {
+  background: transparent;
+  color: $white;
+}
