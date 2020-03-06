@@ -14,7 +14,12 @@
 
 <style lang="scss">
 @import "../node_modules/bulma/bulma.sass";
-@import "@/assets/scss/_variables.scss";
+@import "@/assets/scss/base/_variables.scss";
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+  text-decoration: none;
+}
 
 /*
 #app {

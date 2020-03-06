@@ -26,8 +26,8 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/scss/_variables.scss";
-@import "@/assets/scss/_components.scss";
+@import "@/assets/scss/base/_variables.scss";
+@import "@/assets/scss/modules/_button.scss";
 
 .login_home {
   display: flex;
@@ -37,6 +37,7 @@
   width: 100%;
   justify-content: space-around;
   color: $white;
+  background-color: rgba(0, 0, 0, 0);
 
   header, nav {
     width: 100%;

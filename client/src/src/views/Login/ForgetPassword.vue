@@ -9,8 +9,8 @@
 </template>
 
 <style lang="scss">
-@import "@/assets/scss/_variables.scss";
-@import "@/assets/scss/_components.scss";
+@import "@/assets/scss/base/_variables.scss";
+@import "@/assets/scss/modules/_button.scss";
 
 .password_forget {
   overflow-y: hidden;
