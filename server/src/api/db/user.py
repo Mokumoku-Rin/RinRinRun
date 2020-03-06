@@ -2,11 +2,11 @@ import pymysql.cursors
 from middlewares.database import get_db
 
 
-def insert_user(uid):
+def insert_user(uid, name, img_url):
     conn = get_db()
     with conn.cursor() as cursor:
-        sql = "INSERT INTO users VALUES(%s, default, default, default, default, default);"
-        cursor.execute(sql, (uid,))
+        sql = "INSERT INTO users (id, name, img_url) VALUES(%s, %s, %s);"
+        cursor.execute(sql, (uid, name, img_url))
     conn.commit()
 
 
