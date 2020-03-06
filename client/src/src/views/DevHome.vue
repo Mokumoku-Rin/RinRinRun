@@ -7,6 +7,8 @@
     <showAllRoute/>
     <hr>
     <apiTest/>
+    <hr>
+    <rinRinMap/>
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -27,11 +29,13 @@ import router from '../router'
 
 import apiTest from '@/components/devtools/ApiTest.vue'
 import showAllRoute from '@/components/devtools/ShowAllRoute.vue'
+import rinRinMap from '@/components/RinRinMap.vue'
 
 export default {
   components: {
     apiTest,
-    showAllRoute
+    showAllRoute,
+    rinRinMap
   },
   methods: {
     logout() {
