@@ -19,7 +19,7 @@
   "name": string コース名,
   "discription": string コースの説明
   "mean_distance": int 平均ランニング距離(m),
-  "mean_time": int 平均でかかった時間(m),
+  "mean_time": int 平均でかかった時間(ms),
   "landmarks": [
     { 
       "id": int ランドマークのID
