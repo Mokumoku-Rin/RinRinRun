@@ -1,7 +1,7 @@
 from usecases.image import compare_image
 
 
-class ImageService:
+class LandmarkService:
     @staticmethod
     async def ImageCompare(image_request):
         similarity = compare_image(
