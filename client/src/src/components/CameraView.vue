@@ -37,7 +37,6 @@ export default {
     }, interval);
   },
   destroyed: async function() {
-    console.log("Destory");
     clearInterval(this.interval);
   },
   methods: {
