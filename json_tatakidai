@@ -19,7 +19,8 @@
   "mean_distance": int 平均ランニング距離(m),
   "mean_time": int 平均でかかった時間(m),
   "landmarks": [
-    {
+    { 
+      "id": string ランドマークのID
       "name": string ランドマーク名,
       "positoin": [float, float],
       "img_url: string imgのURL,
