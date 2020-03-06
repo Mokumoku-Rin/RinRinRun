@@ -105,3 +105,8 @@
   "course_id": int コースID,
   "img": base64 検証用の画像
 }
+
+画像検証時に返却するデータ
+{
+  "result": "string" //OKかNGが入ってくる
+}
