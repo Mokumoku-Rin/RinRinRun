@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    myGPSLocations:[]
+    myGPSLocations:[],
+    myRunTimeList:[]
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -13,6 +14,12 @@ export default new Vuex.Store({
     },
     clearMyGPSLocation(state){
       state.myGPSLocations.length = 0
+    },
+    addMyRunTimeList(state, time){
+      state.myRunTimeList.push(time)
+    },
+    clearMyRunTimeList(state){
+      state.myRunTimeList.length = 0
     }
   },
   actions: {
