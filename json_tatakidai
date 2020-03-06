@@ -93,7 +93,7 @@
 ユーザ登録時
 {
     token: string token,
-    img_uel: string: “”,
+    img_url: string: “”,
     name: string: “”
  }
 
