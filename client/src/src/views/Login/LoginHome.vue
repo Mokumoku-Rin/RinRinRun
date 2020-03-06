@@ -53,8 +53,8 @@ function sendLoginRequest(token, userName, photoURL) {
   const ENDPOINT = "/login"
   axios.post(API_URL + ENDPOINT, {
     token: token,
-    img_uel: userName,
-    name: photoURL
+    img_url: photoURL,
+    name: userName
   }).then(response => {
     if (response.status !== 200) {
       throw Error("Login failed by reason:" + response.data)

@@ -45,7 +45,7 @@ function sendLoginRequest(token) {
 
   axios.post(API_URL + ENDPOINT, {
     token: token,
-    img_uel: "",
+    img_url: "",
     name: ""
   }).then(response => {
     if (response.status !== 200) {
