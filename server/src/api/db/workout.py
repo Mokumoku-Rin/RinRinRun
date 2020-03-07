@@ -12,10 +12,10 @@ def insert_workout_history(uid, course_id, total_time,
         sql = "SELECT LAST_INSERT_ID();"
         cursor.execute(sql)
 
-        insert_id = cursor.fetchone()
+        insert_id = cursor.fetchone()['LAST_INSERT_ID()']
     conn.commit()
 
-    return insert_id['LAST_INSERT_ID()']
+    return insert_id
 
 
 def insert_landmark_visit(work_history_id, landmark_id, time):
