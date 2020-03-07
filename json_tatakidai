@@ -1,7 +1,7 @@
 走り終わった後
 {
   "properties":{
-    "time_list": [int 経過時間(ms), int 経過時間(ms), ...],
+    "time_list": string "経過時間(ms),経過時間(ms)", //カンマ区切りの文字列
     "total_distance": int ランニング距離(m),
     "total_time": int 経過時間(ms)
   },
