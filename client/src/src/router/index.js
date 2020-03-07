@@ -40,6 +40,11 @@ const routes = [
     name: 'ChoiceCourse',
     component: () => import('../views/ChoiceCourse.vue')
   },
+  {
+    path: '/take-picture',
+    name: 'TakePicture',
+    component: () => import('../views/TakePicture.vue')
+  },
 
 
   // -------before login------------

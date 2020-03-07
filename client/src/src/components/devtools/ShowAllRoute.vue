@@ -4,6 +4,7 @@
     <router-link to="/home">HOME</router-link><br>
     <router-link to="/search-course">コース検索</router-link><br>
     <router-link to="/choice-course">コース選択</router-link><br>
+    <router-link to="/take-picture">写真をとるページ</router-link><br>
   </div>
 </template>
 
