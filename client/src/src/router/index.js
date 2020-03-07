@@ -25,7 +25,11 @@ const routes = [
   //   component: () => import('../views/Home.vue')
   // },
   // ------------------------------
-
+  {
+    path: '/friends',
+    name: 'Friends',
+    component: () => import('../views/Friends.vue')
+  },
   {
     path: '/search-course',
     name: 'SearchCourse',

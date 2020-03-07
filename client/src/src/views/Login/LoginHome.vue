@@ -65,11 +65,11 @@
 import firebase from 'firebase/app'
 import axios from 'axios'
 import router from '@/router'
-import CameraView from "@/components/CameraView"
+// import CameraView from "@/components/CameraView"
 
 export default {
   components: {
-    CameraView,
+    // CameraView,
   },
   methods: {
     googleLogin() {
