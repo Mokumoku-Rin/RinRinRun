@@ -6,6 +6,7 @@ class property(BaseModel):
     time_list: List[int]
     total_distance: int
     total_time: int
+    course_id: int
 
 
 class visit_landmark(BaseModel):
