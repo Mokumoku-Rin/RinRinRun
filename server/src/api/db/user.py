@@ -25,3 +25,11 @@ def update_user_totaltime(uid, time):
         sql = "UPDATE users SET total_time = total_time + %s WHERE id = %s"
         cursor.execute(sql, (time, uid))
     conn.commit()
+
+
+def update_user_totaldistance(uid, total_distance):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "UPDATE users SET total_distance = total_distance + %s WHERE id = %s"
+        cursor.execute(sql, (total_distance, uid))
+    conn.commit()
