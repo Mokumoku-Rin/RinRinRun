@@ -14,7 +14,7 @@ class WorkoutService:
         geo_json = workout_request.geo_json
 
         insert_id = add_workout_history(uid, course_id, total_time,
-                                        total_distance, geo_json)
+                                        total_distance, time_list, geo_json)
         add_landmark_visit(uid, insert_id, landmark_visits)
 
         return "OK"

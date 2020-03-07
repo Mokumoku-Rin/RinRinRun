@@ -3,9 +3,9 @@ from db.user import update_user_total_record
 
 
 def add_workout_history(uid, course_id, total_time,
-                        total_distance, geo_json):
+                        total_distance, time_list, geo_json):
     insert_id = insert_workout_history(uid, course_id, total_time,
-                                       total_distance, geo_json)
+                                       total_distance, time_list, geo_json)
     # 別関数に分けたり、usecase.userに置くべきかもしれん
     update_user_total_record(uid, total_time, total_distance)
 
