@@ -13,7 +13,7 @@ function getApiErrorDefaultFunc(error){
   console.log('-------------------------------------------------')
 }
 
-function postToApi(path,jsonInput, token, successFunc=()=>{}, errorFunc=()=>{}) {
+function postToApi(path,jsonInput, token, successFunc, errorFunc) {
   const headers = {
     headers: {
       'X-Token': token
