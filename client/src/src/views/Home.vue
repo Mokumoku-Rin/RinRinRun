@@ -179,6 +179,10 @@ export default {
       }
     }
   },
+  created() {
+    var user = firebase.auth().currentUser
+    this.account.avatar = user.photoURL
+  },
   components: {
     // apiTest,
     // showAllRoute,
