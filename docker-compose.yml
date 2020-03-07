@@ -49,8 +49,6 @@ services:
     build: ./client
     # command:  # 起動コマンド
     container_name: mokumoku-vue
-    depends_on:
-      - python
     environment:
       TZ: 'Asia/Tokyo'
     ports:
