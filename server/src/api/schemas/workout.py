@@ -2,17 +2,22 @@ from pydantic import BaseModel
 from typing import List
 
 
-class Route(BaseModel):
-    arrive_order: int
-    landmark: str
-    time: float
+class Property(BaseModel):
+    time_list: str
+    total_distance: int
+    total_time: int
+    course_id: int
+
+
+class VisitLandmark(BaseModel):
+    id: int
+    time: int
 
 
 class WorkoutRequest(BaseModel):
-    course_id: int
-    move_history: str
-    total_time: float
-    route: List[Route]
+    properties: Property
+    landmark_visits: List[VisitLandmark]
+    geo_json: str
 
 
 class WorkoutResponse(BaseModel):
