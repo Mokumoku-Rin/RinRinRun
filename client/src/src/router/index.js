@@ -40,6 +40,11 @@ const routes = [
     name: 'ChoiceCourse',
     component: () => import('../views/ChoiceCourse.vue')
   },
+  {
+    path: '/running-info',
+    name: 'RunningInfo',
+    component: () => import('../views/RunningInfo.vue')
+  },
 
 
   // -------before login------------
