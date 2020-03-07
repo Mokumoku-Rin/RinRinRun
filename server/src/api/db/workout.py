@@ -9,18 +9,13 @@ def insert_workout_history(uid, course_id, total_time,
         sql = "INSERT INTO workout_histories (user_id, cource_id, total_time, total_distance, geo_linestring) VALUE (%s, %s, %s, %s, ST_GeomFromGeoJSON(%s));"
         cursor.execute(sql, (uid, course_id, total_time,
                              total_distance, geo_json))
+        sql = "SELECT LAST_INSERT_ID();"
+        cursor.execute(sql)
+
+        insert_id = cursor.fetchone()
     conn.commit()
 
-
-def get_workout_history_id(uid, course_id, total_time,
-                           total_distance, geo_json):
-    conn = get_db()
-    with conn.cursor() as cursor:
-        sql = "SELECT id FROM workout_histories WHERE user_id = %s and cource_id = %s and total_time = %s and total_distance = %s and geo_linestring = ST_GeomFromGeoJSON(%s)"
-        cursor.execute(sql, (uid, course_id, total_time,
-                             total_distance, geo_json))
-        result = cursor.fetchone()
-    return result
+    return insert_id['LAST_INSERT_ID()']
 
 
 def insert_landmark_visit(work_history_id, landmark_id, time):
