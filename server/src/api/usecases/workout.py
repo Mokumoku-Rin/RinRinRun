@@ -7,7 +7,7 @@ def add_workout_history(uid, course_id, total_time,
     insert_workout_history(uid, course_id, total_time,
                            total_distance, geo_json)
     # 別関数に分けたり、usecase.userに置くべきかもしれん
-    update_user_totaltime(uid, time)
+    update_user_totaltime(uid, total_time)
 
 
 def add_landmark_visit(uid, cource_id, geometry_track, time, route):
