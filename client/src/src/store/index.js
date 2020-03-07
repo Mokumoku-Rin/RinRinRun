@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     myGPSLocations:[],
-    myRunTimeList:[]
+    myRunTimeList:[],
+    myRunStartTime: -1,
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -20,10 +21,20 @@ export default new Vuex.Store({
     },
     clearMyRunTimeList(state){
       state.myRunTimeList.length = 0
+    },
+    resetMyRunStartTime(state){
+      const tempDate = new Date()
+      state.myRunStartTime = tempDate.getTime()
     }
   },
   actions: {
   },
   modules: {
+  },
+  getters: {
+    myRunElapsedTime: state => {
+      const tempDate = new Date()
+      return tempDate.getTime() - state.myRunStartTime
+    }
   }
 })
