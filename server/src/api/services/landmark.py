@@ -11,4 +11,4 @@ class LandmarkService:
         # similarityは、一致度が高いほど0に近くなるため
         if similarity < threshold:
             return "OK"
-        return "OK"
+        return "NG"
