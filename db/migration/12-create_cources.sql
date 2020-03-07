@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `mokumoku`.`cources` (
+CREATE TABLE IF NOT EXISTS `mokumoku`.`courses` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(64) NOT NULL,
 	`mean_distance` INT unsigned NOT NULL,

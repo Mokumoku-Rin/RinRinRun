@@ -3,7 +3,7 @@ from typing import List
 
 
 class Property(BaseModel):
-    time_list: List[int]
+    time_list: str
     total_distance: int
     total_time: int
     course_id: int
