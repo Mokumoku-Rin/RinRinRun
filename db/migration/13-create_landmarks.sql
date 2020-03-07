@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS `mokumoku`.`landmarks` (
 	`id` INT unsigned NOT NULL AUTO_INCREMENT,
-	`cource_id` INT unsigned DEFAULT 1,
 	`name` VARCHAR(64) NOT NULL,
 	`description` TEXT NOT NULL DEFAULT '',
 	`img_url` TEXT NOT NULL DEFAULT 'https://via.placeholder.com/720x360.png?text=Null+landmark+image',
