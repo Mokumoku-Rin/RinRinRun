@@ -1,10 +1,6 @@
 <template>
   <div class="login_mail">
-    <nav class="navbar">
-      <router-link to="login-home">
-        <font-awesome-icon icon="chevron-left"></font-awesome-icon>
-      </router-link>
-    </nav>
+    <statusBar left-link="login-home"></statusBar>
     <main class="section">
       <h1 class="title">メールアドレスでログイン</h1>
       <p class="error" v-show="showError" dismissible variant="danger">{{ errorMessage }}</p>
@@ -86,7 +82,12 @@ import firebase from 'firebase/app'
 import router from '@/router'
 import axios from 'axios'
 
+import statusBar from '@/components/StatusBar.vue'
+
 export default {
+  components: {
+    statusBar
+  },
   data() {
     return {
       email: '',
@@ -108,6 +109,9 @@ export default {
         this.errorMessage = "認証できませんでした。"
         this.showError = true
       })
+    },
+    backHome() {
+      router.push('login-home')
     }
   }
 }
