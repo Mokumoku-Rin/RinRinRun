@@ -15,5 +15,7 @@ class WorkoutService:
 
         add_workout_history(uid, course_id, total_time,
                             total_distance, geo_json)
-        add_landmark_visit(uid, cource_id, geometry_track, time, route)
-        return geometry_track
+        add_landmark_visit(uid, course_id, total_time,
+                           total_distance, geo_json, landmark_visits)
+
+        return "OK"

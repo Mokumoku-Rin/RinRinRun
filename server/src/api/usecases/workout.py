@@ -11,11 +11,13 @@ def add_workout_history(uid, course_id, total_time,
     update_user_totaldistance(uid, total_distance)
 
 
-def add_landmark_visit(uid, cource_id, geometry_track, time, route):
+def add_landmark_visit(uid, course_id, total_time,
+                       total_distance, geo_json, landmark_visits):
     work_history_id = get_workout_history_id(
-        uid, cource_id, geometry_track, time)
+        uid, course_id, total_time,
+        total_distance, geo_json)
     print("work_history:", work_history_id)
-    for i in route:
-        landmark_id = 1  # 実際にはlandmarkテーブルからidを取ってくる必要がある
+    for i in landmark_visits:
+        landmark_id = i.id
         time = i.time
         insert_landmark_visit(work_history_id['id'], landmark_id, time)

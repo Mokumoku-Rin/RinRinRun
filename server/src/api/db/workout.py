@@ -12,11 +12,13 @@ def insert_workout_history(uid, course_id, total_time,
     conn.commit()
 
 
-def get_workout_history_id(uid, cource_id, geometry_track, time):
+def get_workout_history_id(uid, course_id, total_time,
+                           total_distance, geo_json):
     conn = get_db()
     with conn.cursor() as cursor:
-        sql = "SELECT id FROM workout_histories WHERE user_id = %s and cource_id = %s and geometry_track = %s and time = %s"
-        cursor.execute(sql, (uid, cource_id, geometry_track, time))
+        sql = "SELECT id FROM workout_histories WHERE user_id = %s and cource_id = %s and total_time = %s and total_distance = %s and geo_linestring = ST_GeomFromGeoJSON(%s)"
+        cursor.execute(sql, (uid, course_id, total_time,
+                             total_distance, geo_json))
         result = cursor.fetchone()
     return result
 
