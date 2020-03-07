@@ -62,7 +62,7 @@ export default {
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
-      canvasContext.drawImage(this.video, 0, 0)
+      canvasContext.drawImage(this.video, 0, 0, this.video.width, this.video.height)
       const imgData = this.takedPhotoCanvas.toDataURL('image/png')
       console.log(imgData);
       console.log('take photo')
@@ -73,12 +73,12 @@ export default {
         course_id: 1,
         img: imgData.replace(/^.*,/, '') // data:image/png;base64, がサーバー側で不要なため消す
       }
-      this.$postApi('/session/landmark/visit/', postData)
+      this.$postApi('/session/landmark/visit/', postData, this.imgCaertification)
 
     },
     imgCaertification(responce){
       // TODO 認証結果を利用したその後の処理
-      console.log(responce)
+      console.log(responce.data.result)
     }
   }
 };
