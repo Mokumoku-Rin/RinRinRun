@@ -63,43 +63,27 @@
 
 <script>
 import firebase from 'firebase/app'
-import axios from 'axios'
 import router from '@/router'
 
 export default {
   methods: {
-    googleLogin() {
+    async googleLogin() {
       const provider = new firebase.auth.GoogleAuthProvider()
 
-      firebase.auth().signInWithPopup(provider).then(() => {
-        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          firebase.auth().currentUser.providerData.forEach(function (profile) {
-            sendLoginRequest(idToken, profile.displayName, profile.photoURL)
-          })
+      try {
+        const userCred = await firebase.auth().signInWithPopup(provider)
+
+        this.$postApi('/login', {
+          token: await userCred.user.getIdToken(true),
+          img_url: userCred.user.photoURL,
+          name: userCred.user.displayName
         })
         router.push('/')
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
-        this.errorMessage = error.message
-        this.showError = true
-      })
+        alert(error)
+      }
     }
   }
-}
-
-function sendLoginRequest(token, userName, photoURL) {
-  const API_URL = 'http://localhost:8081'
-  const ENDPOINT = "/login"
-  axios.post(API_URL + ENDPOINT, {
-    token: token,
-    img_url: photoURL,
-    name: userName
-  }).then(response => {
-    if (response.status !== 200) {
-      throw Error("Login failed by reason:" + response.data)
-    }
-  }).catch(e => {
-    throw Error(e.message)
-  })
 }
 </script>
