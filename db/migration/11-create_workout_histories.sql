@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `mokumoku`.`workout_histories` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(64) NOT NULL,
-  `cource_id` INT unsigned NOT NULL,
+  `course_id` INT unsigned NOT NULL,
   `total_time` INT unsigned NOT NULL,
   `total_distance` INT unsigned NOT NULL,
   `time_list` TEXT NOT NULL,

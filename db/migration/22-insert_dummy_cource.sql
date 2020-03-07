@@ -1,2 +1,2 @@
-INSERT INTO `cources` (`name`, `mean_distance`, `mean_time`, `played_count`) VALUES ('Donuts Cource', '4300', '566524', '10');
-INSERT INTO `cources` (`name`, `mean_distance`, `mean_time`, `played_count`) VALUES ('Starlight Cource', '7600', '765254', '28');
+INSERT INTO `courses` (`name`, `mean_distance`, `mean_time`, `played_count`) VALUES ('Donuts Cource', '4300', '566524', '10');
+INSERT INTO `courses` (`name`, `mean_distance`, `mean_time`, `played_count`) VALUES ('Starlight Cource', '7600', '765254', '28');

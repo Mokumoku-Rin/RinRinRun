@@ -14,7 +14,7 @@ SET @geojson = '
 
 SET @time_list = '5000,10000,15000,20000,25000,30000,35000,40000,45000,50000,55000,60000';
 
-INSERT INTO `workout_histories` (`user_id`, `cource_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('1', '1', '710000', '5485',@time_list, ST_GeomFromGeoJSON(@geojson));
+INSERT INTO `workout_histories` (`user_id`, `course_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('1', '1', '710000', '5485',@time_list, ST_GeomFromGeoJSON(@geojson));
 
 SET @geojson = '
 {
@@ -30,7 +30,7 @@ SET @geojson = '
     ]
 }';
 
-INSERT INTO `workout_histories` (`user_id`, `cource_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('2', '1', '730000', '2547',@time_list,ST_GeomFromGeoJSON(@geojson));
+INSERT INTO `workout_histories` (`user_id`, `course_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('2', '1', '730000', '2547',@time_list,ST_GeomFromGeoJSON(@geojson));
 
 SET @geojson = '
 {
@@ -46,7 +46,7 @@ SET @geojson = '
     ]
 }';
 
-INSERT INTO `workout_histories` (`user_id`, `cource_id`, `total_time`, `total_distance`, `time_list`,  `geo_linestring`) VALUES ('3', '2', '620000', '6643',@time_list, ST_GeomFromGeoJSON(@geojson));
+INSERT INTO `workout_histories` (`user_id`, `course_id`, `total_time`, `total_distance`, `time_list`,  `geo_linestring`) VALUES ('3', '2', '620000', '6643',@time_list, ST_GeomFromGeoJSON(@geojson));
 
 SET @geojson = '
 {
@@ -62,4 +62,4 @@ SET @geojson = '
     ]
 }';
 
-INSERT INTO `workout_histories` (`user_id`, `cource_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('4', '2', '66000', '6464',@time_list, ST_GeomFromGeoJSON(@geojson));
+INSERT INTO `workout_histories` (`user_id`, `course_id`, `total_time`, `total_distance`, `time_list`, `geo_linestring`) VALUES ('4', '2', '66000', '6464',@time_list, ST_GeomFromGeoJSON(@geojson));
