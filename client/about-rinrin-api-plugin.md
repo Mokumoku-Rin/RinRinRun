@@ -19,19 +19,63 @@ this.$postApi('/test', {name:'this is post test'})
 
 
 
-#### オプション
+#### コールバック関数を設定する
+
+```javascript
+this.$postApi([path], {deta}, [successFunctiuon], [errorFunctiuon])
+```
+
+例) リクエストが成功した時に処理をする
+
+```javascript
+function testSuccessFunc(responce){
+  console.log(responce)
+}
+
+this.$postApi('/test', {name:'this is post test'}, testSuccessFunc)
+```
+
+例) リクエストが失敗した時に処理をする
+
+```javascript
+function testErrorFunc(error){
+  console.log(error)
+}
+
+this.$postApi('/test', {name:'this is post test'}, ()=>{}, testErrorFunc)
+```
+
+例) リクエストが成功した時と失敗した時に処理をする
+
+```javascript
+function testSuccessFunc(responce){
+  console.log(responce)
+}
+
+function testErrorFunc(error){
+  console.log(error)
+}
+
+this.$postApi('/test', {name:'this is post test'}, testSuccessFunc, testErrorFunc)
+```
+
+
+
+ ### オプション
 
 トークンに手動で取得したものを使用する
 
+コールバック関数は設定することもできる
+
 ```javascript
-this.$postApi([path], {deta}, false, [token])
+this.$postApi([path], {deta}, ()=>{}, ()=>{}, false, [token])
 ```
 
 例) 
 
 ```javascript
 let testToken = 'token string'
-this.$postApi('/test', {name:'this is post test'}, false, testToken)
+this.$postApi('/test', {name:'this is post test'}, ()=>{}, ()=>{},false, testToken)
 ```
 
 
@@ -52,19 +96,63 @@ this.$getApi('/test', {name:'this is get test'})
 
 
 
-#### オプション
+#### コールバック関数を設定する
+
+```javascript
+this.$getApi([path], {deta}, [successFunctiuon], [errorFunctiuon])
+```
+
+例) リクエストが成功した時に処理をする
+
+```javascript
+function testSuccessFunc(responce){
+  console.log(responce)
+}
+
+this.$getApi('/test', {name:'this is post test'}, testSuccessFunc)
+```
+
+例) リクエストが失敗した時に処理をする
+
+```javascript
+function testErrorFunc(error){
+  console.log(error)
+}
+
+this.$getApi('/test', {name:'this is post test'}, ()=>{}, testErrorFunc)
+```
+
+例) リクエストが成功した時と失敗した時に処理をする
+
+```javascript
+function testSuccessFunc(responce){
+  console.log(responce)
+}
+
+function testErrorFunc(error){
+  console.log(error)
+}
+
+this.$getApi('/test', {name:'this is post test'}, testSuccessFunc, testErrorFunc)
+```
+
+
+
+ ### オプション
 
 トークンに手動で取得したものを使用する
 
+コールバック関数は設定することもできる
+
 ```javascript
-this.$getApi([path], {deta}, false, [token])
+this.$getApi([path], {deta}, ()=>{}, ()=>{}, false, [token])
 ```
 
 例) 
 
 ```javascript
 let testToken = 'token string'
-this.$getApi('/test', {name:'this is get test'}, false, testToken)
+this.$getApi('/test', {name:'this is post test'}, ()=>{}, ()=>{},false, testToken)
 ```
 
 
