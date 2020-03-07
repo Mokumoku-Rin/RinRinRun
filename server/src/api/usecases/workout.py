@@ -2,8 +2,10 @@ from db.workout import insert_workout_history, get_workout_history_id, insert_la
 from db.user import update_user_totaltime
 
 
-def add_workout_history(uid, cource_id, geometry_track, time):
-    insert_workout_history(uid, cource_id, geometry_track, time)
+def add_workout_history(uid, course_id, total_time,
+                        total_distance, geo_json):
+    insert_workout_history(uid, course_id, total_time,
+                           total_distance, geo_json)
     # 別関数に分けたり、usecase.userに置くべきかもしれん
     update_user_totaltime(uid, time)
 

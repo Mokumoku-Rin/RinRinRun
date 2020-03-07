@@ -9,9 +9,11 @@ class WorkoutService:
         time_list = properties.time_list
         total_distance = properties.total_distance
         total_time = properties.total_time
+        course_id = properties.course_id
         landmark_visits = workout_request.landmark_visits
         geo_json = workout_request.geo_json
 
-        add_workout_history(uid, cource_id, geometry_track, time)
+        add_workout_history(uid, course_id, total_time,
+                            total_distance, geo_json)
         add_landmark_visit(uid, cource_id, geometry_track, time, route)
         return geometry_track
