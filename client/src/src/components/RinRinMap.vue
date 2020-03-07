@@ -4,7 +4,7 @@
     this is map
     <button @click="startGetGPS">計測スタート</button>
     <button @click="stopGetGPS">計測ストップ</button>
-    <button @click="clearGPSHistory">クリア</button>
+    <button @click="clearHistory">クリア</button>
     <button @click="showGPSHistory">GPS計測結果</button>
     <button @click="sendGPSHistory">計測結果を送信</button>
   </div>
@@ -70,8 +70,6 @@ export default {
       gpsTimerObj: null,
       isGpsIntervalSet: false,
       map: null,
-      startDate: new Date(),
-      startTime: 0
     }
   },
   methods:{
@@ -80,8 +78,7 @@ export default {
         this.gpsIntervalFunc() 
         this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
         this.isGpsIntervalSet = true
-        const tempDate = new Date()
-        this.startTime = tempDate.getTime()
+        this.$store.commit('resetMyRunStartTime')
       }
     },
     successGetGPS(position){
@@ -89,8 +86,7 @@ export default {
       this.$store.commit('addMyGPSLocation', nowGPS)
       this.map.setView(nowGPS)
 
-      const tempDate = new Date()
-      this.$store.commit('addMyRunTimeList', tempDate.getTime() - this.startTime)
+      this.$store.commit('addMyRunTimeList', this.getElapssedTime())
 
       console.log('success')
     },
@@ -101,12 +97,16 @@ export default {
     stopGetGPS(){
       clearInterval(this.gpsTimerObj)
     },
-    clearGPSHistory(){
+    clearHistory(){
       this.$store.commit('clearMyGPSLocation')
       this.$store.commit('clearMyRunTimeList')
     },
     showGPSHistory(){
       console.log(this.$store.state.myGPSLocations)
+    },
+    getElapssedTime(){
+      const tempDate = new Date()
+      return tempDate.getTime() - this.$store.state.myRunStartTime
     },
     sendGPSHistory(){
       let coordinates = '['
@@ -122,14 +122,23 @@ export default {
       let geoJson = '{"type": "LineString","crs": { "type": "name"},'
       geoJson += '"coordinates":' + coordinates + '}'
 
+      let time_list = ""
+      for(let i=0; i<this.$store.state.myRunTimeList.length; i++){
+        if (i === 0){
+          time_list += this.$store.state.myRunTimeList[i]
+        }else{
+          time_list += ','+this.$store.state.myRunTimeList[i]
+        }
+      }
+
       // TODO landmark_visitsの処理を追加する
       // ランドマークを回ったタイミングを出すには、それぞれのtimeが必要になる
       const distance = calDistance(this.$store.state.myGPSLocations)
       let postJson = {
         "properties":{
-          "time_list": this.$store.state.myRunTimeList,
+          "time_list": time_list,
           "total_distance": distance,
-          "total_time": this.$store.state.myRunTimeList[this.$store.state.myRunTimeList.length - 1]
+          "total_time": this.getElapssedTime()
         },
         "landmark_visits": [
           {
@@ -161,7 +170,7 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
      }).addTo(this.map);
 
-     this.clearGPSHistory()
+     this.clearHistory()
   },
   destroyed: function () {
     this.stopGetGPS()
