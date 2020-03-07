@@ -5,7 +5,7 @@
 
       <article class="today__no_data section" v-if="isEmpty(today_data)">
         <h2 class="title">記録がありません</h2>
-        <router-link to="SearchCourse">
+        <router-link to="/search-course">
           <p class="message has-text-red">
             今からランニングを開始する
             <font-awesome-icon icon="chevron-right"></font-awesome-icon>
@@ -66,7 +66,6 @@
   flex-direction: column;
   justify-content: center;
   background: $white;
-  border-top: solid 1px $black;
 
   .title, .message {
     margin-bottom: 1rem;
@@ -173,10 +172,10 @@ export default {
         avatar: testAvatarImage
       },
       today_data: {
-        distance: 0,
-        time: 0,  // ミリ秒
-        calorie: 0,
-        course: {}
+        // distance: 0,
+        // time: 0,  // ミリ秒
+        // calorie: 0,
+        // course: {}
       }
     }
   },

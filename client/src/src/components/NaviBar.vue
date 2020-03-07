@@ -1,7 +1,7 @@
 <template>
   <nav class="navibar">
     <div class="navibar_content navibar_content_left">
-      <router-link class="navibar_link" :class="[active==0 || active=='Today' ? 'is-active' : '']" to="Home">
+      <router-link class="navibar_link" :class="[active==0 || active=='Today' ? 'is-active' : '']" to="/home">
         <div class="navibar_img">
           <font-awesome-icon icon="chart-bar"></font-awesome-icon>
         </div>
@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="navibar_content navibar_content_center">
-      <router-link class="navibar_link" to="SearchCourse">
+      <router-link class="navibar_link" to="/search-course">
         <div class="navibar_img">
           <font-awesome-icon icon="running"></font-awesome-icon>
         </div>
@@ -21,7 +21,7 @@
       </router-link>
     </div>
     <div class="navibar_content navibar_content_right">
-      <router-link class="navibar_link" :class="[active==2 || active=='Friends' ? 'is-active' : '']" to="Friends">
+      <router-link class="navibar_link" :class="[active==2 || active=='Friends' ? 'is-active' : '']" to="/friends">
         <div class="navibar_img">
           <font-awesome-icon icon="user-friends"></font-awesome-icon>
         </div>
