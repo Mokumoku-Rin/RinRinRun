@@ -62,8 +62,6 @@ export default {
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
-      this.video.width = this.width
-      this.video.height = this.height
       canvasContext.drawImage(this.video, 0, 0, this.video.width, this.video.height)
       const imgData = this.takedPhotoCanvas.toDataURL('image/png')
       console.log(imgData);
