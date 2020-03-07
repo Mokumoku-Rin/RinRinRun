@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS `mokumoku`.`workout_histories` (
   `cource_id` INT unsigned NOT NULL,
   `total_time` INT unsigned NOT NULL,
   `total_distance` INT unsigned NOT NULL,
+  `time_list` TEXT NOT NULL,
   `geo_linestring` GEOMETRY NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP,
