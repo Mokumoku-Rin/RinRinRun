@@ -1,6 +1,7 @@
 module.exports = {
   devServer: {
-    https: true
+    https: true,
+    disableHostCheck: true
   },
   pwa: {
     name: 'RinRinRun'
