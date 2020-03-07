@@ -7,12 +7,12 @@ Vue.use(VueRouter)
 const routes = [
   // --------------dev---------------
   {
-    path: '/DevHome',
+    path: '/',
     name: 'DevHome',
     component: () => import('../views/DevHome.vue')
   },
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: () => import('../views/Home.vue')
   },

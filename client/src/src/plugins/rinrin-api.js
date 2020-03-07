@@ -1,24 +1,30 @@
 import axios from 'axios'
 import firebase from 'firebase/app'
 
-function postToApi(path,jsonInput, token) {
+function postApiErrorDefaultFunc(error){
+  console.log('---rinrin-api-plugin-$postApi--postToApi-error-----')
+  console.log(error)
+  console.log('--------------------------------------------------')
+}
+
+function getApiErrorDefaultFunc(error){
+  console.log('---rinrin-api-plugin-$getApi--getToApi-error-----')
+  console.log(error)
+  console.log('-------------------------------------------------')
+}
+
+function postToApi(path,jsonInput, token, successFunc=()=>{}, errorFunc=()=>{}) {
   const headers = {
     headers: {
       'X-Token': token
     }
   }
   axios.post('http://localhost:8081'+path , jsonInput, headers)
-  // .then(response => {
-  //   console.log(response)
-  // })
-  .catch(error => {
-    console.log('---rinrin-api-plugin-$postApi--postToApi-error-----')
-    console.log(error)
-    console.log('--------------------------------------------------')
-  })
+  .then(successFunc)
+  .catch(errorFunc)
 }
 
-function getToApi(path,jsonInput, token) {
+function getToApi(path,jsonInput, token, successFunc, errorFunc) {
   const headers = {
     headers: {
       'X-Token': token
@@ -26,22 +32,16 @@ function getToApi(path,jsonInput, token) {
   }
   const sendHeaderBody = Object.assign(headers, jsonInput);
   axios.get('http://localhost:8081'+path , sendHeaderBody)
-  // .then(response => {
-  //   console.log(response)
-  // })
-  .catch(error => {
-    console.log('---rinrin-api-plugin-$getApi--getToApi-error-----')
-    console.log(error)
-    console.log('-------------------------------------------------')
-  })
+  .then(successFunc)
+  .catch(errorFunc)
 }
 
 const RinRinApi = {
 install (Vue) {
-    Vue.prototype.$postApi = (path, jsonInput, getToken=true, token=null) => {
+    Vue.prototype.$postApi = (path, jsonInput, successFunc=()=>{}, errorFunc=postApiErrorDefaultFunc, getToken=true, token=null) => {
       if (getToken) {
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          postToApi(path, jsonInput, idToken)
+          postToApi(path, jsonInput, idToken, successFunc, errorFunc)
         }).catch(function(error) {
           console.log('---rinrin-api-plugin-$postApi--firebase-error-----')
           console.log(error)
@@ -51,14 +51,14 @@ install (Vue) {
         if (token === null) {
           throw new Error('getTokenをfalseにする場合はTokenを引数に与えてください')
         }
-        postToApi(path, jsonInput, token)
+        postToApi(path, jsonInput, token, successFunc, errorFunc)
       }
     }
 
-    Vue.prototype.$getApi = (path, jsonInput, getToken=true, token=null) => {
+    Vue.prototype.$getApi = (path, jsonInput, successFunc=()=>{}, errorFunc=getApiErrorDefaultFunc, getToken=true, token=null) => {
       if (getToken) {
         firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          getToApi(path, jsonInput, idToken)
+          getToApi(path, jsonInput, idToken, successFunc, errorFunc)
         }).catch(function(error) {
           console.log('---rinrin-api-plugin-$getApi--firebase-error-----')
           console.log(error)
@@ -68,7 +68,7 @@ install (Vue) {
         if (token === null) {
           throw new Error('getTokenをfalseにする場合はTokenを引数に与えてください')
         }
-        getToApi(path, jsonInput, token)
+        getToApi(path, jsonInput, token, successFunc, errorFunc)
       }
     }
   }
