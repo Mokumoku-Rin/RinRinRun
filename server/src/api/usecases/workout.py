@@ -1,5 +1,5 @@
 from db.workout import insert_workout_history, get_workout_history_id, insert_landmark_visit
-from db.user import update_user_totaltime, update_user_totaldistance
+from db.user import update_user_total_record
 
 
 def add_workout_history(uid, course_id, total_time,
@@ -7,8 +7,7 @@ def add_workout_history(uid, course_id, total_time,
     insert_workout_history(uid, course_id, total_time,
                            total_distance, geo_json)
     # 別関数に分けたり、usecase.userに置くべきかもしれん
-    update_user_totaltime(uid, total_time)
-    update_user_totaldistance(uid, total_distance)
+    update_user_total_record(uid, total_time, total_distance)
 
 
 def add_landmark_visit(uid, course_id, total_time,
