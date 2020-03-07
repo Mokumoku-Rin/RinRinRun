@@ -85,7 +85,7 @@ export default {
       const nowGPS = [position.coords.latitude, position.coords.longitude]
       this.$store.commit('addMyGPSLocation', nowGPS)
       this.map.setView(nowGPS)
-      
+
       this.$store.commit('addMyRunTimeList', this.getElapssedTime())
 
       console.log('success')
@@ -122,12 +122,21 @@ export default {
       let geoJson = '{"type": "LineString","crs": { "type": "name"},'
       geoJson += '"coordinates":' + coordinates + '}'
 
+      let time_list = ""
+      for(let i=0; i<this.$store.state.myRunTimeList.length; i++){
+        if (i === 0){
+          time_list += this.$store.state.myRunTimeList[i]
+        }else{
+          time_list += ','+this.$store.state.myRunTimeList[i]
+        }
+      }
+
       // TODO landmark_visitsの処理を追加する
       // ランドマークを回ったタイミングを出すには、それぞれのtimeが必要になる
       const distance = calDistance(this.$store.state.myGPSLocations)
       let postJson = {
         "properties":{
-          "time_list": this.$store.state.myRunTimeList,
+          "time_list": time_list,
           "total_distance": distance,
           "total_time": this.getElapssedTime()
         },
