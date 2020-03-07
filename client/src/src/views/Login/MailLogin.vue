@@ -3,7 +3,6 @@
     <statusBar left-link="login-home"></statusBar>
     <main class="section">
       <h1 class="title">メールアドレスでログイン</h1>
-      <p class="error" v-show="showError" dismissible variant="danger">{{ errorMessage }}</p>
       <div class="control has-icons-left">
         <input class="input is-medium" v-model="email" type="email" placeholder="メールアドレス" />
         <span class="icon is-left is-medium">
@@ -80,7 +79,6 @@
 <script>
 import firebase from 'firebase/app'
 import router from '@/router'
-import axios from 'axios'
 
 import statusBar from '@/components/StatusBar.vue'
 
@@ -92,44 +90,27 @@ export default {
     return {
       email: '',
       password: '',
-      errorMessage: '',
-      showError: false
     }
   },
   methods: {
-    emailLogin() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
-        console.log(result)
-        firebase.auth().currentUser.getIdToken(/* forceRefresh */ true).then(function(idToken) {
-          sendLoginRequest(idToken)
+    async emailLogin() {
+      try {
+        const userCred = await firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+
+        this.$postApi('/login', {
+          token: await userCred.user.getIdToken(true),
+          img_url: userCred.user.photoURL,
+          name: userCred.user.displayName
         })
         router.push('/')
-      }).catch(error => {
+      } catch (error) {
         console.log(error)
-        this.errorMessage = "認証できませんでした。"
-        this.showError = true
-      })
+        alert(error)
+      }
     },
     backHome() {
       router.push('login-home')
     }
   }
-}
-
-function sendLoginRequest(token) {
-  const API_URL = 'http://localhost:8081'
-  const ENDPOINT = "/login"
-
-  axios.post(API_URL + ENDPOINT, {
-    token: token,
-    img_url: "",
-    name: ""
-  }).then(response => {
-    if (response.status !== 200) {
-      throw Error("Login failed by reason:" + response.data)
-    }
-  }).catch(e => {
-    throw Error(e.message)
-  })
 }
 </script>
