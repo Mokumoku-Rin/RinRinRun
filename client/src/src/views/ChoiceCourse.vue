@@ -120,7 +120,7 @@ export default {
     }
 
     this.loading = true
-    this.$getApi('/session/course/', {sortby: type, limit: 10}, (res)=>{
+    this.$getApi('/session/course/', {sort_by: type, limit: 10}, (res)=>{
       if(res.data.courses.length > 0){
         this.courseData = res.data.courses
       }
