@@ -1,54 +1,88 @@
 <template>
   <section id="camera-view">
-    <div>
+    <div id="overlay-wrapper">
       <video
         ref="video"
-        id="video"
-        width="400"
-        height="600"
+        id="src-video"
+        :width="width"
+        :height="height"
         playsinline
       ></video>
+
+      <canvas ref="overlay" id="overlay-canvas" :width="width" :height="height"></canvas>
     </div>
-    <canvas ref="canvas" id="canvas" width="400" height="600" disabled></canvas>
+    <button @click=takePhoto>写真をとる！</button>
+    <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas" :width="width" :height="height"></canvas>
   </section>
 </template>
 
 <script>
 export default {
+  props:{
+    landmarkImgUrl: {
+      type: String,
+      required: true
+    },
+    width: {
+      type: Number,
+      default: 400
+    },
+    height: {
+      type: Number,
+      default: 400
+    }
+  },
   data() {
     return {
       video: {},
-      canvas: {},
-      interval: null
+      takedPhotoCanvas: {}
     };
   },
   mounted: async function() {
+    // setup img canvas
+    const overLayContext = this.$refs.overlay.getContext('2d')
+    const overLayImage = new Image()
+    overLayImage.src = this.landmarkImgUrl
+    overLayImage.width = this.width
+    overLayImage.height = this.height
+
+    overLayImage.addEventListener('load', function() {
+        overLayContext.drawImage(overLayImage, 0, 0, this.width, this.height)
+    }, false)
+
+
     // setup video
     this.video = this.$refs.video;
     const userAgent = navigator.userAgent.toLowerCase();
     const stream = await getVideoStream(userAgent);
     this.video.srcObject = stream;
     this.video.play();
-
-    // setup capture interval
-    const interval = 1000; //1000ms is 1sec
-    this.interval = setInterval(() => {
-      this.capture();
-    }, interval);
-  },
-  destroyed: async function() {
-    clearInterval(this.interval);
   },
   methods: {
-    capture: function() {
-      // this.captures.pop()
-      this.canvas = this.$refs.canvas;
-      const imgData = this.canvas.toDataURL("image/png");
-      // TODO: 画像データから類似度を取る
+    takePhoto(){
+      this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
+      const canvasContext = this.takedPhotoCanvas.getContext('2d')
+      canvasContext.drawImage(this.video, 0, 0, this.video.width, this.video.height)
+      const imgData = this.takedPhotoCanvas.toDataURL('image/png')
       console.log(imgData);
+      console.log('take photo')
+
+      // TODO: コースのidとランドマークのidをちゃんとしたものにする
+      const postData = {
+        landmark_id: 1,
+        course_id: 1,
+        img: imgData.replace(/^.*,/, '') // data:image/png;base64, がサーバー側で不要なため消す
+      }
+      this.$postApi('/session/landmark/visit/', postData, this.imgCaertification)
+
+    },
+    imgCaertification(responce){
+      // TODO 認証結果を利用したその後の処理
+      console.log(responce.data.result)
     }
   }
 };
+
 
 async function getVideoStream(userAgent) {
   const ua = userAgent.toLowerCase();
@@ -61,13 +95,16 @@ async function getVideoStream(userAgent) {
       video: {
         facingMode: {
           exact: "environment"
-        }
+        },
+        aspectRatio: {exact: 1}
       }
     };
   } else {
     medias = {
       audio: false,
-      video: true
+      video: {
+        aspectRatio: {exact: 1}
+      }
     };
   }
 
@@ -76,3 +113,21 @@ async function getVideoStream(userAgent) {
   return videoStream;
 }
 </script>
+
+<style scoped>
+#overlay-canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  opacity:0.3;
+}
+
+#overlay-wrapper{
+  position: relative;
+}
+
+#taked-ptoto-canvas{
+  display: none;
+}
+</style>

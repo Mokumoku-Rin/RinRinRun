@@ -45,6 +45,11 @@ const routes = [
     name: 'RunningInfo',
     component: () => import('../views/RunningInfo.vue')
   },
+  {
+    path: '/take-picture',
+    name: 'TakePicture',
+    component: () => import('../views/TakePicture.vue')
+  },
 
 
   // -------before login------------
