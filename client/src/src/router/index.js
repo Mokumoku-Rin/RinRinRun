@@ -41,6 +41,11 @@ const routes = [
     component: () => import('../views/ChoiceCourse.vue')
   },
   {
+    path: '/running-info',
+    name: 'RunningInfo',
+    component: () => import('../views/RunningInfo.vue')
+  },
+  {
     path: '/take-picture',
     name: 'TakePicture',
     component: () => import('../views/TakePicture.vue')

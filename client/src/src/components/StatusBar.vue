@@ -13,7 +13,7 @@
     </div>
     <div class="statusbar_right">
       <a v-if="avatar" @click="rightFunc">
-        <img :src="avatar" alt="アバター">
+        <img class="statusbar_avatar" :src="avatar" alt="アバター">
       </a>
       <a v-else-if="rightFunc" @click="$emit('rightFunc')">
         <font-awesome-icon icon="times"></font-awesome-icon>
@@ -51,6 +51,11 @@
   }
 }
 
+.statusbar_avatar {
+  border: 1px solid $white;
+  border-radius: 50%;
+  background: $white;
+}
 </style>
 
 <script>
