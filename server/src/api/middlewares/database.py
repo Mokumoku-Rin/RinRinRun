@@ -6,6 +6,8 @@ db: Connection
 
 def get_db():
   global db
+  # reconnect when connection is closed
+  db.ping(reconnect=True)
   return db
 
 def setup(app: FastAPI):
