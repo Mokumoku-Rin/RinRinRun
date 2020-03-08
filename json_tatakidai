@@ -46,7 +46,7 @@
 
 ランニング時
 {
-  "ghost":[
+  "ghosts":[
     {
       "name": string ユーザ名,
       "img_url": string ユーザの画像,
