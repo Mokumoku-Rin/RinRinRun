@@ -5,7 +5,10 @@
       <ul class="search_course_list">
         <li class="search_course_item" v-for="data in courseData" :key="data.id">
           <router-link class="search_course_link" :to="{ path: '/running-info', query: { id: data.id } }">
-            <div>{{data.title}}</div>
+            <div class="search_course_content">
+              <h2 class="search_course_title">{{data.title}}</h2>
+              <p class="search_course_description">{{data.description}}</p>
+            </div>
             <font-awesome-icon class="search_course_chevron" icon="chevron-right"></font-awesome-icon>
           </router-link>
         </li>
@@ -43,7 +46,7 @@
 }
 
 .search_course_item {
-  padding: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
 
   &+.search_course_item {
     border-top: 1px solid $black;
@@ -57,9 +60,35 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
+}
+
+.search_course_content {
+  line-height: 1.5;
+  flex-grow: 1;
+  width: 80%;
+}
+
+.search_course_title {
+  margin-bottom: .25rem;
+  font-size: 1.5rem;
+  font-weight: $weight-bold;
+}
+
+.search_course_description {
+  height: 3em;
+  overflow-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .search_course_chevron {
+  font-size: 1.25rem;
+  flex-grow: 0;
+  margin-left: .75rem;
   height: 100%;
   color: $red;
 }
@@ -73,7 +102,7 @@ export default {
     return {
       pageTitle: '',
       courseData: [
-        // {id: '0', title: 'タイトル1'}
+        {id: '0', title: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'}
       ]
     }
   },
