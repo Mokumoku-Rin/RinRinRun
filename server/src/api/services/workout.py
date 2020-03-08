@@ -1,5 +1,5 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history, add_landmark_visit, update_course_mean_record, update_course_play_count
+from usecases.workout import add_workout_history, add_landmark_visit, update_course_status
 
 
 class WorkoutService:
@@ -17,7 +17,6 @@ class WorkoutService:
                                         total_distance, time_list, geo_json)
         add_landmark_visit(uid, insert_id, landmark_visits)
 
-        update_course_mean_record(course_id, total_time, total_distance)
-        update_course_play_count(course_id)
+        update_course_status(course_id, total_time, total_distance)
 
         return "OK"
