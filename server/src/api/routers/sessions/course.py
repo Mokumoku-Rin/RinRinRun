@@ -13,7 +13,7 @@ def get_course(sort_by: str = "popular", limit: int = 10):
   }
   return response
 
-@router.get("/{course_id}", response_model=CourseGetResponse)
+@router.get("/{course_id}/", response_model=CourseGetResponse)
 def get_course(course_id: int):
   course, landmarks = CourseService.gether_course_info(course_id)
   response = course

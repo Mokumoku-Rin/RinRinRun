@@ -14,7 +14,7 @@ def get_image_url(landmark_id):
 def get_landmarks_by_course_id(course_id: int):
     conn = get_db()
     with conn.cursor() as cursor:
-        sql = 'select landmarks.id, landmarks.name, landmarks.description, landmarks.img_url, landmarks.pos from landmarks join course_landmarks on landmarks.id = course_landmarks.landmark_id join courses on course_landmarks.course_id = courses.id WHERE courses.id = %s'
+        sql = 'SELECT landmarks.id, landmarks.name, landmarks.description, landmarks.img_url, landmarks.pos FROM landmarks JOIN course_landmarks ON landmarks.id = course_landmarks.landmark_id JOIN courses ON course_landmarks.course_id = courses.id WHERE courses.id = %s'
         cursor.execute(sql, (str(course_id),))
         result = cursor.fetchall()
     return result
