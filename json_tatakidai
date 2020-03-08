@@ -109,3 +109,39 @@
 {
   "result": "string" //OKかNGが入ってくる
 }
+
+
+指定した日の記録を取得 (リクエスト)
+{
+  "date": string 'yyyy-mm-dd'
+}
+
+指定した日の記録を取得 (レスポンス)
+{
+  "date": string 'yyyy-mm-dd',
+  "datas": [
+    {
+      "total_distance": int ランニング距離(m),
+      "total_time": int 経過時間(ms),
+      "geo_json": {
+        "type": "LineString",
+        "coordinates": [
+          [float,float],
+          [float,float]
+        ]
+      }
+    },
+    {
+      "total_distance": int ランニング距離(m),
+      "total_time": int 経過時間(ms),
+      "geo_json": {
+        "type": "LineString",
+        "coordinates": [
+          [float,float],
+          [float,float]
+        ]
+      }
+    }, ...
+  ]
+}
+
