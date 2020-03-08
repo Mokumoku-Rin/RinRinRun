@@ -1,6 +1,6 @@
 from db.workout import insert_workout_history, insert_landmark_visit, get_mean_total_record
 from db.user import update_user_total_record
-from db.course import update_mean_record
+from db.course import update_mean_record, update_played_count
 
 
 def add_workout_history(uid, course_id, total_time,
@@ -24,3 +24,7 @@ def update_course_mean_record(course_id, total_time, total_distance):
     mean_data = get_mean_total_record(course_id)
     update_mean_record(mean_data['avg(total_time)'],
                        mean_data['avg(total_distance)'], course_id)
+
+
+def update_course_play_count(course_id):
+    update_played_count(course_id)
