@@ -3,10 +3,10 @@
     <statusBar left-link="/search-course" :center="pageTitle"></statusBar>
     <main>
       <ul class="search_course_list">
-        <li class="search_course_item" v-for="data in courseData" :key="data.id" v-show="!loading">
+        <li class="search_course_item" v-for="data in courseData" :key="data.id">
           <router-link class="search_course_link" :to="{ path: '/running-info', query: { id: data.id } }">
             <div class="search_course_content">
-              <h2 class="search_course_title">{{data.name}}</h2>
+              <h2 class="search_course_title">{{data.title}}</h2>
               <p class="search_course_description">{{data.description}}</p>
             </div>
             <font-awesome-icon class="search_course_chevron" icon="chevron-right"></font-awesome-icon>
@@ -102,9 +102,8 @@ export default {
     return {
       pageTitle: '',
       courseData: [
-        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'}
-      ],
-      loading: false,
+        {id: '0', title: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'}
+      ]
     }
   },
   created() {
@@ -118,14 +117,6 @@ export default {
     } else {
       this.pageTitle = "error: no queries"
     }
-
-    this.loading = true
-    this.$getApi('/session/course/', {sort_by: type, limit: 10}, (res)=>{
-      if(res.data.courses.length > 0){
-        this.courseData = res.data.courses
-      }
-      this.loading = false
-    })
   },
   components: {
     statusBar
