@@ -20,12 +20,13 @@ def decode_base64_to_ndarray(image):
 def calc_image_similarity(user_base64_image, landmark_id):
 
     user_image_color = decode_base64_to_ndarray(user_base64_image)
-    user_image_gray = cv2.cvtColor(user_image, cv2.COLOR_BGR2GRAY)
+    user_image_gray = cv2.cvtColor(user_image_color, cv2.COLOR_BGR2GRAY)
 
     database_image_url = get_image_url(landmark_id)['img_url']
     database_image_binary = requests.get(database_image_url).content
     database_image_color = convert_binary_to_ndarray(database_image_binary)
-    database_image_gray = cv2.cvtColor(database_image, cv2.COLOR_BGR2GRAY)
+    database_image_gray = cv2.cvtColor(
+        database_image_color, cv2.COLOR_BGR2GRAY)
 
     # ORB検出器を使う
     orb = cv2.ORB_create()
