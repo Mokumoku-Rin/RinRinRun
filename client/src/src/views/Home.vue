@@ -180,6 +180,7 @@ export default {
     }
   },
   created() {
+    // アバターを取得するコード（書き換え予定）
     var user = firebase.auth().currentUser
     this.account.avatar = user.photoURL
   },
