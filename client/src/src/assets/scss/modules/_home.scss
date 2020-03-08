@@ -1,0 +1,12 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  overflow-y: hidden;
+
+  main {
+    flex-grow: 1;
+    height: 100%;
+  }
+}

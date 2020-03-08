@@ -1,9 +1,9 @@
 <template>
-  <nav class="statusbar">
+  <nav class="statusbar" :class="backgroundColor=='white' ? 'is-white' : '' ">
     <div class="statusbar_left">
-      <a v-if="leftLink" @click="goTo(leftLink)">
+      <router-link v-if="leftLink" :to="leftLink">
         <font-awesome-icon icon="chevron-left"></font-awesome-icon>
-      </a>
+      </router-link>
       <a v-else-if="leftFunc" @click="leftFunc">
         <font-awesome-icon icon="chevron-left"></font-awesome-icon>
       </a>
@@ -15,7 +15,7 @@
       <a v-if="avatar" @click="rightFunc">
         <img class="statusbar_avatar" :src="avatar" alt="アバター">
       </a>
-      <a v-else-if="rightFunc" @click="$emit('rightFunc')">
+      <a v-else-if="rightFunc" @click="rightFunc">
         <font-awesome-icon icon="times"></font-awesome-icon>
       </a>
     </div>
@@ -36,6 +36,14 @@
 
   a {
     color: $white;
+  }
+  &.is-white {
+    background: $white;
+    color: $orange;
+
+    a {
+      color: $red;
+    }
   }
 }
 
@@ -64,7 +72,7 @@ import router from '../router'
 export default {
   props: {
     leftLink: {
-      type: String
+      type: [String, Object]
     },
     leftFunc: {
       type: Function
@@ -73,7 +81,7 @@ export default {
       type: String
     },
     rightLink: {
-      type: String
+      type: [String, Object]
     },
     rightFunc: {
       type: Function
@@ -81,8 +89,9 @@ export default {
     avatar: {
       type: String
     },
-    color: {
-      type: String
+    backgroundColor: {
+      type: String,
+      default: 'orange'
     }
   },
   methods: {
