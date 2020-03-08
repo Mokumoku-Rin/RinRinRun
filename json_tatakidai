@@ -31,13 +31,13 @@
     { 
       "id": int ランドマークのID
       "name": string ランドマーク名,
-      "positoin": [float, float],
+      "pos": [float, float],
       "img_url: string imgのURL,
       "discription": string ランドマークの説明
     },
     {
       "name": string ランドマーク名,
-      "positoin": [float, float],
+      "pos": [float, float],
       "img_url: string imgのURL,
       "discription": string ランドマークの説明
     }, ....
@@ -51,7 +51,7 @@
       "name": string ユーザ名,
       "img_url": string ユーザの画像,
       "time_list": [int 経過時間(ms), int 経過時間(ms),...],
-      "position_list": [[float, float], [float, float],....],
+      "pos_list": [[float, float], [float, float],....],
       "total_distance": int ランニング距離(m),
       "rating": int, ユーザのレーティングポイント //なくてもいいかも
       "landmark_visits":[
@@ -70,7 +70,7 @@
       "name": string ユーザ名,
       "img_url": string ユーザの画像,
       "time_list": [int 経過時間(ms), int 経過時間(ms),...],
-      "position_list": [[float, float], [float, float],....],
+      "pos_list": [[float, float], [float, float],....],
       "total_distance": int ランニング距離(m),
       "rating": int ユーザのレーティングポイント, //なくてもいいかも
       "landmark_visits":[ 到達のやつ
