@@ -55,6 +55,11 @@ const routes = [
     name: 'TakePicture',
     component: () => import('../views/TakePicture.vue')
   },
+  {
+    path: '/run-map-test',
+    name: 'RunMapTest',
+    component: () => import('../views/RunMapTest.vue')
+  },
 
 
   // -------before login------------
