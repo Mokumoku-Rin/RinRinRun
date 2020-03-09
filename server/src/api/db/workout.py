@@ -42,3 +42,12 @@ def get_mean_total_record(course_id):
         cursor.execute(sql, (course_id))
         result = cursor.fetchone()
     return result
+
+
+def get_today_record(uid, date):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT total_time, total_distance, ST_AsGeoJSON(geo_linestring) FROM workout_histories WHERE user_id = %s AND created_at LIKE %s"
+        cursor.execute(sql, (uid, date))
+        result = cursor.fetchall()
+    return result
