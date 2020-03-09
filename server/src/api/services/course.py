@@ -1,4 +1,4 @@
-from usecases.course import get_course_list_by, get_cource
+from usecases.course import get_course_list_by, get_course
 from usecases.landmark import get_landmarks_for_course_request, get_landmark_visits_for_ghost
 from usecases.user import get_user_score, get_user_list_by_score_close
 from usecases.workout import get_workout_list_for_ghost
