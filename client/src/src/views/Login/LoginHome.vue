@@ -16,19 +16,13 @@
       <div class="subtitle">壮大な総情の大地を走ろう！</div>
     </header>
     <nav>
-      <a class="button" @click="googleLogin">
-        <font-awesome-icon :icon="['fab', 'google']"></font-awesome-icon>
-        Googleアカウントで続ける
-      </a>
-      <router-link class="button is-reverse" to="/mail-login">メールアドレスでログイン</router-link>
-      <router-link class="button is-reverse" to="/mail-register">メールアドレスで登録</router-link>
+      <Button :func="googleLogin" :icon="['fab', 'google']" label="Googleアカウントで続ける"></Button>
     </nav>
   </div>
 </template>
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
-@import "@/assets/scss/modules/_button.scss";
 
 .login_home {
   display: flex;
@@ -53,7 +47,7 @@
   .title {
     margin-bottom: 3rem;
   }
-  .button+.button {
+  .button_wrapper+.button_wrapper {
       margin-top: 1rem;
   }
 }
@@ -65,7 +59,12 @@
 import firebase from 'firebase/app'
 import router from '@/router'
 
+import Button from '@/components/Button.vue'
+
 export default {
+  components: {
+    Button
+  },
   methods: {
     async googleLogin() {
       const provider = new firebase.auth.GoogleAuthProvider()

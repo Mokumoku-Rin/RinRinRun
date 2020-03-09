@@ -3,14 +3,14 @@
     <statusBar leftLink="home" center="コースの検索"></statusBar>
     <main>
       <div class="search_course section">
-        <router-link class="search_course_card card" :to="{ path: '/choice-course', query: { type: 'popular' } }" >
+        <router-link class="search_course_card card" :to="{ path: '/choice-course', query: { search_type: 'popular' } }" >
           <div class="card-content">
             <h2 class="search_course_card_title">人気のコース</h2>
             <p class="serach_course_card_description">人気のコースから選択</p>
             <img class="search_course_card_img" src="@/assets/img/office-best-achiever.svg" alt="office best achiever">
           </div>
         </router-link>
-        <router-link class="search_course_card card" :to="{ path: '/choice-course', query: { type: 'latest' } }" >
+        <router-link class="search_course_card card" :to="{ path: '/choice-course', query: { search_type: 'latest' } }" >
           <div class="card-content">
             <h2 class="search_course_card_title">最新のコース</h2>
             <p class="serach_course_card_description">最新のコースから選択</p>
@@ -24,19 +24,7 @@
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  overflow-y: hidden;
-
-  main {
-    flex-grow: 1;
-    height: 100%;
-  }
-}
+@import "@/assets/scss/modules/_home.scss";
 
 .search_course {
   display: flex;
