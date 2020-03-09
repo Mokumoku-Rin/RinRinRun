@@ -1,7 +1,7 @@
 <template>
   <div>
     test
-    <rin-rin-map :courseID="1" :myLocation="myLocation" :ghosts="ghostData" :elapssedTime="mapElappedTime"/>
+    <rin-rin-map :courseID="1" :myLocation="myLocation" :ghostData="ghostData" :elapsedTime="mapElapsedTime"/>
     <button @click="startRunning">計測スタート</button>
     <button @click="stopRunning">計測ストップ</button>
     <button @click="clearHistory">クリア</button>
@@ -16,14 +16,14 @@ import rinRinMap from '@/components/RinRinMap.vue'
 const SOJO_GPS_POSITION = [34.878031, 135.575573]
 
 // TODO サーバーから取得する
-const dammyGhostData = [
+const dummyGhostData = [
   {
     name: 'hogehoge',
     img_url: 'example.com',
     time_list: [0, 5500, 10010, 16000],
     pos_list: [[34.878834, 135.575930], [34.878623, 135.575838], [34.878515, 135.575773], [34.878468, 135.575622]],
     total_distance: 123,
-    rating: 123, //なくてもいいかも
+    score: 123, //なくてもいいかも
     landmark_visits:[
       {
         id: 1,
@@ -41,7 +41,7 @@ const dammyGhostData = [
     time_list: [0, 5500, 10010, 16000],
     pos_list: [[34.878822, 135.575930], [34.878517, 135.575880], [34.878446, 135.576017], [34.878245, 135.575942]],
     total_distance: 123,
-    rating: 123, //なくてもいいかも
+    score: 123, //なくてもいいかも
     landmark_visits:[
       {
         id: 1,
@@ -65,8 +65,8 @@ export default {
       mapTimerOnj: null, 
       isIntervalSet: false,
       myLocation: SOJO_GPS_POSITION,
-      ghostData: dammyGhostData,
-      mapElappedTime: 0, 
+      ghostData: dummyGhostData,
+      mapElapsedTime: 0, 
     }
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
       navigator.geolocation.getCurrentPosition(this.successGetGPS, (error)=>{console.log('gps error',error.code)})
     },
     mapIntervalFunc(){
-      this.mapElappedTime = this.getElapssedTime()
+      this.mapElapsedTime = this.getElapssedTime()
     },
     getElapssedTime(){
       const tempDate = new Date()
@@ -126,7 +126,7 @@ export default {
       }
       coordinates += ']' 
 
-      let geoJson = '{"type": "LineString","crs": { "type": "name"},'
+      let geoJson = '{"type": "LineString",'
       geoJson += '"coordinates":' + coordinates + '}'
 
       let time_list = ""

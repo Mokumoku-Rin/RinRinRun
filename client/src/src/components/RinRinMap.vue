@@ -32,11 +32,11 @@ export default {
       type: Array,
       required: true
     },
-    ghosts: {
+    ghostData: {
       type: Array,
       required: true
     },
-    elapssedTime: {
+    elapsedTime: {
       type: Number,
       required: true
     }
@@ -52,15 +52,15 @@ export default {
   },
   methods:{
     removeLayerDrawed(){
-      for(let eLayer of this.existDrawed){
+      for(const eLayer of this.existDrawed){
         this.map.removeLayer(eLayer)
       }
       this.existDrawed.length = 0
     },
     setMapLandmark(){
-      for(let landmark of this.landmarks){
+      for(const landmark of this.landmarks){
         // check ずみ
-        if(this.$store.state.myRunCheckedLandmarkID.indexOf(landmark.id) !== -1) continue
+        if(this.$store.state.myRunCheckedLandmarkID.includes(landmark.id)) continue
 
         const tempPos = landmark.pos.split(',')
         const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
@@ -73,14 +73,13 @@ export default {
       this.setMapLandmark()
 
       this.existDrawed.push(L.marker(this.myLocation, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
-
-      for(const ghost of this.ghosts){
-        let dispRouteList = []
+      for(const ghost of this.ghostData){
+        const dispRouteList = []
         let dispNowGPS = ghost.pos_list[0]
 
         // for of は遅いらしいので使用しない
         for(let index = 0; index < ghost.time_list.length; index++){
-          if(ghost.time_list[index] < this.elapssedTime){
+          if(ghost.time_list[index] < this.elapsedTime){
             dispRouteList.push(ghost.pos_list[index])
             dispNowGPS = ghost.pos_list[index]
           }
@@ -123,7 +122,7 @@ export default {
     myLocation: function(){
       this.reRender()
     },
-    elapssedTime: function(){
+    elapsedTime: function(){
       this.reRender()
     }
   }
