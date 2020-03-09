@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home with-navibar">
     <statusBar center="今日の記録" :avatar="account.avatar" :rightFunc="confirmLogout"></statusBar>
     <main>
 

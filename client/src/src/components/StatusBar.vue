@@ -26,6 +26,11 @@
 @import "@/assets/scss/base/_variables.scss";
 
 .statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,6 +38,7 @@
   padding: .8rem 1.5rem;
   font-size: 1.25rem;
   color: $white;
+  z-index: 1;
 
   a {
     color: $white;

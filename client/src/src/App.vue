@@ -16,6 +16,13 @@
 @import "../node_modules/bulma/bulma.sass";
 @import "@/assets/scss/base/_variables.scss";
 
+#app {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
 a, a:visited, a:hover, a:active {
   color: inherit;
   text-decoration: none;
