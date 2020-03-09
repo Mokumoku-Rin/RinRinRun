@@ -31,7 +31,7 @@ def update_course_status(course_id, total_time, total_distance):
 
 
 def select_history_based_on_date(uid, date):
-    uid = 2
+    # uid = 2
     workout_history_based_on_date = []
     for i in get_based_on_date(uid, date):
         i['geo_json'] = json.loads(i.pop('ST_AsGeoJSON(geo_linestring)'))
