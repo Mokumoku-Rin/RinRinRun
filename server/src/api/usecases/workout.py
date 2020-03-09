@@ -1,11 +1,10 @@
 from db.workout import (insert_workout_history,
                         insert_landmark_visit, get_mean_total_record,
-                        get_based_on_date
+                        get_based_on_date,
                         get_totaldist_timelist_poslist
                        )
 from db.user import update_user_total_record
 from db.course import update_mean_record, update_played_count
-import json
 
 import json
 
