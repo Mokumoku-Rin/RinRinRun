@@ -8,6 +8,8 @@ export default new Vuex.Store({
     myGPSLocations:[],
     myRunTimeList:[],
     myRunStartTime: -1,
+    myRunNowDistance: 0,
+    myRunCheckedLandmarkID: []
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -25,6 +27,9 @@ export default new Vuex.Store({
     resetMyRunStartTime(state){
       const tempDate = new Date()
       state.myRunStartTime = tempDate.getTime()
+    },
+    setMyRunNowDistance(state, distance){
+      state.myRunNowDistance = distance
     }
   },
   actions: {

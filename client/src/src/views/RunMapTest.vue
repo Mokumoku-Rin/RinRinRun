@@ -101,7 +101,6 @@ export default {
 
       this.$store.commit('setMyRunNowDistance', calDistance(this.$store.state.myGPSLocations))
 
-
       this.$store.commit('addMyRunTimeList', this.getElapssedTime())
       console.log('success')
     },
