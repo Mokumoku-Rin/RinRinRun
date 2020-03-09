@@ -54,6 +54,12 @@
 
 .statusbar_center {
   margin: 0 auto;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: center;
   h1{
     font-weight: $weight-bold;
   }
