@@ -77,6 +77,7 @@
 
 .course_info_section {
   margin: 1.5rem 0;
+  line-height: 1.75;
 }
 
 .course_info_title {
@@ -99,6 +100,7 @@
 .course_info_statistics {
   width: 47.5%;
   margin: .5rem 0;
+  line-height: 1.5;
 }
 
 .course_info_statistics_title {
