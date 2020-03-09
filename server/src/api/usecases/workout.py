@@ -1,6 +1,64 @@
-from db.workout import insert_workout_history, insert_landmark_visit, get_mean_total_record
+from db.workout import insert_workout_history, insert_landmark_visit, get_mean_total_record, get_totaldist_timelist_poslist
 from db.user import update_user_total_record
 from db.course import update_mean_record, update_played_count
+
+import json
+
+
+def get_workout_list_for_ghost(uid_list, course_id) -> (list, list):
+    """
+    ゴーストのためのワークアウト基礎データを返却する
+
+    Parameters
+    ----------
+    uid_list : str
+        対象ユーザIDリスト
+    course_id : str
+        対象コースID
+
+    Returns
+    -------
+    workout_list : list of ghost_workout_info
+        [
+            {
+                "time\_list": [int, int, ... ,int],
+                "pos_list": [[float, float], [float, float], ...],
+                "total_distance": int
+                "total_time": int
+            }
+        ]
+    workout_ids: list of id
+    """
+
+    workout_list = []
+    id_list = []
+
+    for uid in uid_list:
+        raw_ghost_workout = get_totaldist_timelist_poslist(uid, course_id)
+        ghost_workout = {}
+
+        # append workout_id
+        id_list.append(raw_ghost_workout["id"])
+
+        # set total_distance total_time time_list
+        ghost_workout["total_distance"] = int(raw_ghost_workout["total_distance"])
+        ghost_workout["total_time"] = int(raw_ghost_workout["total_time"])        
+        ghost_workout["time_list"] = [int(t) for t in raw_ghost_workout["time_list"].split(",")]
+
+        # parse pos_list
+        ghost_workout["pos_list"] = []
+        geojson = json.loads(raw_ghost_workout["ST_AsGeoJSON(geo_linestring)"])
+
+        for pos in geojson["coordinates"]:
+            ghost_workout["pos_list"].append(pos)
+
+        workout_list.append(ghost_workout)
+
+    return id_list, workout_list
+
+
+
+
 
 
 def add_workout_history(uid, course_id, total_time,
