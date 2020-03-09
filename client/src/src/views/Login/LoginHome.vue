@@ -27,9 +27,16 @@
 @import "@/assets/scss/base/_variables.scss";
 
 .login_home {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   display: flex;
   flex-direction: column;
-  overflow-y: hidden;
+  overflow: hidden;
   height: 100vh;
   width: 100%;
   justify-content: space-around;

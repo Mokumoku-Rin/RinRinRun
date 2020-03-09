@@ -71,7 +71,7 @@
     // 情報が最後まで表示されない問題の回避
     content: '';
     display: block;
-    height: 8.5rem;
+    height: 5.5rem;
   }
 }
 
