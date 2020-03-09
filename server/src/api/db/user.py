@@ -19,6 +19,33 @@ def get_user(uid):
     return result
 
 
+def get_user_score(uid) -> int:
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT score FROM users WHERE id = %s"
+        cursor.execute(sql, (uid))
+        result = cursor.fetchone()["score"]
+    return int(result)
+
+def get_users_name_img_by_score_and_course_done(user_score, course_id, limit: int) -> list:
+    """
+    与えられたユーザスコアから近い順かつ，指定のコースを走ったことのあるユーザをにlimit個のゴーストに必要なデータを取得する
+    Returns
+    -------
+        result: list
+            [
+                {id: str, name: str, img_url: str},
+                {id: str, name: str, img_url: str},
+                ...
+            ]
+    """
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT DISTINCT users.id, users.name, users.img_url FROM users LEFT JOIN workout_histories ON users.id = workout_histories.user_id WHERE workout_histories.course_id = %s ORDER BY ABS(users.score - %s) LIMIT %s"
+        cursor.execute(sql, (course_id, user_score, limit))
+        result = cursor.fetchall()
+    return result
+
 def update_user_total_record(uid, time, distance):
     conn = get_db()
     with conn.cursor() as cursor:

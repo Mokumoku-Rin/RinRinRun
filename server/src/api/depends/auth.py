@@ -12,8 +12,12 @@ class FirebaseToken:
 
     # on development, skip token verification
     if os.environ["SERVER_ENV"] == "development":
-      self.uid = "development_" + str(randint(0,1000000))
+      if x_token == "1":
+        self.uid = 1
+      elif x_token == "2":
+        self.uid = 2
+      else:
+        self.uid = "development_" + str(randint(0,1000000))
       return
 
-    
     self.uid = verify_token(x_token)

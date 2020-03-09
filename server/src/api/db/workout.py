@@ -44,6 +44,15 @@ def get_mean_total_record(course_id):
     return result
 
 
+def get_totaldist_timelist_poslist(uid, course_id):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT id, time_list, ST_AsGeoJSON(geo_linestring), total_distance, total_time FROM workout_histories WHERE user_id = %s AND course_id = %s ORDER BY total_time"
+        cursor.execute(sql, (uid, course_id))
+        result = cursor.fetchone()
+    return result
+
+
 def get_based_on_date(uid, date):
     conn = get_db()
     with conn.cursor() as cursor:

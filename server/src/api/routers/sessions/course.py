@@ -1,4 +1,5 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from depends.auth import FirebaseToken
 from schemas.course import CourseGetAllResponse
 from schemas.course import CourseGetResponse
 from services.course import CourseService
@@ -18,4 +19,14 @@ def get_course(course_id: int):
   course, landmarks = CourseService.gether_course_info(course_id)
   response = course
   response["landmarks"] = landmarks
+  return response
+
+@router.get("/{course_id}/ghost", response_model=None)
+def get_course_ghost(course_id: int, fbToken: FirebaseToken = Depends()):
+  uid = fbToken.uid
+  ghost_list = CourseService.gether_ghost_info_list(uid, course_id)
+  response = {
+    "ghosts": ghost_list
+  }
+
   return response
