@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from depends.auth import FirebaseToken
-from routers.sessions import workout, landmark, course, today
+from routers.sessions import workout, landmark, course
 
 router = APIRouter()
 
@@ -17,11 +17,6 @@ router.include_router(
 router.include_router(
     course.router,
     prefix="/course",
-)
-
-router.include_router(
-    today.router,
-    prefix="/today",
 )
 
 

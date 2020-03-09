@@ -22,3 +22,14 @@ class WorkoutRequest(BaseModel):
 
 class WorkoutResponse(BaseModel):
     result: str
+
+
+class Data(BaseModel):
+    total_distance: int
+    total_time: int
+    geo_json: dict
+
+
+class Created_Workout_Response(BaseModel):
+    date: str
+    datas: List[Data]
