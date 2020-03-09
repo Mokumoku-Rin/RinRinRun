@@ -30,6 +30,6 @@ class Data(BaseModel):
     geo_json: dict
 
 
-class Based_On_Date_Workout_Response(BaseModel):
+class Workout_Based_On_Date_Response(BaseModel):
     date: str
     datas: List[Data]

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from schemas.workout import WorkoutRequest, WorkoutResponse
-from schemas.workout import Based_On_Date_Workout_Response
+from schemas.workout import Workout_Based_On_Date_Response
 from services.workout import WorkoutService
 from depends.auth import FirebaseToken
 
@@ -17,7 +17,7 @@ async def post_workout(workout_request: WorkoutRequest, fbToken: FirebaseToken =
     return response
 
 
-@router.get("/", response_model=Based_On_Date_Workout_Response)
+@router.get("/", response_model=Workout_Based_On_Date_Response)
 async def get_workout_history_based_date(date: str,
                                          fbToken: FirebaseToken = Depends()):
     uid = fbToken.uid
