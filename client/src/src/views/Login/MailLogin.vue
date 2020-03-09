@@ -15,7 +15,7 @@
           <font-awesome-icon icon="key"></font-awesome-icon>
         </span>
       </div>
-      <a class="button" @click="emailLogin">ログイン</a>
+      <Button :func="emailLogin" label="ログイン"></Button>
       <router-link class="forget" to="/forget-password">パスワードを忘れましたか？</router-link>
     </main>
   </div>
@@ -23,7 +23,6 @@
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
-@import "@/assets/scss/modules/_button.scss";
 
 .login_mail {
   overflow-y: hidden;
@@ -55,7 +54,7 @@
     margin-top: 1rem;
   }
 
-  .button {
+  .button_wrapper {
     margin-top: 1.5rem;
   }
 
@@ -81,10 +80,12 @@ import firebase from 'firebase/app'
 import router from '@/router'
 
 import statusBar from '@/components/StatusBar.vue'
+import Button from '@/components/Button.vue'
 
 export default {
   components: {
-    statusBar
+    statusBar,
+    Button
   },
   data() {
     return {

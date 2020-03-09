@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home with-navibar">
     <statusBar center="今日の記録" :avatar="account.avatar" :rightFunc="confirmLogout"></statusBar>
     <main>
 
@@ -46,19 +46,7 @@
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  overflow-y: hidden;
-
-  main {
-    flex-grow: 1;
-    height: 100%;
-  }
-}
+@import "@/assets/scss/modules/_home.scss";
 
 .today__no_data {
   display: flex;

@@ -37,6 +37,10 @@
 @import "@/assets/scss/base/_variables.scss";
 
 .navibar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -47,6 +51,7 @@
   padding: 0.3rem;
   border-top: 1px solid $black;
   line-height: 1;
+  z-index: 1;
 }
 
 .navibar_link {

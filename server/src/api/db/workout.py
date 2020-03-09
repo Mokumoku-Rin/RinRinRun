@@ -26,6 +26,15 @@ def insert_landmark_visit(work_history_id, landmark_id, time):
     conn.commit()
 
 
+def get_shortest(course_id):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT MIN(total_time), MIN(total_distance) FROM workout_histories WHERE course_id = %s"
+        cursor.execute(sql, (course_id))
+        result = cursor.fetchone()
+    return result
+
+
 def get_mean_total_record(course_id):
     conn = get_db()
     with conn.cursor() as cursor:

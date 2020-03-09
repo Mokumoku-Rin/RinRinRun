@@ -35,7 +35,8 @@ export default {
   data() {
     return {
       video: {},
-      takedPhotoCanvas: {}
+      takedPhotoCanvas: {},
+      videoStream: null,
     };
   },
   mounted: async function() {
@@ -54,8 +55,8 @@ export default {
     // setup video
     this.video = this.$refs.video;
     const userAgent = navigator.userAgent.toLowerCase();
-    const stream = await getVideoStream(userAgent);
-    this.video.srcObject = stream;
+    this.videoStream = await getVideoStream(userAgent);
+    this.video.srcObject = this.videoStream;
     this.video.play();
   },
   methods: {
@@ -80,8 +81,11 @@ export default {
       // TODO 認証結果を利用したその後の処理
       console.log(responce.data.result)
     }
+  },
+  beforeDestroy: function () {
+    this.videoStream.getTracks().forEach(track => track.stop())
   }
-};
+}
 
 
 async function getVideoStream(userAgent) {
