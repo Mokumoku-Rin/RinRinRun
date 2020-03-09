@@ -1,9 +1,9 @@
 <template>
-  <nav class="statusbar">
+  <nav class="statusbar" :class="backgroundColor=='white' ? 'is-white' : '' ">
     <div class="statusbar_left">
-      <a v-if="leftLink" @click="goTo(leftLink)">
+      <router-link v-if="leftLink" :to="leftLink">
         <font-awesome-icon icon="chevron-left"></font-awesome-icon>
-      </a>
+      </router-link>
       <a v-else-if="leftFunc" @click="leftFunc">
         <font-awesome-icon icon="chevron-left"></font-awesome-icon>
       </a>
@@ -15,7 +15,7 @@
       <a v-if="avatar" @click="rightFunc">
         <img class="statusbar_avatar" :src="avatar" alt="アバター">
       </a>
-      <a v-else-if="rightFunc" @click="$emit('rightFunc')">
+      <a v-else-if="rightFunc" @click="rightFunc">
         <font-awesome-icon icon="times"></font-awesome-icon>
       </a>
     </div>
@@ -26,6 +26,11 @@
 @import "@/assets/scss/base/_variables.scss";
 
 .statusbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -33,9 +38,18 @@
   padding: .8rem 1.5rem;
   font-size: 1.25rem;
   color: $white;
+  z-index: 1;
 
   a {
     color: $white;
+  }
+  &.is-white {
+    background: $white;
+    color: $orange;
+
+    a {
+      color: $red;
+    }
   }
 }
 
@@ -46,6 +60,12 @@
 
 .statusbar_center {
   margin: 0 auto;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: center;
   h1{
     font-weight: $weight-bold;
   }
@@ -64,7 +84,7 @@ import router from '../router'
 export default {
   props: {
     leftLink: {
-      type: String
+      type: [String, Object]
     },
     leftFunc: {
       type: Function
@@ -73,7 +93,7 @@ export default {
       type: String
     },
     rightLink: {
-      type: String
+      type: [String, Object]
     },
     rightFunc: {
       type: Function
@@ -81,8 +101,9 @@ export default {
     avatar: {
       type: String
     },
-    color: {
-      type: String
+    backgroundColor: {
+      type: String,
+      default: 'orange'
     }
   },
   methods: {

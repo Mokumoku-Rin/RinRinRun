@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-    <statusBar left-link="/search-course" :center="pageTitle"></statusBar>
+    <statusBar left-link="/search-course" :center="page_info.title"></statusBar>
     <main>
       <ul class="search_course_list">
-        <li class="search_course_item" v-for="data in courseData" :key="data.id" v-show="!loading">
-          <router-link class="search_course_link" :to="{ path: '/running-info', query: { id: data.id } }">
+        <li class="search_course_item" v-for="data in course_data" :key="data.id v-show="!loading"">
+          <router-link class="search_course_link" :to="{ path: '/course-info', query: { search_type: page_info.search_type, course_id: data.id } }">
             <div class="search_course_content">
-              <h2 class="search_course_title">{{data.name}}</h2>
+              <h2 class="search_course_name">{{data.name}}</h2>
               <p class="search_course_description">{{data.description}}</p>
             </div>
             <font-awesome-icon class="search_course_chevron" icon="chevron-right"></font-awesome-icon>
@@ -36,7 +36,7 @@
 .search_course_list {
   height: 100%;
   background: $white;
-  overflow-y: auto;
+  overflow-y: scroll;
   &::after{
     // リストが最後まで表示されない問題の回避
     content: '';
@@ -69,7 +69,7 @@
   width: 80%;
 }
 
-.search_course_title {
+.search_course_name {
   margin-bottom: .25rem;
   font-size: 1.5rem;
   font-weight: $weight-bold;
@@ -100,23 +100,43 @@ import statusBar from '@/components/StatusBar.vue'
 export default {
   data() {
     return {
-      pageTitle: '',
-      courseData: [
-        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'}
-      ],
-      loading: false,
+      page_info: {
+        title: '',
+        search_type: '',
+        loading: false,
+        course: 0
+      },
+      course_data: [
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+        {id: '0', name: 'タイトル1', description: 'hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge'},
+      ]
     }
   },
   created() {
-    var type = this.$route.query.type
-    if(type=="popular") {
-      this.pageTitle = "人気のコース"
+    this.page_info.search_type = this.$route.query.search_type
+    if(this.page_info.search_type=="popular") {
+      this.page_info.title = "人気のコース"
       // 人気のコース情報を取得するコード
-    } else if(type=="latest") {
-      this.pageTitle = "最新のコース"
+    } else if(this.page_info.search_type=="latest") {
+      this.page_info.title = "最新のコース"
       // 最新のコース情報を取得するコード
     } else {
-      this.pageTitle = "error: no queries"
+      this.page_info.title = "error: no queries"
     }
 
     this.loading = true
