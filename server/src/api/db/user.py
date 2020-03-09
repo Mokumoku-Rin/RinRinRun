@@ -41,7 +41,7 @@ def get_users_name_img_by_score_and_course_done(user_score, course_id, limit: in
     """
     conn = get_db()
     with conn.cursor() as cursor:
-        sql = "SELECT users.id, users.name, users.img_url FROM users LEFT JOIN workout_histories ON users.id = workout_histories.user_id WHERE workout_histories.course_id = %s ORDER BY ABS(users.score - %s) LIMIT %s"
+        sql = "SELECT DISTINCT users.id, users.name, users.img_url FROM users LEFT JOIN workout_histories ON users.id = workout_histories.user_id WHERE workout_histories.course_id = %s ORDER BY ABS(users.score - %s) LIMIT %s"
         cursor.execute(sql, (course_id, user_score, limit))
         result = cursor.fetchall()
     return result

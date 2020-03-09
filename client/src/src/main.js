@@ -8,11 +8,11 @@ import firebase from 'firebase'
 
 import 'leaflet/dist/leaflet.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft, faChevronRight, faEnvelope, faCheck, faKey, faTimes, faChartBar, faRunning, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faChevronRight, faEnvelope, faCheck, faKey, faTimes, faChartBar, faRunning, faUserFriends, faCamera } from '@fortawesome/free-solid-svg-icons'
 // import { faCoffee } from '@fortawesome/free-regular-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-library.add(faChevronLeft, faChevronRight, faEnvelope, faCheck, faKey, faTimes, faGoogle, faChartBar, faRunning, faUserFriends)
+library.add(faChevronLeft, faChevronRight, faEnvelope, faCheck, faKey, faTimes, faGoogle, faChartBar, faRunning, faUserFriends, faCamera)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import RinRinApi from './plugins/rinrin-api'

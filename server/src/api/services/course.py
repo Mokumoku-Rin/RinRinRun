@@ -1,5 +1,3 @@
-import pprint
-
 from usecases.course import get_course_list_by, get_cource
 from usecases.landmark import get_landmarks_for_course_request, get_landmark_visits_for_ghost
 from usecases.user import get_user_score, get_user_list_by_score_close
@@ -17,7 +15,7 @@ class CourseService:
   
   @staticmethod
   def gether_course_info(course_id: int):
-    course_result = get_cource(course_id)
+    course_result = get_course(course_id)
     landmark_result = get_landmarks_for_course_request(course_id)
     return course_result, landmark_result
 
@@ -47,8 +45,6 @@ class CourseService:
         "total_time": ghost_workout["total_time"],
         "landmark_visits": ghost_landmark_visits
       })
-    
-    print(ghosts)
     return ghosts
 
 

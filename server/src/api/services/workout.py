@@ -1,5 +1,6 @@
 from usecases.auth import verify_token
-from usecases.workout import add_workout_history, add_landmark_visit, update_course_status
+from usecases.workout import (add_workout_history, add_landmark_visit,
+                              update_course_status, select_history_based_on_date)
 
 
 class WorkoutService:
@@ -20,3 +21,7 @@ class WorkoutService:
         update_course_status(course_id, total_time, total_distance)
 
         return "OK"
+
+    @staticmethod
+    async def get_based_on_date(uid, date):
+        return select_history_based_on_date(uid, date)

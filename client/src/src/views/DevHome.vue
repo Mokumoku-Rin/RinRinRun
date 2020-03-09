@@ -9,6 +9,8 @@
     <apiTest/>
     <hr>
     <!-- <rinRinMap/> -->
+    
+    <dispMap :courseID="1" :route="[[34.879124, 135.575877], [34.878595,  135.575614]]"/>
     <!-- <img alt="Vue logo" src="../assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/> -->
   </div>
@@ -30,12 +32,14 @@ import router from '../router'
 import apiTest from '@/components/devtools/ApiTest.vue'
 import showAllRoute from '@/components/devtools/ShowAllRoute.vue'
 // import rinRinMap from '@/components/RinRinMap.vue'
+import dispMap from '@/components/DispMap.vue'
 
 export default {
   components: {
     apiTest,
     showAllRoute,
-    // rinRinMap
+    // rinRinMap,
+    dispMap
   },
   methods: {
     logout() {

@@ -17,4 +17,6 @@ class CourseGetResponse(BaseModel):
   description: str
   mean_distance: int
   mean_time: int
+  shortest_time: int
+  shortest_distance: int
   landmarks: List[LandmarkInfo]

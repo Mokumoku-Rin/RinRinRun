@@ -26,6 +26,15 @@ def insert_landmark_visit(work_history_id, landmark_id, time):
     conn.commit()
 
 
+def get_shortest(course_id):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT MIN(total_time), MIN(total_distance) FROM workout_histories WHERE course_id = %s"
+        cursor.execute(sql, (course_id))
+        result = cursor.fetchone()
+    return result
+
+
 def get_mean_total_record(course_id):
     conn = get_db()
     with conn.cursor() as cursor:
@@ -34,10 +43,20 @@ def get_mean_total_record(course_id):
         result = cursor.fetchone()
     return result
 
+
 def get_totaldist_timelist_poslist(uid, course_id):
     conn = get_db()
     with conn.cursor() as cursor:
         sql = "SELECT id, time_list, ST_AsGeoJSON(geo_linestring), total_distance, total_time FROM workout_histories WHERE user_id = %s AND course_id = %s ORDER BY total_time"
         cursor.execute(sql, (uid, course_id))
         result = cursor.fetchone()
+    return result
+
+
+def get_based_on_date(uid, date):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        sql = "SELECT total_time, total_distance, ST_AsGeoJSON(geo_linestring) FROM workout_histories WHERE user_id = %s AND created_at LIKE %s"
+        cursor.execute(sql, (uid, date))
+        result = cursor.fetchall()
     return result
