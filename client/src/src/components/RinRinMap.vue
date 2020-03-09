@@ -118,11 +118,6 @@ export default {
       this.setMapLandmark()
     })
 
-    var myIcon = L.icon({
-    iconUrl: pinPath,
-    iconSize: [38, 95]  // アイコンサイズ
-    });
-    L.marker([34.8780, 135.58],{icon: myIcon}).addTo(this.map)
   },
   watch: {
     myLocation: function(){
