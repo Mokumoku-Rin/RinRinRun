@@ -12,8 +12,10 @@
   </div> -->
   <div class="section login_home">
     <header>
-      <h1 class="title">RinRinRun</h1>
-      <div class="subtitle">壮大な総情の大地を走ろう！</div>
+      <h1 class="title">
+        <img src="@/assets/img/logo.svg" alt="かけだせSOJOの森">
+      </h1>
+      <div class="subtitle">Update Orienteering!</div>
     </header>
     <nav>
       <Button :func="googleLogin" :icon="['fab', 'google']" label="Googleアカウントで続ける"></Button>
@@ -45,14 +47,18 @@
     text-align: center;
   }
   .title {
-    margin-bottom: 3rem;
+    margin-bottom: 1.25rem;
+  }
+  .subtitle {
+    font-size: 1.5rem;
   }
   .button_wrapper+.button_wrapper {
       margin-top: 1rem;
   }
+  .button {
+    font-size: 1rem;
+  }
 }
-
-
 </style>
 
 <script>

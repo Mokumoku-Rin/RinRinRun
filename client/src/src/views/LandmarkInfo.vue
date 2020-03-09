@@ -5,6 +5,8 @@
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
+@import "@/assets/scss/modules/_home.scss";
+
 
 </style>
 
