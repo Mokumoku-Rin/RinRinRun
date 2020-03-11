@@ -1,12 +1,11 @@
 <template>
-  <div>
-    閲覧用map
-    <div id='map'></div>
-  </div>
+  <div id='map' v-bind:class="className"></div>
 </template>
 
 <script>
 import L from 'leaflet'
+import pinPath from '@/assets/img/pin_offset.svg'
+import myRunnerPath from '@/assets/img/my_runner.svg'
 
 // デフォルトマーカーアイコン設定
 delete L.Icon.Default.prototype._getIconUrl;
@@ -26,11 +25,21 @@ export default {
     },
     route: {
       type: Array
+    },
+    className: {
+      type: String,
+      default: ""
+    },
+    showMyLocation: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      map: null
+      map: null,
+      gpsTimerObj: null,
+      existDrawed: [],
     }
   },
   mounted: function () {
@@ -47,19 +56,47 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
      }).addTo(this.map)
 
+    const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
     this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
       for(let landmark of response.data.landmarks){
         const tempPos = landmark.pos.split(',')
-        L.marker(tempPos).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
+        L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
       }
     })
 
-    if(this.route.length > 1){
+    if(this.route && this.route.length > 1){
       L.polyline(this.route,{
         "color": "#FF0000",
         "weight": 5,
         "opacity": 0.6
       }).addTo(this.map)
+    }
+
+    if(this.showMyLocation){
+      this.gpsIntervalFunc()
+      this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
+    }
+  },
+  methods: {
+    gpsIntervalFunc(){
+      navigator.geolocation.getCurrentPosition(this.successGetGPS, (error)=>{console.log('gps error',error.code)})
+    },
+    successGetGPS(position){
+      for(const eLayer of this.existDrawed){
+        this.map.removeLayer(eLayer)
+      }
+      this.existDrawed.length = 0
+
+      const nowGPS = [position.coords.latitude, position.coords.longitude]
+      this.existDrawed.push(L.marker(nowGPS, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
+
+      this.map.setView(nowGPS)
+      console.log('success')
+    }
+  },
+  beforeDestroy: function () {
+    if(this.showMyLocation){
+      clearInterval(this.gpsTimerObj)
     }
   }
 }
