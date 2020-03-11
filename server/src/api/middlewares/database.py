@@ -20,7 +20,7 @@ def setup(app: FastAPI):
 
         try:
             connection = Connection(
-                host='mokumoku-mariadb',
+                host=os.environ['DB_HOST'],
                 user=os.environ['DB_USER'],
                 passwd=os.environ['DB_PASSWORD'],
                 db='mokumoku',

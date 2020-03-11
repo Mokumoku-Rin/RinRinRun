@@ -31,8 +31,9 @@ services:
     environment:
       TZ: 'Asia/Tokyo'
       GOOGLE_APPLICATION_CREDENTIALS: '/key.json'
-      DB_USER: controller
-      DB_PASSWORD: controller
+      DB_HOST: 'mokumoku-mariadb'
+      DB_USER: 'controller'
+      DB_PASSWORD: 'controller'
       SERVER_ENV: 'development'
     expose:
       - '8081'
