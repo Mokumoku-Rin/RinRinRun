@@ -46,6 +46,7 @@
   &.is-white {
     background: $white;
     color: $orange;
+    border-bottom: 1px solid $black;
 
     a {
       color: $red;
@@ -79,7 +80,6 @@
 </style>
 
 <script>
-import router from '../router'
 
 export default {
   props: {
@@ -104,11 +104,6 @@ export default {
     backgroundColor: {
       type: String,
       default: 'orange'
-    }
-  },
-  methods: {
-    goTo(path) {
-      router.push(path)
     }
   }
 }

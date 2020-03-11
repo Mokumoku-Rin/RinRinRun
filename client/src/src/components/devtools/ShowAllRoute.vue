@@ -6,6 +6,7 @@
     <router-link to="/choice-course">コース選択</router-link><br>
     <router-link to="/take-picture">写真をとるページ</router-link><br>
     <router-link to="/run-map-test">ゴースト表示テスト</router-link><br>
+    <router-link to="/running-info">ランニング中のページ</router-link>
   </div>
 </template>
 

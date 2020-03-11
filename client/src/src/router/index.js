@@ -56,6 +56,11 @@ const routes = [
     component: () => import('../views/TakePicture.vue')
   },
   {
+    path: '/running-info',
+    name: 'RunningInfo',
+    component: () => import('../views/RunnningInfo.vue')
+  },
+  {
     path: '/run-map-test',
     name: 'RunMapTest',
     component: () => import('../views/RunMapTest.vue')
