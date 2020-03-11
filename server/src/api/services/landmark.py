@@ -1,4 +1,5 @@
 from usecases.image import calc_image_similarity
+from usecases.landmark import add_landmark
 
 
 class LandmarkService:
@@ -12,3 +13,8 @@ class LandmarkService:
         if similarity < threshold:
             return "OK"
         return "NG"
+
+    @staticmethod
+    async def post_landmark(name, description, img_url, pos):
+        add_landmark(name, description, img_url, pos)
+        return 'OK'
