@@ -3,7 +3,7 @@
     <statusBar left-link="/search-course" :center="page_info.title"></statusBar>
     <main>
       <ul class="search_course_list">
-        <li class="search_course_item" v-for="data in course_data" :key="data.id" v-show="!data.loading">
+        <li class="search_course_item" v-for="data in course_data" :key="data.id" v-show="!page_info.loading">
           <router-link class="search_course_link" :to="{ path: '/course-info', query: { search_type: page_info.search_type, course_id: data.id } }">
             <div class="search_course_content">
               <h2 class="search_course_name">{{data.name}}</h2>
@@ -103,7 +103,7 @@ export default {
       page_info: {
         title: '',
         search_type: '',
-        loading: false,
+        loading: true,
         course: 0
       },
       course_data: [
@@ -139,12 +139,11 @@ export default {
       this.page_info.title = "error: no queries"
     }
 
-    this.loading = true
     this.$getApi('/session/course/', {sort_by: this.type, limit: 10}, (res)=>{
       if(res.data.courses.length > 0){
         this.course_data = res.data.courses
       }
-      this.loading = false
+      this.page_info.loading = false
     })
   },
   components: {
