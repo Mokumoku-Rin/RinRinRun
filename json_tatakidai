@@ -118,3 +118,16 @@
   ]
 }
 
+
+landmarkデータのPost
+{
+    "name": string "ランドマークの名前",
+    "description": string "ランドマークの説明",
+    "img_url": string "url"
+    "pos": string "float, float"
+}
+
+landmarkデータのレスポンス
+{
+    "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
+}
