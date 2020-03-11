@@ -30,7 +30,7 @@
           <p class="course_info_description">
             撮影スポット周辺に移動すると、スポットの撮影ができるようになります。
           </p>
-          <dispMap :courseID="parseInt(course_info.id)" className="course_info_map" :showMyLocation="true"/>
+          <dispMap :courseID="parseInt(course_info.id)" className="course_info_map" :showMyLocation="true" ref="map"/>
         </section>
         <section class="course_info_section">
           <h2 class="course_info_title">撮影する写真</h2>
@@ -184,6 +184,7 @@ export default {
         course_id: 0,  // コース番号の記録
         landmark_id: 0,  // 撮影する写真のid
         active_button: false,  // 撮影が開始できるか
+        check_nearest_landmark_timer: null,
       },
       course_info: {
         id: 0,
@@ -238,6 +239,8 @@ export default {
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = this.$route.query.course_id
     this.page_info.title = this.course_info.name
+
+    this.check_nearest_landmark_timer = setInterval(this.checkNearestLandmark, 1000)
   },
   components: {
     statusBar,
@@ -256,6 +259,22 @@ export default {
       var mins = s % 60
       var hrs = (s - mins) / 60
       return padding(hrs) + ':' + padding(mins) + ':' + padding(secs)
+    },
+    checkNearestLandmark(){
+      const idDistance = this.$refs.map.nearestLandmark()
+      if(idDistance){
+        // 何メートルまで近づいたらカメラを起動するか
+        if(idDistance.distance < 10){
+          this.page_info.landmark_id = idDistance.id
+          this.page_info.active_button = true
+        }
+        console.log(idDistance.distance)
+      }
+    }
+  },
+  beforeDestroy: function () {
+    if(this.showMyLocation){
+      clearInterval(this.check_nearest_landmark_timer)
     }
   }
 }

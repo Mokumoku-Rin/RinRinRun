@@ -40,6 +40,8 @@ export default {
       map: null,
       gpsTimerObj: null,
       existDrawed: [],
+      location: null,
+      landmarks: null,
     }
   },
   mounted: function () {
@@ -58,7 +60,8 @@ export default {
 
     const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
     this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
-      for(let landmark of response.data.landmarks){
+      this.landmarks = response.data.landmarks
+      for(const landmark of this.landmarks){
         const tempPos = landmark.pos.split(',')
         L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
       }
@@ -87,11 +90,28 @@ export default {
       }
       this.existDrawed.length = 0
 
-      const nowGPS = [position.coords.latitude, position.coords.longitude]
-      this.existDrawed.push(L.marker(nowGPS, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
+      this.location = [position.coords.latitude, position.coords.longitude]
+      this.existDrawed.push(L.marker(this.location, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
 
-      this.map.setView(nowGPS)
+      this.map.setView(this.location)
       console.log('success')
+    },
+    nearestLandmark(){
+      if(this.location){
+        let nearestID = 0;
+        let nearestDistance = 99999999999999
+        for(const landmark of this.landmarks){
+          const landmarkTempPos = landmark.pos.split(',')
+          const distance = calDistance(this.location, landmarkTempPos)
+          if(distance < nearestDistance){
+            nearestDistance = distance
+            nearestID = landmark.id
+          } 
+        }
+
+        return {id: nearestID, distance: nearestDistance}
+      }
+      return false
     }
   },
   beforeDestroy: function () {
@@ -99,6 +119,40 @@ export default {
       clearInterval(this.gpsTimerObj)
     }
   }
+}
+
+function calDistance(location, landmarkPos){
+  // 緯度経度をラジアンに変換
+  const radLatitudeA = deg2rad(location[0])
+  const radLongitudeA = deg2rad(location[1])
+  const radLatitudeB = deg2rad(landmarkPos[0])
+  const radLongitudeB = deg2rad(landmarkPos[1])
+
+  const radLatDiff = radLatitudeA - radLatitudeB
+  const radLonDiff = radLongitudeA - radLongitudeB
+
+  const radLatAve = (radLatitudeA + radLatitudeB) / 2.0;
+
+  const a = 6378137.0 // 赤道半径
+  const e2 = 0.00669438002301188 // 第一離心率^2
+  const a1e2 = 6335439.32708317 // 赤道上の子午線曲率半径
+
+  let sinLat = Math.sin(radLatAve)
+
+  sinLat = Math.sin(radLatAve)
+  let W2 = 1.0 - e2 * (sinLat*sinLat)
+  let M = a1e2 / (Math.sqrt(W2)*W2); // 子午線曲率半径M
+  let N = a / Math.sqrt(W2); // 卯酉線曲率半径
+
+  let t1 = M * radLatDiff
+  let t2 = N * Math.cos(radLatAve) * radLonDiff
+  let dist = Math.sqrt((t1*t1) + (t2*t2))
+
+  return dist
+}
+
+function deg2rad(deg){
+  return deg * ( Math.PI / 180 )
 }
 </script>
 
