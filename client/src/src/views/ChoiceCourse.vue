@@ -19,24 +19,14 @@
 
 <style lang="scss">
 @import "@/assets/scss/base/_variables.scss";
-
-.home {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100vh;
-  overflow-y: hidden;
-
-  main {
-    flex-grow: 1;
-    height: 100%;
-  }
-}
+@import "@/assets/scss/modules/_home.scss";
 
 .search_course_list {
   height: 100%;
   background: $white;
   overflow-y: scroll;
+  color: $black;
+
   &::after{
     // リストが最後まで表示されない問題の回避
     content: '';

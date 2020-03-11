@@ -61,6 +61,11 @@ const routes = [
     component: () => import('../views/RunnningInfo.vue')
   },
   {
+    path: '/running-goal',
+    name: 'RunningGoal',
+    component: () => import('../views/RunningGoal.vue')
+  },
+  {
     path: '/run-map-test',
     name: 'RunMapTest',
     component: () => import('../views/RunMapTest.vue')

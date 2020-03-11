@@ -18,6 +18,9 @@
       <a v-else-if="rightFunc" @click="rightFunc">
         <font-awesome-icon icon="times"></font-awesome-icon>
       </a>
+      <router-link v-else-if="rightLink" :to="rightLink">
+        <font-awesome-icon icon="times"></font-awesome-icon>
+      </router-link>
     </div>
   </nav>
 </template>
