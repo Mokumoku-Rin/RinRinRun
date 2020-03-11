@@ -239,7 +239,8 @@ export default {
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = this.$route.query.course_id
     this.page_info.title = this.course_info.name
-
+  },
+  mounted() {
     this.check_nearest_landmark_timer = setInterval(this.checkNearestLandmark, 1000)
   },
   components: {
@@ -261,14 +262,16 @@ export default {
       return padding(hrs) + ':' + padding(mins) + ':' + padding(secs)
     },
     checkNearestLandmark(){
-      const idDistance = this.$refs.map.nearestLandmark()
-      if(idDistance){
-        // 何メートルまで近づいたらカメラを起動するか
-        if(idDistance.distance < 10){
-          this.page_info.landmark_id = idDistance.id
-          this.page_info.active_button = true
+      if(this.$refs.map.nearestLandmark()){
+        const idDistance = this.$refs.map.nearestLandmark()
+        if(idDistance){
+          // 何メートルまで近づいたらカメラを起動するか
+          if(idDistance.distance < 10){
+            this.page_info.landmark_id = idDistance.id
+            this.page_info.active_button = true
+          }
+          console.log(idDistance.distance)
         }
-        console.log(idDistance.distance)
       }
     }
   },
