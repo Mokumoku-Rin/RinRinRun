@@ -4,15 +4,13 @@
       <video
         ref="video"
         id="src-video"
-        :width="width"
-        :height="height"
         playsinline
       ></video>
 
-      <canvas ref="overlay" id="overlay-canvas" :width="width" :height="height"></canvas>
+      <canvas ref="overlay" id="overlay-canvas" height="1024" width="1024"></canvas>
     </div>
-    <button @click=takePhoto>写真をとる！</button>
-    <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas" :width="width" :height="height"></canvas>
+    <!-- <button @click=takePhoto>写真をとる！</button> -->
+    <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas"></canvas>
   </section>
 </template>
 
@@ -23,14 +21,6 @@ export default {
       type: String,
       required: true
     },
-    width: {
-      type: Number,
-      default: 400
-    },
-    height: {
-      type: Number,
-      default: 400
-    }
   },
   data() {
     return {
@@ -40,17 +30,11 @@ export default {
     };
   },
   mounted: async function() {
-    // setup img canvas
     const overLayContext = this.$refs.overlay.getContext('2d')
     const overLayImage = new Image()
     overLayImage.src = this.landmarkImgUrl
-    overLayImage.width = this.width
-    overLayImage.height = this.height
 
-    overLayImage.addEventListener('load', function() {
-        overLayContext.drawImage(overLayImage, 0, 0, this.width, this.height)
-    }, false)
-
+    overLayContext.drawImage(overLayImage,0, 0, 1024, 1024)
 
     // setup video
     this.video = this.$refs.video;
@@ -63,7 +47,7 @@ export default {
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
-      canvasContext.drawImage(this.video, 0, 0, this.video.width, this.video.height)
+      canvasContext.drawImage(this.video, 0, 0)
       const imgData = this.takedPhotoCanvas.toDataURL('image/png')
       console.log(imgData);
       console.log('take photo')
@@ -123,12 +107,16 @@ async function getVideoStream(userAgent) {
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
+  width: 100%;
   pointer-events: none;
-  opacity:0.3;
+  opacity: 0.4;
 }
 
 #overlay-wrapper{
   position: relative;
+  height: 100%;
+  width: 100%
 }
 
 #taked-ptoto-canvas{
