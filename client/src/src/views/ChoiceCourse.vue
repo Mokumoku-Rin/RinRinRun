@@ -139,7 +139,6 @@ export default {
       this.page_info.title = "error: no queries"
     }
 
-    this.page_info.loading = true
     this.$getApi('/session/course/', {sort_by: this.type, limit: 10}, (res)=>{
       if(res.data.courses.length > 0){
         this.course_data = res.data.courses
