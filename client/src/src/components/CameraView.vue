@@ -11,7 +11,7 @@
 
       <canvas ref="overlay" id="overlay-canvas" :width="width" :height="height"></canvas>
     </div>
-    <button @click=takePhoto>写真をとる！</button>
+    <!-- <button @click=takePhoto>写真をとる！</button> -->
     <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas" :width="width" :height="height"></canvas>
   </section>
 </template>

@@ -5,11 +5,13 @@
   overflow-y: hidden;
 
   &.with-navibar {
-    height: calc(100% - 3.5rem - 3.75rem);
+    main {
+      height: calc(100vh - 3.5rem - 3.75rem);
+    }
   }
 
   main {
-    height: calc(100% - 3.5rem);
+    height: calc(100vh - 3.5rem);
     position: relative;
     top: 3.5rem;
   }

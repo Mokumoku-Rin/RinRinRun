@@ -1,6 +1,7 @@
 <template>
   <footer class="camera_button_wrapper" :class="active ? 'is-active' : ''">
-    <Button label="撮影" :link="link" color="red" icon="camera" v-if="active"></Button>
+    <Button label="撮影" :func="func" color="red" icon="camera" v-if="func"></Button>
+    <Button label="撮影" :link="link" color="red" icon="camera" v-else-if="active"></Button>
     <Button label="撮影場所に移動してください" :link="link" color="red" :reverse="true" v-else></Button>
   </footer>
 </template>
@@ -36,7 +37,12 @@ export default {
     },
     link: {
       type: [Object, String],
-      required: true
+      default: function() {
+        return {path: '/home'}
+      }
+    },
+    func: {
+      type: Function
     }
   },
   components: {

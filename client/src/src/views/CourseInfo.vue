@@ -183,7 +183,7 @@ export default {
         search_type: '',  // コースの検索手法の記録
         course_id: 0,  // コース番号の記録
         landmark_id: 0,  // 撮影する写真のid
-        active_button: false,  // 撮影が開始できるか
+        active_button: true,  // 撮影が開始できるか
       },
       course_info: {
         id: 0,
