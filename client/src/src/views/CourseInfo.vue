@@ -30,7 +30,7 @@
           <p class="course_info_description">
             撮影スポット周辺に移動すると、スポットの撮影ができるようになります。
           </p>
-          <div class="course_info_map"></div>
+          <dispMap :courseID="parseInt(course_info.id)" className="course_info_map" :showMyLocation="true" ref="map"/>
         </section>
         <section class="course_info_section">
           <h2 class="course_info_title">撮影する写真</h2>
@@ -172,7 +172,7 @@
 <script>
 import statusBar from '@/components/StatusBar.vue'
 import cameraButton from '@/components/CameraButton.vue'
-
+import dispMap from '@/components/DispMap.vue'
 import testImage from '@/assets/img/jogging.svg'
 
 export default {
@@ -183,7 +183,8 @@ export default {
         search_type: '',  // コースの検索手法の記録
         course_id: 0,  // コース番号の記録
         landmark_id: 0,  // 撮影する写真のid
-        active_button: true,  // 撮影が開始できるか
+        active_button: false,  // 撮影が開始できるか
+        check_nearest_landmark_timer: null,
       },
       course_info: {
         id: 0,
@@ -225,13 +226,27 @@ export default {
   created() {
     this.course_info.id = this.$route.query.course_id
     // idから情報を取得するコード
+    this.$getApi('/session/course/'+this.course_info.id+'/', {}, (res)=>{
+      this.course_info.name = res.data.neme
+      this.course_info.description = res.data.description
+      this.course_info.mean_distance = res.data.mean_distance
+      this.course_info.mean_time = res.data.mean_time
+      this.course_info.shortest_time = res.data.shortest_time
+      this.course_info.shortest_distance = res.data.shortest_distance
+      this.course_info.landmarks = res.data.landmarks
+    })
+
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = this.$route.query.course_id
     this.page_info.title = this.course_info.name
   },
+  mounted() {
+    this.check_nearest_landmark_timer = setInterval(this.checkNearestLandmark, 1000)
+  },
   components: {
     statusBar,
     cameraButton,
+    dispMap
   },
   methods: {
     msToTime(s) {
@@ -245,7 +260,23 @@ export default {
       var mins = s % 60
       var hrs = (s - mins) / 60
       return padding(hrs) + ':' + padding(mins) + ':' + padding(secs)
+    },
+    checkNearestLandmark(){
+      if(this.$refs.map.nearestLandmark()){
+        const idDistance = this.$refs.map.nearestLandmark()
+        if(idDistance){
+          // 何メートルまで近づいたらカメラを起動するか
+          if(idDistance.distance < 10){
+            this.page_info.landmark_id = idDistance.id
+            this.page_info.active_button = true
+          }
+          console.log(idDistance.distance)
+        }
+      }
     }
+  },
+  beforeDestroy: function () {
+    clearInterval(this.check_nearest_landmark_timer)
   }
 }
 </script>
