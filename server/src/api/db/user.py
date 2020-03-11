@@ -27,6 +27,7 @@ def get_user_score(uid) -> int:
         result = cursor.fetchone()["score"]
     return int(result)
 
+
 def get_users_name_img_by_score_and_course_done(user_score, course_id, limit: int) -> list:
     """
     与えられたユーザスコアから近い順かつ，指定のコースを走ったことのあるユーザをにlimit個のゴーストに必要なデータを取得する
@@ -45,6 +46,7 @@ def get_users_name_img_by_score_and_course_done(user_score, course_id, limit: in
         cursor.execute(sql, (course_id, user_score, limit))
         result = cursor.fetchall()
     return result
+
 
 def update_user_total_record(uid, time, distance):
     conn = get_db()
