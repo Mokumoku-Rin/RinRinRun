@@ -30,7 +30,7 @@
           <p class="course_info_description">
             撮影スポット周辺に移動すると、スポットの撮影ができるようになります。
           </p>
-          <dispMap :courseID="parseInt(course_info.id)" className="course_info_map"/>
+          <dispMap :courseID="parseInt(course_info.id)" className="course_info_map" :showMyLocation="true"/>
         </section>
         <section class="course_info_section">
           <h2 class="course_info_title">撮影する写真</h2>
