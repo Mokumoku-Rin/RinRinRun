@@ -39,3 +39,26 @@ def setup(app: FastAPI):
             db.close()
 
     return app
+
+
+def execute_fetchone(sql, args=None):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        cursor.execute(sql, args)
+        result = cursor.fetchone()
+    return result
+
+
+def execute_fetchall(sql, args=None):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        cursor.execute(sql, args)
+        result = cursor.fetchall()
+    return result
+
+
+def execute_commit(sql, args):
+    conn = get_db()
+    with conn.cursor() as cursor:
+        cursor.execute(sql, args)
+    conn.commit()
