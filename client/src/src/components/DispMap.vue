@@ -1,12 +1,10 @@
 <template>
-  <div>
-    閲覧用map
-    <div id='map'></div>
-  </div>
+  <div id='map' v-bind:class="className"></div>
 </template>
 
 <script>
 import L from 'leaflet'
+import pinPath from '@/assets/img/pin_offset.svg'
 
 // デフォルトマーカーアイコン設定
 delete L.Icon.Default.prototype._getIconUrl;
@@ -26,6 +24,10 @@ export default {
     },
     route: {
       type: Array
+    },
+    className: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -47,14 +49,15 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
      }).addTo(this.map)
 
+    const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
     this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
       for(let landmark of response.data.landmarks){
         const tempPos = landmark.pos.split(',')
-        L.marker(tempPos).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
+        L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
       }
     })
 
-    if(this.route.length > 1){
+    if(this.route && this.route.length > 1){
       L.polyline(this.route,{
         "color": "#FF0000",
         "weight": 5,
