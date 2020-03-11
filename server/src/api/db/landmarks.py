@@ -1,21 +1,14 @@
-import pymysql.cursors
-from middlewares.database import get_db
+from middlewares.database import (
+    execute_fetchone, execute_fetchall, execute_commit)
 
 
 def get_image_url(landmark_id):
-    conn = get_db()
-    with conn.cursor() as cursor:
-        sql = "SELECT img_url FROM landmarks WHERE id = %s"
-        cursor.execute(sql, (landmark_id,))
-        result = cursor.fetchone()
+    sql = "SELECT img_url FROM landmarks WHERE id = %s"
+    result = execute_fetchone(sql, (landmark_id))
     return result
 
 
 def get_landmarks_by_course_id(course_id: int):
-    conn = get_db()
-    with conn.cursor() as cursor:
-        sql = 'SELECT landmarks.id, landmarks.name, landmarks.description, landmarks.img_url, landmarks.pos FROM landmarks JOIN course_landmarks ON landmarks.id = course_landmarks.landmark_id JOIN courses ON course_landmarks.course_id = courses.id WHERE courses.id = %s'
-        cursor.execute(sql, (str(course_id),))
-        result = cursor.fetchall()
+    sql = 'SELECT landmarks.id, landmarks.name, landmarks.description, landmarks.img_url, landmarks.pos FROM landmarks JOIN course_landmarks ON landmarks.id = course_landmarks.landmark_id JOIN courses ON course_landmarks.course_id = courses.id WHERE courses.id = %s'
+    result = execute_fetchall(sql, (str(course_id)))
     return result
-    
