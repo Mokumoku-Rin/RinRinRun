@@ -1,0 +1,83 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "高槻駅北行き"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.576238,
+          34.879169
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "構内制限速度"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.576431,
+          34.878869
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "百葉箱"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.576519,
+          34.877524
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "追悼"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.576366,
+          34.876287
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "祭典実行委員会"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.575853,
+          34.876656
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "関係者以外立ち入り禁止"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          135.574319,
+          34.876818
+        ]
+      }
+    }
+  ]
+}
