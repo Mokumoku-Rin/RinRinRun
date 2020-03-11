@@ -276,9 +276,7 @@ export default {
     }
   },
   beforeDestroy: function () {
-    if(this.showMyLocation){
-      clearInterval(this.check_nearest_landmark_timer)
-    }
+    clearInterval(this.check_nearest_landmark_timer)
   }
 }
 </script>
