@@ -5,6 +5,7 @@
 <script>
 import L from 'leaflet'
 import pinPath from '@/assets/img/pin_offset.svg'
+import myRunnerPath from '@/assets/img/my_runner.svg'
 
 // デフォルトマーカーアイコン設定
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,11 +29,17 @@ export default {
     className: {
       type: String,
       default: ""
+    },
+    showMyLocation: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
-      map: null
+      map: null,
+      gpsTimerObj: null,
+      existDrawed: [],
     }
   },
   mounted: function () {
@@ -63,6 +70,33 @@ export default {
         "weight": 5,
         "opacity": 0.6
       }).addTo(this.map)
+    }
+
+    if(this.showMyLocation){
+      this.gpsIntervalFunc()
+      this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
+    }
+  },
+  methods: {
+    gpsIntervalFunc(){
+      navigator.geolocation.getCurrentPosition(this.successGetGPS, (error)=>{console.log('gps error',error.code)})
+    },
+    successGetGPS(position){
+      for(const eLayer of this.existDrawed){
+        this.map.removeLayer(eLayer)
+      }
+      this.existDrawed.length = 0
+
+      const nowGPS = [position.coords.latitude, position.coords.longitude]
+      this.existDrawed.push(L.marker(nowGPS, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
+
+      this.map.setView(nowGPS)
+      console.log('success')
+    }
+  },
+  beforeDestroy: function () {
+    if(this.showMyLocation){
+      clearInterval(this.gpsTimerObj)
     }
   }
 }
