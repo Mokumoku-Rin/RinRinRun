@@ -7,7 +7,7 @@
           <img class="take_picture_img" :src="landmark_info.img_url" :alt="landmark_info.name">
         </div>
         <div class="take_picture_camera">
-          <camera-view class="take_picture_camera_view" ref="camera" :landmark-img-url="landmark_info.img_url" />
+          <camera-view class="take_picture_camera_view" ref="camera" :landmark-img-url="landmark_info.img_url"/>
           <canvas class="take_picture_canvas" ref="canvas" id="canvas" disabled></canvas>
         </div>
       </div>
@@ -31,17 +31,17 @@
 
 .take_picture_img_wrapper {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
-  width: 25vw;
+  top: 2rem;
+  left: 0.5rem;
+  width: 40vw;
   overflow: hidden;
   border: 1px solid $black;
-  border-radius: 2%;
-
+  border-radius: 5%;
+  z-index: 2;
   &::before {
     content: "";
     display: block;
-    padding-top: 133.33%;
+    padding-top: 100%;
   }
 }
 
@@ -52,21 +52,21 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1;
+  z-index: 0;
 }
 
 .take_picture_camera {
   position: absolute;
-  top: 3rem;
-  left: 2rem;
-  width: calc(100% - 4rem);
+  top: 10rem;
+  left: 1rem;
+  width: calc(100% - 2rem);
   border: 1px solid $black;
   border-radius: 2%;
 
   &::before {
     content: "";
     display: block;
-    padding-top: 133.33%;
+    padding-top: 100%;
   }
 }
 
