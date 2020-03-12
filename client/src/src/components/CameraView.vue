@@ -15,12 +15,22 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   props:{
-    landmarkImgUrl: {
-      type: String,
+    landmarkID: {
+      type: Number,
       required: true
     },
+    courseID: {
+      type: Number,
+      required: true
+    },
+    searchType: {
+      type: String,
+      required: true
+    }
   },
   data() {
     return {
@@ -29,21 +39,31 @@ export default {
       videoStream: null,
     };
   },
-  mounted: async function() {
+  mounted: function() {
     const overLayContext = this.$refs.overlay.getContext('2d')
     const overLayImage = new Image()
-    overLayImage.src = this.landmarkImgUrl
 
-    overLayContext.drawImage(overLayImage,0, 0, 1024, 1024)
+    // findがうまく動作しないため
+    
+    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+      if(landmark.id  == this.landmarkID){
+        overLayImage.src = landmark.img_url
+        overLayContext.drawImage(overLayImage,0, 0, 1024, 1024)
+        break
+      }
+    }
 
-    // setup video
-    this.video = this.$refs.video;
-    const userAgent = navigator.userAgent.toLowerCase();
-    this.videoStream = await getVideoStream(userAgent);
-    this.video.srcObject = this.videoStream;
-    this.video.play();
+    this.setupVideo()
   },
   methods: {
+    setupVideo: async function(){
+      // setup video
+      this.video = this.$refs.video;
+      const userAgent = navigator.userAgent.toLowerCase();
+      this.videoStream = await getVideoStream(userAgent);
+      this.video.srcObject = this.videoStream;
+      this.video.play();
+    },
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
@@ -52,17 +72,35 @@ export default {
       console.log(imgData);
       console.log('take photo')
 
-      // TODO: コースのidとランドマークのidをちゃんとしたものにする
       const postData = {
-        landmark_id: 1,
-        course_id: 1,
+        landmark_id: this.landmarkID,
+        course_id: this.courseID,
         img: imgData.replace(/^.*,/, '') // data:image/png;base64, がサーバー側で不要なため消す
       }
       this.$postApi('/session/landmark/visit/', postData, this.imgCaertification)
 
     },
     imgCaertification(responce){
-      // TODO 認証結果を利用したその後の処理
+      // ここに実装書くの良くないので時間あれば直す
+      if(responce.data.result === 'OK'){
+        if(this.$store.state.isRunning === false){
+          this.$store.commit('clearMyLandmarkVisits')
+          this.$store.commit('resetMyRunStartTime')
+        }
+        const tempDate = new Date()
+        const elapsedTime = tempDate.getTime() - this.$store.state.myRunStartTime
+        this.$store.commit('addMyRunCheckedLandmarkID', this.landmarkID)
+        this.$store.commit('addMyLandmarkVisits', this.landmarkID, elapsedTime)
+
+        // before destoryが呼ばれないときがあるみたいなので一応
+        this.videoStream.getTracks().forEach(track => track.stop())
+        if(this.$store.state.myLandmarkVisits.length === this.$store.state.runnigCourseData.landmarks.length){
+          //ゴールノーページへ
+          router.push({ path: '/', query: { search_type: this.searchType, course_id: this.courseID } })
+        }else{
+          router.push({ path: '/running-info', query: { search_type: this.searchType, course_id: this.courseID } })
+        }
+      }
       console.log(responce.data.result)
     }
   },
@@ -111,6 +149,7 @@ async function getVideoStream(userAgent) {
   width: 100%;
   pointer-events: none;
   opacity: 0.4;
+  z-index: 1;
 }
 
 #overlay-wrapper{

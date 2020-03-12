@@ -1,13 +1,13 @@
 <template>
   <div class="home">
-    <statusBar :center="page_info.title" :left-link="{path: '/course-info', query: {search_type: page_info.search_type, course_id: page_info.course_id } }"></statusBar>
+    <statusBar :center="page_info.title" :leftFunc="satusLeftFunc"></statusBar>
     <main>
       <div class="take_picture">
         <div class="take_picture_img_wrapper">
           <img class="take_picture_img" :src="landmark_info.img_url" :alt="landmark_info.name">
         </div>
         <div class="take_picture_camera">
-          <camera-view class="take_picture_camera_view" ref="camera" :landmark-img-url="landmark_info.img_url"/>
+          <camera-view class="take_picture_camera_view" ref="camera" :landmarkID="parseInt(landmark_info.id)" :courseID="parseInt(page_info.course_id)" :searchType="page_info.search_type"/>
           <canvas class="take_picture_canvas" ref="canvas" id="canvas" disabled></canvas>
         </div>
       </div>
@@ -52,7 +52,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 0;
+  z-index: 100;
 }
 
 .take_picture_camera {
@@ -93,6 +93,8 @@ import cameraButton from '@/components/CameraButton.vue'
 import collation from '@/components/Collation.vue'
 import CameraView from '@/components/CameraView.vue'
 
+import router from '@/router'
+
 export default {
   components:{
     statusBar,
@@ -115,24 +117,35 @@ export default {
         id: 0,
         name: 'ランドマークテスト1',
         position: [0, 0],
-        img_url: 'https://livedoor.blogimg.jp/boomsports/imgs/4/8/488abd7a.jpg'
+        img_url: '#'
       }
     }
   },
   created() {
     this.landmark_info.id = this.$route.query.landmark_id
+    this.page_info.course_id = this.$route.query.course_id
+    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+      if(landmark.id == this.landmark_info.id){
+        this.landmark_info.name = landmark.name
+        this.page_info.title = this.landmark_info.name + 'の撮影'
+        this.landmark_info.img_url = landmark.img_url
+
+        break
+      }
+    }
+    
     // idから情報を取得するコード
     this.page_info.search_type = this.$route.query.search_type
-    this.page_info.course_id = this.$route.query.course_id
-    this.page_info.title = this.landmark_info.name + 'の撮影'
   },
   mounted: function(){
     this.canvas = this.$refs.canvas
-
   },
   methods: {
     takePhoto() {
       this.$refs.camera.takePhoto()
+    },
+    satusLeftFunc() {
+      router.back()
     }
   }
 }

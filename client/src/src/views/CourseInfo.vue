@@ -173,7 +173,7 @@
 import statusBar from '@/components/StatusBar.vue'
 import cameraButton from '@/components/CameraButton.vue'
 import dispMap from '@/components/DispMap.vue'
-import testImage from '@/assets/img/jogging.svg'
+// import testImage from '@/assets/img/jogging.svg'
 
 export default {
   data() {
@@ -194,32 +194,7 @@ export default {
         shortest_distance: 0,
         mean_time: 0,
         shortest_time: 0,
-        landmarks: [
-          {
-            id: 0,
-            name: 'テスト1',
-            position: [0, 0],
-            img_url: testImage
-          },
-          {
-            id: 1,
-            name: 'テストランドマーク2',
-            position: [1, 1],
-            img_url: testImage
-          },
-          {
-            id: 2,
-            name: 'テストランドマーク3',
-            position: [2, 2],
-            img_url: testImage
-          },
-          {
-            id: 3,
-            name: 'テストランドマーク4',
-            position: [3, 3],
-            img_url: testImage
-          }
-        ]
+        landmarks: null
       }
     }
   },
@@ -233,7 +208,9 @@ export default {
       this.course_info.mean_time = res.data.mean_time
       this.course_info.shortest_time = res.data.shortest_time
       this.course_info.shortest_distance = res.data.shortest_distance
-      this.course_info.landmarks = res.data.landmarks
+
+      this.$store.commit('setRunnigCourseData', res.data)
+      console.log(this.$store.state.runnigCourseData)
     })
 
     this.page_info.search_type = this.$route.query.search_type
@@ -266,7 +243,7 @@ export default {
         const idDistance = this.$refs.map.nearestLandmark()
         if(idDistance){
           // 何メートルまで近づいたらカメラを起動するか
-          if(idDistance.distance < 10){
+          if(idDistance.distance < 1000000000){
             this.page_info.landmark_id = idDistance.id
             this.page_info.active_button = true
           }

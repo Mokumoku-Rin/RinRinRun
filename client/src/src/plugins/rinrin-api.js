@@ -27,7 +27,7 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
 function getToApi(path,jsonInput, token, successFunc, errorFunc) {
   const headers = {
     headers: {
-      'X-Token': token
+      'X-Token': 1
     }
   }
   const sendHeaderBody = Object.assign(headers, jsonInput);
