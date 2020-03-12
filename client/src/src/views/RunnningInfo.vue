@@ -42,6 +42,7 @@
   height: calc(100% - 5.5rem);
   overflow-y: scroll;
   line-height: 1.7;
+  color: $black;
 }
 
 .running_info_section {
@@ -65,22 +66,23 @@
 }
 
 .running_info_statistics_title {
-  font-size: 1.25rem;
+  font-size: 1.4rem;
   color: $black;
   font-weight: $weight-bold;
 }
 
 .running_info_statistics_text {
-  font-size: 2.5rem;
+  font-size: 3rem;
   color: $orange;
 }
 
 .running_info_time {
-  font-size: 3.5rem;
+  font-size: 3.75rem;
 }
 
 .running_info_statistics_unit {
   font-size: 1.5rem;
+  margin-left: .25rem;
 }
 
 .running_info_map {

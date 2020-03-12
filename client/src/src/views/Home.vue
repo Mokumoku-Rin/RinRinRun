@@ -132,6 +132,7 @@
 
 .today_data_unit {
   font-size: 1.25rem;
+  margin-left: .25rem;
 }
 
 .today_map {
