@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends
-from schemas.workout import WorkoutRequest, WorkoutResponse
-from schemas.workout import WorkoutBasedOnDateResponse
-from services.workout import WorkoutService
 from depends.auth import FirebaseToken
+from fastapi import APIRouter, Depends
+from schemas.workout import (WorkoutBasedOnDateResponse, WorkoutRequest,
+                             WorkoutResponse)
+from services.workout import WorkoutService
 
 router = APIRouter()
 

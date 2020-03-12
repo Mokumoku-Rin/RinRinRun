@@ -1,5 +1,5 @@
-from db.landmarks import get_landmarks_by_course_id, insert_landmark
 from db.landmark_visit import get_landmark_visit
+from db.landmarks import get_landmarks_by_course_id, insert_landmark
 
 
 def get_landmarks_for_course_request(course_id):
