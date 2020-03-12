@@ -1,6 +1,7 @@
 from usecases.auth import verify_token
-from usecases.workout import (add_workout_history, add_landmark_visit,
-                              update_course_status, select_history_based_on_date)
+from usecases.workout import (add_landmark_visit, add_workout_history,
+                              select_history_based_on_date,
+                              update_course_status)
 
 
 class WorkoutService:

@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends
 from depends.auth import FirebaseToken
-from routers.sessions import workout, landmark, course
+from fastapi import APIRouter, Depends
+from routers.sessions import course, landmark, workout
 
 router = APIRouter()
 

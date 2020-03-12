@@ -1,6 +1,7 @@
-from fastapi import FastAPI
-from pymysql import Connection, err, cursors
 import os
+
+from fastapi import FastAPI
+from pymysql import Connection, cursors, err
 
 db: Connection
 
