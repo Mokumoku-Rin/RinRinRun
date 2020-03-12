@@ -55,7 +55,7 @@ export default {
       id: 'mapbox/streets-v10', //v11もあるがv10の方が詳細な地図が出るためv10を使う
       tileSize: 512,
       zoomOffset: -1,
-      accessToken: process.env.VUE_APP_MAP_BOX_API_KYE
+      accessToken: process.env.VUE_APP_MAP_BOX_API_KEY
      }).addTo(this.map)
 
     const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
