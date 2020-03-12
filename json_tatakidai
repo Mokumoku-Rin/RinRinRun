@@ -131,3 +131,16 @@ landmarkデータのレスポンス
 {
     "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
 }
+
+
+courseの登録Post
+{
+  "name": "string",
+  "description": "string",
+  "landmarks": [ int, id, id, id, id.... ]
+ }
+ 
+ course登録時のレスポンス
+ {
+    "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
+}
