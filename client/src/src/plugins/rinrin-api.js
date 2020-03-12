@@ -1,6 +1,8 @@
 import axios from 'axios'
 import firebase from 'firebase/app'
 
+const API_ENDPOINT = process.env["API_ENDPOINT"]
+
 function postApiErrorDefaultFunc(error){
   console.log('---rinrin-api-plugin-$postApi--postToApi-error-----')
   console.log(error)
@@ -19,7 +21,7 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
       'X-Token': token
     }
   }
-  axios.post('http://localhost:8081'+path , jsonInput, headers)
+  axios.post(API_ENDPOINT+path , jsonInput, headers)
   .then(successFunc)
   .catch(errorFunc)
 }
@@ -31,7 +33,7 @@ function getToApi(path,jsonInput, token, successFunc, errorFunc) {
     }
   }
   const sendHeaderBody = Object.assign(headers, jsonInput);
-  axios.get('http://localhost:8081'+path , sendHeaderBody)
+  axios.get(API_ENDPOINT+path , sendHeaderBody)
   .then(successFunc)
   .catch(errorFunc)
 }
