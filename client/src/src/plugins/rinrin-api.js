@@ -1,7 +1,7 @@
 import axios from 'axios'
 import firebase from 'firebase/app'
 
-const API_ENDPOINT = process.env["API_ENDPOINT"]
+const API_ENDPOINT = process.env["VUE_APP_API_ENDPOINT"]
 
 function postApiErrorDefaultFunc(error){
   console.log('---rinrin-api-plugin-$postApi--postToApi-error-----')
