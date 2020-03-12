@@ -1,7 +1,8 @@
+import base64
+
 import cv2
 import numpy as np
 import requests
-import base64
 from db.landmarks import get_image_url
 
 
