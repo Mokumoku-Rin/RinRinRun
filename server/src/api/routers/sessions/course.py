@@ -1,6 +1,7 @@
 from depends.auth import FirebaseToken
 from fastapi import APIRouter, Depends
-from schemas.course import CourseGetAllResponse, CourseGetResponse
+from schemas.course import (CorsePostResponse, CourseGetAllResponse,
+                            CourseGetResponse, CoursePostRequest)
 from services.course import CourseService
 
 router = APIRouter()
@@ -31,4 +32,16 @@ def get_course_ghost(course_id: int, fbToken: FirebaseToken = Depends()):
         "ghosts": ghost_list
     }
 
+    return response
+
+
+@router.post("/", response_model=CorsePostResponse)
+def post_course(request_model: CoursePostRequest):
+    name = request_model.name
+    description = request_model.description
+    landmarks = request_model.landmarks
+    result = CourseService.post_course(name, description, landmarks)
+    response: response_model = {
+        "result": result
+    }
     return response
