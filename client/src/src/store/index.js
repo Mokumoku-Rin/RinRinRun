@@ -38,16 +38,13 @@ export default new Vuex.Store({
       state.isRunning = running
     },
     addMyRunCheckedLandmarkID(state, input_id){
-      console.log('push id ',input_id)
       state.myRunCheckedLandmarkID.push(input_id)
-      console.log('push id ',input_id)
-      console.log(state.myRunCheckedLandmarkID)
     },
     clearMyRunCheckedLandmarkID(state){
       state.myRunCheckedLandmarkID.length = 0
     },
-    addMyLandmarkVisits(state, id, time){
-      state.myLandmarkVisits.push({id:id, time:time})
+    addMyLandmarkVisits(state, visit){
+      state.myLandmarkVisits.push(visit)
     },
     clearMyLandmarkVisits(state){
       state.myLandmarkVisits.length = 0

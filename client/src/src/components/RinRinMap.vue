@@ -105,7 +105,6 @@ export default {
       if(this.myLocation){
         let nearestID = 0
         let nearestDistance = 99999999999999
-        console.log(this.$store.state.myRunCheckedLandmarkID)
         for(const landmark of this.landmarks){
           if(!landmark)continue
           if(this.$store.state.myRunCheckedLandmarkID.includes(landmark.id)) continue

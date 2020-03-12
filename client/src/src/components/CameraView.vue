@@ -90,13 +90,13 @@ export default {
         const tempDate = new Date()
         const elapsedTime = tempDate.getTime() - this.$store.state.myRunStartTime
         this.$store.commit('addMyRunCheckedLandmarkID', this.landmarkID)
-        this.$store.commit('addMyLandmarkVisits', this.landmarkID, elapsedTime)
+        this.$store.commit('addMyLandmarkVisits', {id:this.landmarkID, time:elapsedTime})
 
         // before destoryが呼ばれないときがあるみたいなので一応
         this.videoStream.getTracks().forEach(track => track.stop())
         if(this.$store.state.myLandmarkVisits.length === this.$store.state.runnigCourseData.landmarks.length){
           //ゴールノーページへ
-          router.push({ path: '/', query: { search_type: this.searchType, course_id: this.courseID } })
+          router.push('/running-goal')
         }else{
           router.push({ path: '/running-info', query: { search_type: this.searchType, course_id: this.courseID } })
         }
