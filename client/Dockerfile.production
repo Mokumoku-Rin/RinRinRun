@@ -1,0 +1,11 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+COPY ./src/package*.json ./
+COPY ./src ./
+RUN npm install -g http-server && \
+    npm install
+RUN npm install --only=production
+
+EXPOSE 8080
+CMD [ "http-server", "dist" ]
