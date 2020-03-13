@@ -1,4 +1,5 @@
-from usecases.course import get_course, get_course_list_by
+from usecases.course import (add_course, add_course_landmarks, get_course,
+                             get_course_list_by)
 from usecases.landmark import (get_landmark_visits_for_ghost,
                                get_landmarks_for_course_request)
 from usecases.user import get_user_list_by_score_close, get_user_score
@@ -49,3 +50,9 @@ class CourseService:
                 "landmark_visits": ghost_landmark_visits
             })
         return ghosts
+
+    @staticmethod
+    def post_course(name, description, landmarks):
+        course_id = add_course(name, description)
+        add_course_landmarks(course_id, landmarks)
+        return "OK"
