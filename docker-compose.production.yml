@@ -1,8 +1,5 @@
 version: '3'
 
-volumes:
-  node_modules:
-
 services:
 
   mariadb:
@@ -17,13 +14,9 @@ services:
       MYSQL_USER: controller
       MYSQL_PASSWORD: controller
     restart: always
-    volumes:
-      # - ./db/data:/var/lib/mysql # SQL ; 二回目起動時以降にmigrationが行われないため，こいつは無効化しておく
-      - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
 
   python:
-    build: ./server
-    command: python api/main.py
+    image: tomo9925/kakemori_server:develop
     container_name: mokumoku-python
     depends_on:
       - mariadb
@@ -32,30 +25,20 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: '/key.json'
       DB_USER: controller
       DB_PASSWORD: controller
-      SERVER_ENV: 'production'
+      SERVER_ENV: 'development'
     expose:
       - '8081'
-    ports:
-      - '8081:8081'  # 開発試験用
     links:
       - mariadb:mariadb
     restart: always
-    volumes:
-      - ./server/src:/src
-      - ./server/key.json:/key.json:ro
 
   vue:
-    build: ./client
-    # command:  # 起動コマンド
+    image: tomo9925/kakemori_vue:develop
     container_name: mokumoku-vue
     environment:
       TZ: 'Asia/Tokyo'
     ports:
-      - '8080:8080'
-      # - '8443:433'
+      - '443:8080'
     links:
       - python:python
     restart: always
-    volumes:
-      - ./client/src:/app
-      - node_modules:/app/node_modules
