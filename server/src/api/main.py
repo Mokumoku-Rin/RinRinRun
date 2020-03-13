@@ -1,3 +1,4 @@
+import os
 import uvicorn
 from fastapi import FastAPI, Depends
 from routers import login, session
@@ -24,4 +25,4 @@ app.include_router(
 
 if __name__ == "__main__":
     default_app = firebase_admin.initialize_app()
-    uvicorn.run(app, host="0.0.0.0", port=8081)
+    uvicorn.run(app, host=os.environ["SERVER_HOST"], port=os.environ["SERVER_PORT"])
