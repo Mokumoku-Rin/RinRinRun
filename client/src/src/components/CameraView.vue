@@ -39,31 +39,28 @@ export default {
       videoStream: null,
     };
   },
-  mounted: function() {
+  mounted: async function() {
     const overLayContext = this.$refs.overlay.getContext('2d')
     const overLayImage = new Image()
 
     // findがうまく動作しないため
     
     for(const landmark of this.$store.state.runnigCourseData.landmarks){
-      if(landmark.id  == this.landmarkID){
+      if(parseInt(landmark.id)  == this.landmarkID){
         overLayImage.src = landmark.img_url
         overLayContext.drawImage(overLayImage,0, 0, 1024, 1024)
         break
       }
     }
 
-    this.setupVideo()
+    // setup video
+    this.video = this.$refs.video;
+    const userAgent = navigator.userAgent.toLowerCase();
+    this.videoStream = await getVideoStream(userAgent);
+    this.video.srcObject = this.videoStream;
+    this.video.play();
   },
   methods: {
-    setupVideo: async function(){
-      // setup video
-      this.video = this.$refs.video;
-      const userAgent = navigator.userAgent.toLowerCase();
-      this.videoStream = await getVideoStream(userAgent);
-      this.video.srcObject = this.videoStream;
-      this.video.play();
-    },
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
