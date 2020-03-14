@@ -31,9 +31,12 @@ services:
     environment:
       TZ: 'Asia/Tokyo'
       GOOGLE_APPLICATION_CREDENTIALS: '/key.json'
+      DB_HOST: 'mokumoku-mariadb'
       DB_USER: controller
       DB_PASSWORD: controller
       SERVER_ENV: 'development'
+      SERVER_HOST: '0.0.0.0'
+      SERVER_PORT: '8081'
     expose:
       - '8081'
     ports:
@@ -51,6 +54,8 @@ services:
     container_name: mokumoku-vue
     environment:
       TZ: 'Asia/Tokyo'
+      VUE_APP_API_ENDPOINT: 'http://localhost:8081'
+      VUE_APP_MAP_BOX_API_KEY: 'pk.eyJ1IjoicmlucmluLXJ1biIsImEiOiJjazdkMjV2bHMwMDhlM3BwY25keTBpeHphIn0.wodOLOPqOrEh3xsx-nHfcA'
     ports:
       - '8080:8080'
       # - '8443:433'
