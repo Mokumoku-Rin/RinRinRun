@@ -78,13 +78,13 @@ export default {
           let dispNowGPS = ghost.pos_list[0]
 
           // for of は遅いらしいので使用しない
-          for(let index = 0; index < ghost.time_list.length; index++){
+          for(let timeIndex = 0; timeIndex < ghost.time_list.length; timeIndex++){
             // データが空のときがある
-            if(!ghost.pos_list[index]) continue
+            if(!ghost.pos_list[timeIndex]) continue
 
-            if(ghost.time_list[index] < this.elapsedTime){
-              dispRouteList.push(ghost.pos_list[index])
-              dispNowGPS = ghost.pos_list[index]
+            if(ghost.time_list[timeIndex] < this.elapsedTime){
+              dispRouteList.push(ghost.pos_list[timeIndex])
+              dispNowGPS = ghost.pos_list[timeIndex]
             }
           }
 
