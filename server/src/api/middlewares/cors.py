@@ -6,6 +6,7 @@ origins = [
   "http://localhost:8080",
   "https://localhost:8080",
   "https://develop.hiragi.guru:7370",
+  "https://kakemori-vue.azurewebsites.net",
 ]
 
 def setup(app: FastAPI):

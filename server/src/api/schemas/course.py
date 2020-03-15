@@ -23,3 +23,13 @@ class CourseGetResponse(BaseModel):
     shortest_time: int
     shortest_distance: int
     landmarks: List[LandmarkInfo]
+
+
+class CoursePostRequest(BaseModel):
+    name: str
+    description: str
+    landmarks: List[int]
+
+
+class CorsePostResponse(BaseModel):
+    result: str

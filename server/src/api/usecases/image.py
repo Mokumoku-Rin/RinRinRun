@@ -42,6 +42,11 @@ def calc_image_similarity(user_base64_image, landmark_id):
     matches = bf.match(des1, des2)
 
     dist = [m.distance for m in matches]
+
+    # 特徴量のマッチ数が0のとき、無限を返す
+    if len(dist) == 0:
+        return float('inf')
+
     # 類似度を計算する
     ret = sum(dist) / len(dist)
 

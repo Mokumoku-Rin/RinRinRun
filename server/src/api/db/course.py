@@ -34,3 +34,11 @@ def update_mean_record(mean_time, mean_distance, course_id):
 def update_played_count(course_id):
     sql = 'UPDATE courses SET played_count = played_count + 1 WHERE id = %s'
     execute_commit(sql, (course_id))
+
+
+def insert_course(name, description):
+    sql = 'INSERT INTO courses (name, description, mean_distance, mean_time) VALUES (%s, %s, 0, 0)'
+    execute_commit(sql, (name, description))
+    sql = "SELECT LAST_INSERT_ID();"
+    insert_id = execute_fetchone(sql)['LAST_INSERT_ID()']
+    return insert_id
