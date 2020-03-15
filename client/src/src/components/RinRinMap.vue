@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <div id='map'></div>
-    this is map
-  </div>
+  <div id='map' v-bind:class="className"></div>
 </template>
 
 <script>
@@ -32,13 +29,13 @@ export default {
       type: Array,
       required: true
     },
-    ghostData: {
-      type: Array,
-      required: true
-    },
     elapsedTime: {
       type: Number,
       required: true
+    },
+    className: {
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -58,7 +55,8 @@ export default {
       this.existDrawed.length = 0
     },
     setMapLandmark(){
-      for(const landmark of this.landmarks){
+      for(let index=0;  index < this.landmarks.length; index++){
+        const landmark = this.landmarks[index]
         // check ずみ
         if(this.$store.state.myRunCheckedLandmarkID.includes(landmark.id)) continue
 
@@ -73,29 +71,56 @@ export default {
       this.setMapLandmark()
 
       this.existDrawed.push(L.marker(this.myLocation, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
-      for(const ghost of this.ghostData){
-        const dispRouteList = []
-        let dispNowGPS = ghost.pos_list[0]
+      if(this.ghostData){
+        for(let index = 0; index < this.ghostData.length; index++){
+          const ghost = this.ghostData[index]
+          const dispRouteList = []
+          let dispNowGPS = ghost.pos_list[0]
 
-        // for of は遅いらしいので使用しない
-        for(let index = 0; index < ghost.time_list.length; index++){
-          if(ghost.time_list[index] < this.elapsedTime){
-            dispRouteList.push(ghost.pos_list[index])
-            dispNowGPS = ghost.pos_list[index]
+          // for of は遅いらしいので使用しない
+          for(let timeIndex = 0; timeIndex < ghost.time_list.length; timeIndex++){
+            // データが空のときがある
+            if(!ghost.pos_list[timeIndex]) continue
+
+            if(ghost.time_list[timeIndex] < this.elapsedTime){
+              dispRouteList.push(ghost.pos_list[timeIndex])
+              dispNowGPS = ghost.pos_list[timeIndex]
+            }
           }
-        }
 
-        if(dispRouteList.length > 1){
-            this.existDrawed.push( L.polyline(dispRouteList,{
-              "color": "#FF0000",
-              "weight": 5,
-              "opacity": 0.6
-            }).addTo(this.map) )
+          if(dispRouteList.length > 1){
+              this.existDrawed.push( L.polyline(dispRouteList,{
+                "color": "#FF0000",
+                "weight": 5,
+                "opacity": 0.6
+              }).addTo(this.map) )
+          }
+          this.existDrawed.push(L.marker(dispNowGPS, {icon: L.icon({iconUrl: ghostPath, iconSize: [30, 30]})}).addTo(this.map))
         }
-        this.existDrawed.push(L.marker(dispNowGPS, {icon: L.icon({iconUrl: ghostPath, iconSize: [30, 30]})}).addTo(this.map))
       }
-
       this.map.setView(this.myLocation)
+    },
+    nearestLandmark(){
+      if(!this.landmarks)return false
+      if(this.myLocation){
+        let nearestID = 0
+        let nearestDistance = 99999999999999
+        for(const landmark of this.landmarks){
+          if(!landmark)continue
+          if(this.$store.state.myRunCheckedLandmarkID.includes(landmark.id)) continue
+
+          const landmarkTempPos = landmark.pos.split(',')
+
+          const distance = calDistance(this.myLocation, landmarkTempPos)
+          if(distance < nearestDistance){
+            nearestDistance = distance
+            nearestID = landmark.id
+          } 
+        }
+
+        return {id: nearestID, distance: nearestDistance}
+      }
+      return false
     }
   },
   mounted: function () {
@@ -112,9 +137,11 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KEY
      }).addTo(this.map);
      
-    this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
-      this.landmarks = response.data.landmarks
-      this.setMapLandmark()
+    this.landmarks = this.$store.state.runnigCourseData.landmarks
+    this.setMapLandmark()
+    
+    this.$getApi('/session/course/'+this.courseID+'/ghost', {}, (response)=>{
+      this.ghostData = response.data.ghosts
     })
 
   },
@@ -127,12 +154,46 @@ export default {
     }
   }
 }
+
+function calDistance(location, landmarkPos){
+  // 緯度経度をラジアンに変換
+  const radLatitudeA = deg2rad(location[0])
+  const radLongitudeA = deg2rad(location[1])
+  const radLatitudeB = deg2rad(landmarkPos[0])
+  const radLongitudeB = deg2rad(landmarkPos[1])
+
+  const radLatDiff = radLatitudeA - radLatitudeB
+  const radLonDiff = radLongitudeA - radLongitudeB
+
+  const radLatAve = (radLatitudeA + radLatitudeB) / 2.0;
+
+  const a = 6378137.0 // 赤道半径
+  const e2 = 0.00669438002301188 // 第一離心率^2
+  const a1e2 = 6335439.32708317 // 赤道上の子午線曲率半径
+
+  let sinLat = Math.sin(radLatAve)
+
+  sinLat = Math.sin(radLatAve)
+  let W2 = 1.0 - e2 * (sinLat*sinLat)
+  let M = a1e2 / (Math.sqrt(W2)*W2); // 子午線曲率半径M
+  let N = a / Math.sqrt(W2); // 卯酉線曲率半径
+
+  let t1 = M * radLatDiff
+  let t2 = N * Math.cos(radLatAve) * radLonDiff
+  let dist = Math.sqrt((t1*t1) + (t2*t2))
+
+  return dist
+}
+
+function deg2rad(deg){
+  return deg * ( Math.PI / 180 )
+}
 </script>
 
 <style scoped>
   #map {
     z-index: 0;
-    height: 100%;
+    /* height: 100%; */
     min-height: 500px;
   }
 </style>

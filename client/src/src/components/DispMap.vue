@@ -41,7 +41,7 @@ export default {
       gpsTimerObj: null,
       existDrawed: [],
       location: null,
-      landmarks: null,
+      landmarks: null
     }
   },
   mounted: function () {

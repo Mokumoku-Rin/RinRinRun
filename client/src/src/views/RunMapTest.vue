@@ -1,7 +1,7 @@
 <template>
   <div>
     test
-    <rin-rin-map :courseID="1" :myLocation="myLocation" :ghostData="ghostData" :elapsedTime="mapElapsedTime"/>
+    <rin-rin-map :courseID="1" :myLocation="myLocation" :elapsedTime="mapElapsedTime"/>
     <button @click="startRunning">計測スタート</button>
     <button @click="stopRunning">計測ストップ</button>
     <button @click="clearHistory">クリア</button>

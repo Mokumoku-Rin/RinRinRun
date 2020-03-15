@@ -9,7 +9,10 @@ export default new Vuex.Store({
     myRunTimeList:[],
     myRunStartTime: -1,
     myRunNowDistance: 0,
-    myRunCheckedLandmarkID: []
+    myRunCheckedLandmarkID: [],
+    isRunning: false,
+    myLandmarkVisits: [],
+    runnigCourseData: null,
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -30,6 +33,24 @@ export default new Vuex.Store({
     },
     setMyRunNowDistance(state, distance){
       state.myRunNowDistance = distance
+    },
+    setIsRuning(state, running){
+      state.isRunning = running
+    },
+    addMyRunCheckedLandmarkID(state, input_id){
+      state.myRunCheckedLandmarkID.push(input_id)
+    },
+    clearMyRunCheckedLandmarkID(state){
+      state.myRunCheckedLandmarkID.length = 0
+    },
+    addMyLandmarkVisits(state, visit){
+      state.myLandmarkVisits.push(visit)
+    },
+    clearMyLandmarkVisits(state){
+      state.myLandmarkVisits.length = 0
+    },
+    setRunnigCourseData(state, data){
+      state.runnigCourseData = data
     }
   },
   actions: {

@@ -21,7 +21,7 @@
         <section class="running_info_section">
           <h2 class="running_info_title">撮影場所とゴーストの情報</h2>
           <div class="running_info_map">
-            <div class="running_info_map_inner">aaaa</div>
+            <rin-rin-map :courseID="this.page_info.course_id" :myLocation="myLocation" :elapsedTime="mapElapsedTime" style="height:500px;" className="" ref="map"/>
           </div>
         </section>
       </div>
@@ -110,10 +110,15 @@ import router from '../router'
 import statusBar from '@/components/StatusBar.vue'
 import cameraButton from '@/components/CameraButton.vue'
 
+import rinRinMap from '@/components/RinRinMap.vue'
+
+const SOJO_GPS_POSITION = [34.878031, 135.575573]
+
 export default {
   components: {
     statusBar,
-    cameraButton
+    cameraButton,
+    rinRinMap
   },
   data() {
     return {
@@ -127,15 +132,20 @@ export default {
         run_time: 0,
         run_distance: 0,
         ranking: 1
-      }
+      },
+      gpsTimerObj: null,
+      mapTimerOnj: null, 
+      isIntervalSet: false,
+      myLocation: SOJO_GPS_POSITION,
+      mapElapsedTime: 0, 
+      stopWatchTimer: null,
+      nearestID: 1
     }
   },
   created() {
-    // 端末中に保持しているデータを読み込むコード
-
     this.page_info.search_type = this.$route.query.search_type
-    this.page_info.course_id = this.$route.query.course_id
-    this.page_info.title = this.course_info.name
+    this.page_info.course_id = parseInt(this.$route.query.course_id)
+    this.page_info.title = this.$store.state.runnigCourseData.name
   },
   methods: {
     confirmExit() {
@@ -154,7 +164,116 @@ export default {
       var mins = s % 60
       var hrs = (s - mins) / 60
       return padding(hrs) + ':' + padding(mins) + ':' + padding(secs)
-    }
+    },
+    startRunning(){
+      if(this.$store.state.isRunning === false){
+        this.clearHistory()
+      }
+      if(this.isIntervalSet === false){
+        this.gpsIntervalFunc() 
+        this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
+        this.mapTimerOnj = setInterval(this.mapIntervalFunc, 500) //500 is ms
+        this.stopWatchTimer = setInterval(this.stopWatchFunc, 200)
+
+        this.isIntervalSet = true
+      }
+      
+      if(this.$store.state.isRunning === false){
+        this.$store.commit('setIsRuning', true)
+      }
+    },
+    stopRunning(){
+      clearInterval(this.gpsTimerObj)
+      clearInterval(this.mapTimerOnj)
+      clearInterval(this.stopWatchTimer)
+    },
+    clearHistory(){
+      this.$store.commit('clearMyGPSLocation')
+      this.$store.commit('clearMyRunTimeList')
+    },
+    successGetGPS(position){
+      const nowGPS = [position.coords.latitude, position.coords.longitude]
+      this.$store.commit('addMyGPSLocation', nowGPS)
+      this.myLocation = nowGPS
+
+      this.$store.commit('setMyRunNowDistance', calDistance(this.$store.state.myGPSLocations))
+
+      this.$store.commit('addMyRunTimeList', this.getElapssedTime())
+
+      this.page_info.run_distance = calDistance(this.$store.state.myGPSLocations) / 1000
+      console.log('success')
+    },
+    gpsIntervalFunc(){
+      console.log('get location')
+      navigator.geolocation.getCurrentPosition(this.successGetGPS, (error)=>{console.log('gps error',error.code)})
+    },
+    mapIntervalFunc(){
+      this.mapElapsedTime = this.getElapssedTime()
+      if(this.$refs.map.nearestLandmark()){
+        const idDistance = this.$refs.map.nearestLandmark()
+        if(idDistance){
+          // 何メートルまで近づいたらカメラを起動するか
+          if(idDistance.distance < 1000000){
+            this.page_info.landmark_id = idDistance.id
+            this.page_info.active_button = true
+          }
+        }
+      }
+    },
+    stopWatchFunc(){
+      this.page_info.run_time = this.getElapssedTime()
+    },
+    getElapssedTime(){
+      const tempDate = new Date()
+      return tempDate.getTime() - this.$store.state.myRunStartTime
+    },
+  },
+  mounted(){
+    this.startRunning()
+  },
+  beforeDestroy: function () {
+    this.stopRunning()
   }
+}
+
+function calDistance(positionList){
+  let distance = 0.0
+
+  if(positionList.length < 2)return 0
+
+  for(let i=1; i<positionList.length; i++){
+    // 緯度経度をラジアンに変換
+    const radLatitudeA = deg2rad(positionList[i-1][0])
+    const radLongitudeA = deg2rad(positionList[i-1][1])
+    const radLatitudeB = deg2rad(positionList[i][0])
+    const radLongitudeB = deg2rad(positionList[i][1])
+
+    const radLatDiff = radLatitudeA - radLatitudeB
+    const radLonDiff = radLongitudeA - radLongitudeB
+
+    const radLatAve = (radLatitudeA + radLatitudeB) / 2.0;
+
+    const a = 6378137.0 // 赤道半径
+    const e2 = 0.00669438002301188 // 第一離心率^2
+    const a1e2 = 6335439.32708317 // 赤道上の子午線曲率半径
+
+    let sinLat = Math.sin(radLatAve)
+
+    sinLat = Math.sin(radLatAve)
+    let W2 = 1.0 - e2 * (sinLat*sinLat)
+    let M = a1e2 / (Math.sqrt(W2)*W2); // 子午線曲率半径M
+    let N = a / Math.sqrt(W2); // 卯酉線曲率半径
+
+    let t1 = M * radLatDiff
+    let t2 = N * Math.cos(radLatAve) * radLonDiff
+    let dist = Math.sqrt((t1*t1) + (t2*t2))
+
+    distance += dist
+  }
+  return distance
+}
+
+function deg2rad(deg){
+  return deg * ( Math.PI / 180 )
 }
 </script>
