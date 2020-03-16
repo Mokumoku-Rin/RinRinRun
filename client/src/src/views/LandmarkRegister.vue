@@ -62,7 +62,7 @@ export default {
           const postData = {
             name: this_ref.landmarkTitle,
             description: this_ref.landmarkDesc,
-            img_path: childName,
+            img_path: fileName + '.jpg',
             pos: this_ref.location[0] + ',' + this_ref.location[1]
           }
           console.log(postData)
