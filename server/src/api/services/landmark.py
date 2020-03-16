@@ -1,5 +1,5 @@
 from usecases.image import calc_image_similarity
-from usecases.landmark import add_landmark
+from usecases.landmark import add_landmark, get_all_landmarks
 
 
 class LandmarkService:
@@ -15,6 +15,12 @@ class LandmarkService:
         return "NG"
 
     @staticmethod
-    async def post_landmark(name, description, img_url, pos):
-        add_landmark(name, description, img_url, pos)
+    async def post_landmark(name, description, img_path, pos):
+        add_landmark(name, description, img_path, pos)
         return 'OK'
+    
+
+    @staticmethod
+    async def fetch_all_landmarks():
+        landmark_list = get_all_landmarks()
+        return landmark_list
