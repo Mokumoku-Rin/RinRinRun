@@ -212,15 +212,17 @@ export default {
 
       const editedCourseData = res.data
       const storageRef = firebase.storage().ref()
+      const LANDMARK_IMG_STORAGE_PREFIX = 'landmarks/'  // サーバ側と合わせる必要あり
+      const this_ref = this
       let urlCallbackCount = 0
       for(let index = 0; index < editedCourseData.landmarks.length; index++){
-        storageRef.child(editedCourseData[index].img_path).getDownloadURL().then(function(url) {
+        storageRef.child(LANDMARK_IMG_STORAGE_PREFIX + editedCourseData.landmarks[index].img_path).getDownloadURL().then(function(url) {
           urlCallbackCount++
-          editedCourseData[index].img_url = url
+          editedCourseData.landmarks[index].img_url = url
           if(urlCallbackCount === editedCourseData.landmarks.length){
-            this.$store.commit('setRunnigCourseData', editedCourseData)
-            this.course_info.landmarks = editedCourseData.landmarks
-            console.log(this.$store.state.runnigCourseData)
+            this_ref.$store.commit('setRunnigCourseData', editedCourseData)
+            this_ref.course_info.landmarks = editedCourseData.landmarks
+            console.log(this_ref.$store.state.runnigCourseData)
           }
         }).catch(function(error) {
           console.log(error)
