@@ -174,6 +174,7 @@ import statusBar from '@/components/StatusBar.vue'
 import cameraButton from '@/components/CameraButton.vue'
 import dispMap from '@/components/DispMap.vue'
 // import testImage from '@/assets/img/jogging.svg'
+import firebase from 'firebase/app'
 
 export default {
   data() {
@@ -209,8 +210,24 @@ export default {
       this.course_info.shortest_time = res.data.shortest_time
       this.course_info.shortest_distance = res.data.shortest_distance
 
-      this.$store.commit('setRunnigCourseData', res.data)
-      console.log(this.$store.state.runnigCourseData)
+      const editedCourseData = res.data
+      const storageRef = firebase.storage().ref()
+      const LANDMARK_IMG_STORAGE_PREFIX = 'landmarks/'  // サーバ側と合わせる必要あり
+      const this_ref = this
+      let urlCallbackCount = 0
+      for(let index = 0; index < editedCourseData.landmarks.length; index++){
+        storageRef.child(LANDMARK_IMG_STORAGE_PREFIX + editedCourseData.landmarks[index].img_path).getDownloadURL().then(function(url) {
+          urlCallbackCount++
+          editedCourseData.landmarks[index].img_url = url
+          if(urlCallbackCount === editedCourseData.landmarks.length){
+            this_ref.$store.commit('setRunnigCourseData', editedCourseData)
+            this_ref.course_info.landmarks = editedCourseData.landmarks
+            console.log(this_ref.$store.state.runnigCourseData)
+          }
+        }).catch(function(error) {
+          console.log(error)
+        })
+      }
     })
 
     this.page_info.search_type = this.$route.query.search_type
