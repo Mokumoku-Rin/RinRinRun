@@ -6,10 +6,6 @@ from firebase_admin import auth, exceptions
 
 
 def verify_token(token: str):
-    # development
-    if os.environ["SERVER_ENV"] == "development":
-        return "development_" + str(randint(0, 1000000))
-
     try:
         dec_token = auth.verify_id_token(token)
         return dec_token["uid"]
