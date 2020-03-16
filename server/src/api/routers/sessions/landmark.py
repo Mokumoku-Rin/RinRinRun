@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from schemas.landmark import (
     LandmarkVisitRequest, LandmarkVisitResponse,
-    LandmarkPostResponse, LandmarkPostRequest)
+    LandmarkPostResponse, LandmarkPostRequest, LandmarkResponse)
 from services.landmark import LandmarkService
 from depends.auth import FirebaseToken
 
@@ -16,6 +16,16 @@ async def compare_image(landmark_request: LandmarkVisitRequest, fbToken: Firebas
         "result": message
     }
     return response
+
+@router.get("/", response_model=LandmarkResponse)
+async def get_landmark():
+    landmarks = await LandmarkService.fetch_all_landmarks()
+    response: LandmarkResponse = {
+        "landmarks": landmarks
+    }
+
+    return response
+
 
 
 @router.post("/", response_model=LandmarkPostResponse)

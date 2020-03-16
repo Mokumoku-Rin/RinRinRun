@@ -13,6 +13,11 @@ def get_landmarks_by_course_id(course_id: int):
     result = execute_fetchall(sql, (str(course_id)))
     return result
 
+def get_landmarks(limit: int):
+    sql = 'SELECT id, name, pos, img_url, description FROM landmarks'
+    # FIXME: LIMIT区にintを投げるとSQL Syntax Errorが起こる．
+    result = execute_fetchall(sql)
+    return result
 
 def insert_landmark(name, description, img_url, pos):
     sql = 'INSERT INTO landmarks (name, description, img_url, pos) VALUES (%s, %s, %s, %s)'

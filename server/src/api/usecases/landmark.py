@@ -1,5 +1,12 @@
 from db.landmark_visit import get_landmark_visit
-from db.landmarks import get_landmarks_by_course_id, insert_landmark
+from db.landmarks import get_landmarks_by_course_id, insert_landmark, get_landmarks
+
+
+def get_all_landmarks():
+    limit = 100 # とりあえずこのぐらいで
+    landmarks = get_landmarks(limit)
+
+    return landmarks
 
 
 def get_landmarks_for_course_request(course_id):

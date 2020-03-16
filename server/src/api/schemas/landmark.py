@@ -20,6 +20,8 @@ class LandmarkInfo(BaseModel):
     img_url: str
     description: str
 
+class LandmarkResponse(BaseModel):
+    landmarks: List[LandmarkInfo]
 
 class LandmarkPostResponse(BaseModel):
     result: str
