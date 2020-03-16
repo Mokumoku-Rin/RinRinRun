@@ -123,7 +123,7 @@ landmarkデータのPost
 {
     "name": string "ランドマークの名前",
     "description": string "ランドマークの説明",
-    "img_url": string "url"
+    "img_path": string "画像のパス"
     "pos": string "float, float"
 }
 
