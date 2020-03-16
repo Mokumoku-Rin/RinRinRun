@@ -16,6 +16,7 @@
 
 <script>
 import router from '@/router'
+import Compressor from "compressorjs"
 
 export default {
   props:{
@@ -48,7 +49,7 @@ export default {
     for(const landmark of this.$store.state.runnigCourseData.landmarks){
       if(parseInt(landmark.id)  == this.landmarkID){
         overLayImage.src = landmark.img_url
-        overLayContext.drawImage(overLayImage,0, 0, 1024, 1024)
+        overLayContext.drawImage(overLayImage,0, 0, 512, 512)
         break
       }
     }
@@ -64,9 +65,8 @@ export default {
     takePhoto(){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
-      canvasContext.drawImage(this.video, 0, 0)
-      const imgData = this.takedPhotoCanvas.toDataURL('image/png')
-      console.log(imgData);
+      canvasContext.drawImage(this.video, 0, 0, 512, 512)
+      const imgData = this.takedPhotoCanvas.toDataURL('image/jpeg', 0.65)
       console.log('take photo')
 
       const postData = {
