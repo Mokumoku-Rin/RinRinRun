@@ -16,7 +16,6 @@
 
 <script>
 import router from '@/router'
-import Compressor from "compressorjs"
 
 export default {
   props:{
