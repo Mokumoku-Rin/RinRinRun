@@ -21,7 +21,7 @@ services:
     volumes:
       # - ./db/data:/var/lib/mysql # SQL ; 二回目起動時以降にmigrationが行われないため，こいつは無効化しておく
       - ./db/migration:/docker-entrypoint-initdb.d  # SQL Migrations
-
+      - ./db/config/my.cnf:/etc/mysql/my.cnf
   python:
     build: ./server
     command: python api/main.py
