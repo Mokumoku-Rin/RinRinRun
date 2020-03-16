@@ -32,7 +32,7 @@
       "id": int ランドマークのID
       "name": string ランドマーク名,
       "pos": [float, float],
-      "img_url: string imgのURL,
+      "img_pathl: string imgのfirebase storageのpath,
       "discription": string ランドマークの説明
     },
     ...
