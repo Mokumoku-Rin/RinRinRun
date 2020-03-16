@@ -19,7 +19,7 @@ class FirebaseToken:
             elif x_token == "2":
                 self.uid = 2
             else:
-                self.uid = "development_" + str(randint(0, 1000000))
+                self.uid = verify_token(x_token)
             return
 
         self.uid = verify_token(x_token)
