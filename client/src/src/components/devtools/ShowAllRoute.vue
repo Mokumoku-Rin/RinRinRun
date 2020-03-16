@@ -8,6 +8,8 @@
     <router-link to="/run-map-test">ゴースト表示テスト</router-link><br>
     <router-link to="/running-info?course_id=1">ランニング中のページ</router-link><br>
     <router-link to="/running-goal">ゴールしたときのページ</router-link><br>
+    <hr>
+    <router-link to="/dev/landmark-register">ランドマーク登録ページ</router-link>
   </div>
 </template>
 
