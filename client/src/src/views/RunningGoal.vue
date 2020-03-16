@@ -212,7 +212,5 @@ function deg2rad(deg){
 function calCalorie(time){
   const mets = 9
   return mets * 65 * time * 1.05
-    }
-  }
 }
 </script>
