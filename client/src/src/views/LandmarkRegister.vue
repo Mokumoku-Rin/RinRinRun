@@ -66,7 +66,13 @@ export default {
             pos: this_ref.location[0] + ',' + this_ref.location[1]
           }
           console.log(postData)
-          this_ref.$postApi('/session/landmark/', postData)
+          this_ref.$postApi('/session/landmark/', postData, (res)=>{
+            if(res.data.result==='OK'){
+              alert('登録完了')
+            }else{
+              alert('登録エラー')
+            }
+          })
         }).catch(error => {
           console.log(error)
         })
