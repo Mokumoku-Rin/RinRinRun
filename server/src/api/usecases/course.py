@@ -17,8 +17,11 @@ def get_course_list_by(order: str, limit: int):
 def get_course(course_id: int):
     course_info = get_course_by_id(course_id)
     workout_shortest = get_shortest(course_id)
-    course_info.update(shortest_time=workout_shortest['MIN(total_time)'],
-                       shortest_distance=workout_shortest['MIN(total_distance)'])
+    if workout_shortest:
+        course_info.update(
+            shortest_time=workout_shortest['MIN(total_time)'],
+            shortest_distance=workout_shortest['MIN(total_distance)']
+        )
     return course_info
 
 
