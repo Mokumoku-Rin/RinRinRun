@@ -17,7 +17,7 @@ class LandmarkInfo(BaseModel):
     id: int
     name: str
     pos: str
-    img_url: str
+    img_path: str
     description: str
 
 class LandmarkResponse(BaseModel):
@@ -30,5 +30,5 @@ class LandmarkPostResponse(BaseModel):
 class LandmarkPostRequest(BaseModel):
     name: str
     description: str
-    img_url: str
+    img_path: str
     pos: str

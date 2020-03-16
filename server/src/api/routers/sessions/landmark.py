@@ -32,9 +32,9 @@ async def get_landmark():
 async def post_landmark(request_model: LandmarkPostRequest):
     name = request_model.name
     description = request_model.description
-    img_url = request_model.img_url
+    img_path = request_model.img_path
     pos = request_model.pos
-    message = await LandmarkService.post_landmark(name, description, img_url, pos)
+    message = await LandmarkService.post_landmark(name, description, img_path, pos)
     response: response_model = {
         "result": message
     }

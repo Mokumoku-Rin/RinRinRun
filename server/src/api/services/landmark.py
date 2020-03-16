@@ -15,8 +15,8 @@ class LandmarkService:
         return "NG"
 
     @staticmethod
-    async def post_landmark(name, description, img_url, pos):
-        add_landmark(name, description, img_url, pos)
+    async def post_landmark(name, description, img_path, pos):
+        add_landmark(name, description, img_path, pos)
         return 'OK'
     
 

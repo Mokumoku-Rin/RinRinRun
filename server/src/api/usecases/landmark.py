@@ -38,6 +38,6 @@ def get_landmark_visits_for_ghost(workout_id_list: list) -> list:
     return landmark_visit_list
 
 
-def add_landmark(name, description, img_url, pos):
-    insert_landmark(name, description, img_url, pos)
+def add_landmark(name, description, img_path, pos):
+    insert_landmark(name, description, img_path, pos)
     # TODO: 画像をもらって，Firebase Storageに画像を入れる
