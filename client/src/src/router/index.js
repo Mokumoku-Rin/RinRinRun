@@ -92,6 +92,13 @@ const routes = [
     path: '/forget-password',
     name: 'ForgetPassword',
     component: () => import('../views/Login/ForgetPassword.vue')
+  },
+
+  // -------開発者ページ--------------
+  {
+    path: '/dev/landmark-register',
+    name: 'LandmarkRegister',
+    component: () => import('../views/LandmarkRegister.vue')
   }
 ]
 
