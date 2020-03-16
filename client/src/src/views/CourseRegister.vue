@@ -78,11 +78,15 @@ export default {
       const postData = {
         name: this.courseTitle,
         description: this.courseDesc,
-        landmarks: JSON.stringify(this.checkedLandmark)
+        landmarks: this.checkedLandmark
       }
       console.log(postData)
-      this.$postApi('/session/course/', postData, ()=>{
-        alert('投稿完了')
+      this.$postApi('/session/course/', postData, (res)=>{
+        if(res.data.result==='OK'){
+          alert('登録完了')
+        }else{
+          alert('登録エラー')
+        }
       })
     }
   }
