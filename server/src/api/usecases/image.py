@@ -24,7 +24,7 @@ def calc_image_similarity(user_base64_image, landmark_id):
     user_image = decode_base64_to_ndarray(user_base64_image)
     user_image_gray = cv2.cvtColor(user_image, cv2.COLOR_BGR2GRAY)
 
-    origin_filename = get_image_url(landmark_id)['img_url']
+    origin_filename = get_image_url(landmark_id)['img_path']
     origin_raw_image = fetch_landmark_image(origin_filename)
     origin_image = convert_binary_to_ndarray(origin_raw_image)
     origin_image_gray = cv2.cvtColor(
