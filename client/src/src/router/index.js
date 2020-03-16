@@ -99,6 +99,11 @@ const routes = [
     path: '/dev/landmark-register',
     name: 'LandmarkRegister',
     component: () => import('../views/LandmarkRegister.vue')
+  },
+  {
+    path: '/dev/course-register',
+    name: 'CourseRegister',
+    component: () => import('../views/CourseRegister.vue')
   }
 ]
 
