@@ -42,12 +42,11 @@ export default {
     this.$getApi('/session/landmark/', {}, (res)=>{
       const editedCourseData = res.data
       const storageRef = firebase.storage().ref()
-      const LANDMARK_IMG_STORAGE_PREFIX = 'landmarks/'  // サーバ側と合わせる必要あり
       const this_ref = this
       let urlCallbackCount = 0
 
       for(let index = 0; index < editedCourseData.landmarks.length; index++){
-        storageRef.child(LANDMARK_IMG_STORAGE_PREFIX + editedCourseData.landmarks[index].img_path).getDownloadURL().then(function(url) {
+        storageRef.child(editedCourseData.landmarks[index].img_path).getDownloadURL().then(function(url) {
           urlCallbackCount++
           editedCourseData.landmarks[index].img_url = url
           if(urlCallbackCount === editedCourseData.landmarks.length){

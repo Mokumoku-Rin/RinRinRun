@@ -50,9 +50,8 @@ export default {
         return
       }
 
-      const LANDMARK_IMG_STORAGE_PREFIX = 'landmarks/'  // サーバ側と合わせる必要あり
       const fileName = generateUuid()
-      const childName = LANDMARK_IMG_STORAGE_PREFIX + fileName + '.jpg'
+      const childName = fileName + '.jpg'
 
       const this_ref = this // コールバックの中でthisがvueインスタンスを指さなくなるため
 
