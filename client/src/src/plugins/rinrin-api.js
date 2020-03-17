@@ -21,6 +21,10 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
       'X-Token': token
     }
   }
+  console.log(API_ENDPOINT)
+  console.log(path)
+  console.log(process.env.VUE_APP_API_ENDPOINT)
+
   axios.post(API_ENDPOINT+path , jsonInput, headers)
   .then(successFunc)
   .catch(errorFunc)
