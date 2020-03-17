@@ -3,6 +3,19 @@ import firebase from 'firebase/app'
 
 const API_ENDPOINT = process.env.VUE_APP_API_ENDPOINT
 
+// リダイレクトを抑制するため，パスの末尾が / ではない場合，/ を付加する
+function redirectionPreventer(path) {
+  const uri = {
+    path: path.split("?")[0],
+    query: path.split("?")[1]
+  }
+
+  if(uri.path.endsWith("/")) {
+    return path
+  }
+  return uri.path + "/" + (uri.query === undefined ? "" : "?" + uri.query)
+}
+
 function postApiErrorDefaultFunc(error){
   console.log('---rinrin-api-plugin-$postApi--postToApi-error-----')
   console.log(error)
@@ -21,11 +34,7 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
       'X-Token': token
     }
   }
-  console.log(API_ENDPOINT)
-  console.log(path)
-  console.log(process.env.VUE_APP_API_ENDPOINT)
-  console.log(process.env)
-
+  path = redirectionPreventer(path)
   axios.post(API_ENDPOINT+path , jsonInput, headers)
   .then(successFunc)
   .catch(errorFunc)
@@ -37,6 +46,7 @@ function getToApi(path,jsonInput, token, successFunc, errorFunc) {
       'X-Token': 1
     }
   }
+  path = redirectionPreventer(path)
   const sendHeaderBody = Object.assign(headers, jsonInput);
   axios.get(API_ENDPOINT+path , sendHeaderBody)
   .then(successFunc)
