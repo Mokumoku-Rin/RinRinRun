@@ -24,6 +24,7 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
   console.log(API_ENDPOINT)
   console.log(path)
   console.log(process.env.VUE_APP_API_ENDPOINT)
+  console.log(process.env)
 
   axios.post(API_ENDPOINT+path , jsonInput, headers)
   .then(successFunc)
