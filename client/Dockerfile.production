@@ -2,10 +2,11 @@ FROM node:lts-alpine
 
 WORKDIR /app
 COPY ./src ./
+
+ENV VUE_APP_API_ENDPOINT='https://kakemori-api.azurewebsites.net' VUE_APP_MAP_BOX_API_KEY='pk.eyJ1IjoicmlucmluLXJ1biIsImEiOiJjazdkMjV2bHMwMDhlM3BwY25keTBpeHphIn0.wodOLOPqOrEh3xsx-nHfcA'
+
 RUN npm install -g http-server && \
     npm install && \
     npm run build
-
-ENV VUE_APP_API_ENDPOINT='https://kakemori-api.azurewebsites.net' VUE_APP_MAP_BOX_API_KEY='pk.eyJ1IjoicmlucmluLXJ1biIsImEiOiJjazdkMjV2bHMwMDhlM3BwY25keTBpeHphIn0.wodOLOPqOrEh3xsx-nHfcA'
 EXPOSE 8000
 CMD [ "http-server", "dist", "-p", "8000", "-g", "-b" ]
