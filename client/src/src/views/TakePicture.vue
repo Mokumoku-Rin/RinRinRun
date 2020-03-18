@@ -94,6 +94,7 @@
   top: 89vh;
   width: 100vw;
   height: 20vh;
+  display: flex;
 }
 </style>
 
