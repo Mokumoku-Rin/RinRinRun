@@ -11,6 +11,12 @@ router = APIRouter()
 @router.post("/visit/", response_model=LandmarkVisitResponse)
 async def compare_image(landmark_request: LandmarkVisitRequest, fbToken: FirebaseToken = Depends()):
     uid = fbToken.uid
+    # デバッグモードなら常にOKを返す
+    if landmark_request.debug == "true":
+        return {
+            "result": "OK"
+        }
+    
     message = await LandmarkService.ImageCompare(landmark_request)
     response: WorkoutResponse = {
         "result": message

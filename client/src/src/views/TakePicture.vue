@@ -12,7 +12,10 @@
         </div>
       </div>
     </main>
-    <cameraButton :func="takePhoto" :active="page_info.active_button"></cameraButton>
+    <div class="camera_button_container">
+      <cameraButton :func="takePhoto" :active="page_info.active_button"></cameraButton>
+      <cameraButton :func="takePhotoDebug" :active="page_info.active_button"></cameraButton>
+    </div>
     <collation :active="page_info.active_collation"></collation>
   </div>
 </template>
@@ -85,6 +88,13 @@
   width: 100%;
   height: 100%;
 }
+
+.camera_button_container {
+  position: absolute;
+  top: 89vh;
+  width: 100vw;
+  height: 20vh;
+}
 </style>
 
 <script>
@@ -143,6 +153,9 @@ export default {
   methods: {
     takePhoto() {
       this.$refs.camera.takePhoto()
+    },
+    takePhotoDebug() {
+      this.$refs.camera.takePhoto(true)
     },
     satusLeftFunc() {
       router.back()

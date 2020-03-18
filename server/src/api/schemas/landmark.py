@@ -11,6 +11,7 @@ class LandmarkVisitRequest(BaseModel):
     landmark_id: int
     course_id: int
     img: str
+    debug: str = None
 
 
 class LandmarkInfo(BaseModel):
