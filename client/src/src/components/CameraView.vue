@@ -61,7 +61,7 @@ export default {
     this.video.play();
   },
   methods: {
-    takePhoto(){
+    takePhoto(debugMode = false){
       this.takedPhotoCanvas = this.$refs.takedPhotoCanvas
       const canvasContext = this.takedPhotoCanvas.getContext('2d')
       canvasContext.drawImage(this.video, 0, 0, 512, 512)
@@ -71,7 +71,8 @@ export default {
       const postData = {
         landmark_id: this.landmarkID,
         course_id: this.courseID,
-        img: imgData.replace(/^.*,/, '') // data:image/png;base64, がサーバー側で不要なため消す
+        img: imgData.replace(/^.*,/, ''), // data:image/png;base64, がサーバー側で不要なため消す
+        debug: debugMode.toString()
       }
       this.$postApi('/session/landmark/visit/', postData, this.imgCaertification)
 
