@@ -12,7 +12,7 @@
         </div>
         <section class="running_goal_section">
           <h2 class="running_goal_title">走ったコース</h2>
-          <dispMap :courseID="this.$store.state.runnigCourseData.id" :route="this.$store.state.myGPSLocations" className="running_goal_map"/>
+          <dispMap :courseID="this.$store.state.runnigCourseData.id" :routes="[this.$store.state.myGPSLocations]" className="running_goal_map"/>
           <!-- <div class="running_goal_map">
           </div> -->
         </section>

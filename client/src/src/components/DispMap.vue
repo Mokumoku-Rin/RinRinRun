@@ -20,10 +20,9 @@ const SOJO_GPS_POSITION = [34.878031, 135.575573]
 export default {
   props: {
     courseID: {
-      type: Number,
-      required: true
+      type: Number
     },
-    route: {
+    routes: {
       type: Array
     },
     className: {
@@ -59,20 +58,24 @@ export default {
      }).addTo(this.map)
 
     const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
-    this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
-      this.landmarks = response.data.landmarks
-      for(const landmark of this.landmarks){
-        const tempPos = landmark.pos.split(',')
-        L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
-      }
-    })
+    if(this.courseID){
+      this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
+        this.landmarks = response.data.landmarks
+        for(const landmark of this.landmarks){
+          const tempPos = landmark.pos.split(',')
+          L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
+        }
+      })
+    }
 
-    if(this.route && this.route.length > 1){
-      L.polyline(this.route,{
-        "color": "#FF0000",
-        "weight": 5,
-        "opacity": 0.6
-      }).addTo(this.map)
+    if(this.routes){
+      for(const route of this.routes){
+        L.polyline(route,{
+          "color": "#FF0000",
+          "weight": 5,
+          "opacity": 0.6
+        }).addTo(this.map)
+      }
     }
 
     if(this.showMyLocation){
