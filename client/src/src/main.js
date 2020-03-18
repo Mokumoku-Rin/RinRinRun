@@ -16,11 +16,13 @@ library.add(faChevronLeft, faChevronRight, faEnvelope, faCheck, faKey, faTimes, 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 import RinRinApi from './plugins/rinrin-api'
+import GpsUtil from './plugins/gps-util'
 import './registerServiceWorker'
 
 Vue.config.productionTip = false
 Vue.use(VueAxios, axios)
 Vue.use(RinRinApi)
+Vue.use(GpsUtil)
 
 const firebaseConfig = {
   apiKey: "AIzaSyCVXhTVDoB3jKj_yAhtxiDU2dDxmf5v9LI",
