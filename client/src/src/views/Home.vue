@@ -2,8 +2,7 @@
   <div class="home with-navibar">
     <statusBar center="今日の記録" :avatar="account.avatar" :rightFunc="confirmLogout"></statusBar>
     <main>
-
-      <article class="today__no_data section" v-if="isEmpty(today_data)">
+      <article class="today__no_data section" v-show="isEmpty(today_data)">
         <h2 class="title">記録がありません</h2>
         <router-link to="/search-course">
           <p class="message has-text-red">
@@ -14,7 +13,7 @@
         <img src="@/assets/img/jogging.svg" alt="ジョギング">
       </article>
 
-      <div class="today__has_data" v-else>
+      <div class="today__has_data" v-show="!isEmpty(today_data)">
         <header class="today_top section">
           <section class="today_distance">
             <h2 class="today_data_title">距離</h2>
@@ -29,16 +28,17 @@
             </section>
             <section class="today_calorie">
               <h2 class="today_data_title">消費カロリー</h2>
-              <p class="today_data_text">{{today_data.calorie}}<span class="today_data_unit">km</span></p>
+              <p class="today_data_text">{{today_data.calorie}}<span class="today_data_unit">kcal</span></p>
             </section>
           </div>
           <section class="today_course">
             <h2 class="today_data_title">走ったコース</h2>
-            <div class="today_map">地図</div>
+            <!-- TODO スタイル修正 -->
+            <dispMap :routes="routes" ref="map" className="today_map"/>
+            <!-- <div class="today_map">地図</div> -->
           </section>
         </div>
       </div>
-
     </main>
     <naviBar active="Today"></naviBar>
   </div>
@@ -147,10 +147,9 @@
 import firebase from 'firebase/app'
 import router from '../router'
 
-// import apiTest from '@/components/devtools/ApiTest.vue'
-// import showAllRoute from '@/components/devtools/ShowAllRoute.vue'
 import statusBar from '@/components/StatusBar.vue'
 import naviBar from '@/components/NaviBar.vue'
+import dispMap from '@/components/DispMap.vue'
 
 import testAvatarImage from '@/assets/img/user-circle.svg'
 
@@ -165,19 +164,36 @@ export default {
         // time: 0,  // ミリ秒
         // calorie: 0,
         // course: {}
-      }
+      },
+      routes: null,
     }
   },
   created() {
     // アバターを取得するコード（書き換え予定）
     var user = firebase.auth().currentUser
     this.account.avatar = user.photoURL
+
+    this.$getApi('/session/workout/', {date: getNowYMD()}, (res)=>{
+      if(res.data.datas.length > 0){
+        let totalDistance = 0
+        let totalTime = 0
+        let tempRoutes = []
+        for(const data of res.data.datas){
+          totalDistance += data.total_distance
+          totalTime += data.total_time
+          tempRoutes.push(data.geo_json.coordinates)
+        }
+        this.$set(this.today_data, 'distance', totalDistance)
+        this.$set(this.today_data, 'time', totalTime)
+        this.$set(this.today_data, 'calorie', calCalorie(totalTime / 1000 / 3600).toFixed(3))
+        this.routes = tempRoutes
+      }
+    })
   },
   components: {
-    // apiTest,
-    // showAllRoute,
     statusBar,
-    naviBar
+    naviBar,
+    dispMap
   },
   methods: {
     confirmLogout() {
@@ -210,5 +226,23 @@ export default {
       return padding(hrs) + ':' + padding(mins) + ':' + padding(secs)
     }
   }
+}
+
+
+function getNowYMD(){
+  var dt = new Date();
+  var y = dt.getFullYear();
+  var m = ("00" + (dt.getMonth()+1)).slice(-2);
+  var d = ("00" + dt.getDate()).slice(-2);
+  var result = y + "-" + m + "-" + d;
+  return result;
+}
+
+// 消費カロリー(kcal) ＝ メッツ * 体重kg * 運動時間 * 1.05
+// 体重はわからないので65で計算
+// timeは h
+function calCalorie(time){
+  const mets = 9
+  return mets * 65 * time * 1.05
 }
 </script>
