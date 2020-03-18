@@ -151,7 +151,7 @@ export default {
           "total_time": this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time,
           "course_id": this.$store.state.runnigCourseData.id
         },
-        "landmark_visits": JSON.stringify(this.$store.state.myLandmarkVisits),
+        "landmark_visits": this.$store.state.myLandmarkVisits, 
         "geo_json":geoJson
       }
       console.log(postJson)
