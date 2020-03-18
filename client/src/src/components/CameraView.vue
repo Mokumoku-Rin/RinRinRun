@@ -55,8 +55,7 @@ export default {
 
     // setup video
     this.video = this.$refs.video;
-    const userAgent = navigator.userAgent.toLowerCase();
-    this.videoStream = await getVideoStream(userAgent);
+    this.videoStream = await getVideoStream();
     this.video.srcObject = this.videoStream;
     this.video.play();
   },
@@ -107,28 +106,15 @@ export default {
 }
 
 
-async function getVideoStream(userAgent) {
-  const ua = userAgent.toLowerCase();
-  let medias = {};
-
-  // For iPhone support
-  if (ua.includes("iphone")) {
-    medias = {
-      audio: false,
-      video: {
-        facingMode: {
-          exact: "environment"
-        },
-        aspectRatio: {exact: 1}
-      }
-    };
-  } else {
-    medias = {
-      audio: false,
-      video: {
-        aspectRatio: {exact: 1}
-      }
-    };
+async function getVideoStream() {
+  const medias = {
+    audio: false,
+    video: {
+      aspectRatio: {exact: 1},
+      facingMode: {
+        ideal: "environment"
+      },
+    }
   }
 
   const videoStream = await navigator.mediaDevices.getUserMedia(medias);
