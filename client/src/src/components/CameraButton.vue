@@ -10,15 +10,14 @@
 @import "@/assets/scss/base/_variables.scss";
 
 .camera_button_wrapper {
-  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  width: 100%;
   background: $white;
   padding: 1rem 1.5rem;
   border-top: 1px solid $black;
   pointer-events: none;
+  width: 50vw;
 
   &.is-active {
     pointer-events: auto;
