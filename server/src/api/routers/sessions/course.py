@@ -24,7 +24,7 @@ def get_course(course_id: int):
     return response
 
 
-@router.get("/{course_id}/ghost", response_model=None)
+@router.get("/{course_id}/ghost/", response_model=None)
 def get_course_ghost(course_id: int, fbToken: FirebaseToken = Depends()):
     uid = fbToken.uid
     ghost_list = CourseService.gether_ghost_info_list(uid, course_id)
