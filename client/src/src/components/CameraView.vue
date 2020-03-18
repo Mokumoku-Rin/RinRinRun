@@ -7,7 +7,7 @@
         playsinline
       ></video>
 
-      <canvas ref="overlay" id="overlay-canvas" height="1024" width="1024"></canvas>
+      <canvas ref="overlay" id="overlay-canvas" height="512" width="512"></canvas>
     </div>
     <!-- <button @click=takePhoto>写真をとる！</button> -->
     <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas"></canvas>
@@ -48,7 +48,7 @@ export default {
     for(const landmark of this.$store.state.runnigCourseData.landmarks){
       if(parseInt(landmark.id)  == this.landmarkID){
         overLayImage.src = landmark.img_url
-        overLayContext.drawImage(overLayImage,0, 0, 512, 512)
+        overLayContext.drawImage(overLayImage,0, 0, 512, 512, 0, 0, 512, 512)
         break
       }
     }
