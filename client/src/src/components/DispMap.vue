@@ -38,7 +38,8 @@ export default {
     return {
       map: null,
       gpsTimerObj: null,
-      existDrawed: [],
+      existDrawedRunner: [],
+      existDrawedPinRoute: [],
       location: null,
       landmarks: null
     }
@@ -57,44 +58,25 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KEY
      }).addTo(this.map)
 
-    const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
-    if(this.courseID){
-      this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
-        this.landmarks = response.data.landmarks
-        for(const landmark of this.landmarks){
-          const tempPos = landmark.pos.split(',')
-          L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map)
-        }
-      })
-    }
-
-    if(this.routes){
-      for(const route of this.routes){
-        L.polyline(route,{
-          "color": "#FF0000",
-          "weight": 5,
-          "opacity": 0.6
-        }).addTo(this.map)
-      }
-    }
-
     if(this.showMyLocation){
       this.gpsIntervalFunc()
       this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
     }
+
+    this.render()
   },
   methods: {
     gpsIntervalFunc(){
       navigator.geolocation.getCurrentPosition(this.successGetGPS, (error)=>{console.log('gps error',error.code)})
     },
     successGetGPS(position){
-      for(const eLayer of this.existDrawed){
+      for(const eLayer of this.existDrawedRunner){
         this.map.removeLayer(eLayer)
       }
-      this.existDrawed.length = 0
+      this.existDrawedRunner.length = 0
 
       this.location = [position.coords.latitude, position.coords.longitude]
-      this.existDrawed.push(L.marker(this.location, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
+      this.existDrawedRunner.push(L.marker(this.location, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
 
       this.map.setView(this.location)
       console.log('success')
@@ -115,11 +97,42 @@ export default {
         return {id: nearestID, distance: nearestDistance}
       }
       return false
+    },
+    render(){
+      for(const eLayer of this.existDrawedPinRoute){
+        this.map.removeLayer(eLayer)
+      }
+
+      const pinIcon = L.icon({ iconUrl: pinPath, iconSize: [38, 95]})
+      if(this.courseID){
+        this.$getApi('/session/course/'+this.courseID+'/', {}, (response)=>{
+          this.landmarks = response.data.landmarks
+          for(const landmark of this.landmarks){
+            const tempPos = landmark.pos.split(',')
+            this.existDrawedPinRoute.push(L.marker(tempPos,{icon: pinIcon}).bindPopup('<b>'+landmark.name+'</b><br>'+landmark.description).addTo(this.map))
+          }
+        })
+      }
+      
+      if(this.routes){
+        for(const route of this.routes){
+          this.existDrawedPinRoute.push(L.polyline(route,{
+            "color": "#FF0000",
+            "weight": 5,
+            "opacity": 0.6
+          }).addTo(this.map))
+        }
+      }
     }
   },
   beforeDestroy: function () {
     if(this.showMyLocation){
       clearInterval(this.gpsTimerObj)
+    }
+  },
+  watch:{
+    routes:function(){
+      this.render()
     }
   }
 }

@@ -47,6 +47,7 @@ function getToApi(path,jsonInput, token, successFunc, errorFunc) {
     }
   }
   path = redirectionPreventer(path)
+  jsonInput = {params: jsonInput}
   const sendHeaderBody = Object.assign(headers, jsonInput);
   axios.get(API_ENDPOINT+path , sendHeaderBody)
   .then(successFunc)
