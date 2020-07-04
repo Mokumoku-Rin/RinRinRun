@@ -37,6 +37,6 @@ def get_totaldist_timelist_poslist(uid, course_id):
 
 
 def get_based_on_date(uid, date):
-    sql = "SELECT total_time, total_distance, ST_AsGeoJSON(geo_linestring) FROM workout_histories WHERE user_id = %s AND created_at LIKE %s"
+    sql = "SELECT total_time, total_distance, ST_AsGeoJSON(geo_linestring) FROM workout_histories WHERE user_id = %s AND DATE(created_at) = %s"
     result = execute_fetchall(sql, (uid, date))
     return result

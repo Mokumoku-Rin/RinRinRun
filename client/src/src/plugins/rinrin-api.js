@@ -43,7 +43,7 @@ function postToApi(path,jsonInput, token, successFunc, errorFunc) {
 function getToApi(path,jsonInput, token, successFunc, errorFunc) {
   const headers = {
     headers: {
-      'X-Token': 1
+      'X-Token': token
     }
   }
   path = redirectionPreventer(path)
