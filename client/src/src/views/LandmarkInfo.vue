@@ -69,8 +69,12 @@ export default {
     statusBar
   },
   created() {
-    this.landmark_info.id = this.$route.query.landmark_id
-
+    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+      if(landmark.id === this.$route.query.landmark_id){
+        this.landmark_info = landmark
+        break
+      }
+    }
     // 画面描写に使う情報の取得
     this.page_info.title = this.landmark_info.name
     this.page_info.search_type = this.$route.query.search_type
