@@ -41,6 +41,14 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/server/Dockerfile.production'
         buildContext: '$(Build.SourcesDirectory)/server/'
+        arguments: "\
+          GOOGLE_APPLICATION_CREDENTIALS='$(google_application_credentials)',\
+          DB_HOST='$(db_host)',\
+          DB_USER='$(db_user)',\
+          DB_PASSWORD='$(db_password)',\
+          SERVER_ENV='$(server_env)',\
+          SERVER_HOST='$(server_host)',\
+          SERVER_PORT='$(server_port)'"
         tags: '$(tag)'
     - task: Docker@2
       displayName: Build kakemori-vue image
@@ -50,4 +58,7 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
         buildContext: '$(Build.SourcesDirectory)/client'
+        arguments: "\
+          VUE_APP_API_ENDPOINT='$(vue_app_api_endpoint)',\
+          VUE_APP_MAP_BOX_API_KEY='$(vue_app_api_endpoint)'"
         tags: '$(tag)'
