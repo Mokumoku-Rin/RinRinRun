@@ -11,9 +11,7 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '00a28f2e-6da2-471c-b814-b25ef866b969'
-  imageRepository: 'kakemoriapi'
   containerRegistry: 'kakemori.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/server'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
@@ -38,8 +36,22 @@ stages:
       displayName: Build kakemori-api image
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: '$(imageRepository)'
+        repository: 'kakemori-api'
         command: 'buildAndPush'
-        Dockerfile: '$(dockerfilePath)/Dockerfile.production'
-        buildContext: '$(dockerfilePath)'
+        Dockerfile: '$(Build.SourcesDirectory)/server/Dockerfile.production'
+        buildContext: '$(Build.SourcesDirectory)/server/'
+        tags: '$(tag)'
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build kakemori-vue image
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: 'kakemori-vue'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
+        buildContext: '$(Build.SourcesDirectory)/client'
         tags: '$(tag)'
