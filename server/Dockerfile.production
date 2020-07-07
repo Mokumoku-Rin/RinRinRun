@@ -8,6 +8,5 @@ RUN pip install -r requirements.txt
 COPY ./src ./
 COPY ./key.json /
 
-ENV GOOGLE_APPLICATION_CREDENTIALS='/key.json' DB_HOST='mokumoku-db.mariadb.database.azure.com' DB_USER='controller@mokumoku-db' DB_PASSWORD='CJLC6jRSP2vP' SERVER_ENV='development' SERVER_HOST='0.0.0.0' SERVER_PORT='8000'
 EXPOSE 8000
 CMD ["python", "api/main.py"]
