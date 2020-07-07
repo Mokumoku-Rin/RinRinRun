@@ -32,7 +32,7 @@ stages:
       inputs:
         fileoverwrite: true
         filepath: 'server/key.json'
-        filecontent: $(key)
+        filecontent: '$(key)'
         endWithNewLine: true
     - task: Docker@2
       displayName: Build kakemori-api image
@@ -41,4 +41,12 @@ stages:
         repository: '$(imageRepository)'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile.production'
+        arguments: "\
+          GOOGLE_APPLICATION_CREDENTIALS='$(google_application_credentials)',\
+          DB_HOST='$(db_host)',\
+          DB_USER='$(db_user)',\
+          DB_PASSWORD='$(db_password)',\
+          SERVER_ENV='$(server_env)',\
+          SERVER_HOST='$(server_host)',\
+          SERVER_PORT='$(server_port)'"
         tags: '$(tag)'
