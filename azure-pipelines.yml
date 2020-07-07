@@ -40,13 +40,6 @@ stages:
         containerRegistry: '$(dockerRegistryServiceConnection)'
         repository: '$(imageRepository)'
         command: 'buildAndPush'
-        Dockerfile: '**/Dockerfile.production'
-        arguments: "\
-          GOOGLE_APPLICATION_CREDENTIALS='$(google_application_credentials)',\
-          DB_HOST='$(db_host)',\
-          DB_USER='$(db_user)',\
-          DB_PASSWORD='$(db_password)',\
-          SERVER_ENV='$(server_env)',\
-          SERVER_HOST='$(server_host)',\
-          SERVER_PORT='$(server_port)'"
+        Dockerfile: '$(dockerfilePath)/Dockerfile.production'
+        buildContext: '$(dockerfilePath)'
         tags: '$(tag)'
