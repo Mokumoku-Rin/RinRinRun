@@ -13,7 +13,7 @@ variables:
   dockerRegistryServiceConnection: '00a28f2e-6da2-471c-b814-b25ef866b969'
   imageRepository: 'kakemoriapi'
   containerRegistry: 'kakemori.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/server/Dockerfile.production'
+  dockerfilePath: '$(Build.SourcesDirectory)/server'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
@@ -28,12 +28,17 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: file-creator@5
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        fileoverwrite: true
+        filepath: 'server/key.json'
+        filecontent: $(key)
+        endWithNewLine: true
+    - task: Docker@2
+      displayName: Build kakemori-api image
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(imageRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '**/Dockerfile.production'
+        tags: '$(tag)'
