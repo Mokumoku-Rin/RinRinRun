@@ -47,25 +47,6 @@ stages:
         Dockerfile: '$(Build.SourcesDirectory)/server/$(dockerfileName)'
         buildContext: '$(Build.SourcesDirectory)/server/'
         tags: '$(tag)'
-    - task: AzureRmWebAppDeployment@4
-      displayName: 'Deploy $(apiRepository) to Azure App Service'
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Azure for Students(5e2a8428-1101-4017-aac2-4052d518b5a2)'
-        appType: 'webAppContainer'
-        WebAppName: 'kakemori-api'
-        DockerNamespace: '$(containerRegistry)'
-        DockerRepository: '$(apiRepository)'
-        DockerImageTag: 'latest'
-        AppSettings: '-WEBSITES_PORT $(server_port)'
-        AdditionalArguments: >-
-          -GOOGLE_APPLICATION_CREDENTIALS:$(google_application_credentials)
-          -DB_HOST:$(db_host)
-          -DB_USER:$(db_user)
-          -DB_PASSWORD:$(db_password)
-          -SERVER_ENV:$(server_env)
-          -SERVER_HOST:$(server_host)
-          -SERVER_PORT:$(server_port)
     - task: Docker@2
       displayName: 'Build $(clientRepository) image'
       inputs:
@@ -73,19 +54,5 @@ stages:
         repository: '$(clientRepository)'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/client/$(dockerfileName)'
-        buildContext: '$(Build.SourcesDirectory)/client'
+        buildContext: '$(Build.SourcesDirectory)/client/'
         tags: '$(tag)'
-    - task: AzureRmWebAppDeployment@4
-      displayName: 'Deploy $(clientRepository) to Azure App Service'
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'Azure for Students(5e2a8428-1101-4017-aac2-4052d518b5a2)'
-        appType: 'webAppContainer'
-        WebAppName: 'kakemori'
-        DockerNamespace: '$(containerRegistry)'
-        DockerRepository: '$(clientRepository)'
-        DockerImageTag: 'latest'
-        AppSettings: '-WEBSITES_PORT $(server_port)'
-        AdditionalArguments: 
-          -VUE_APP_API_ENDPOINT:$(vue_app_api_endpoint)
-          -VUE_APP_MAP_BOX_API_KEY:$(vue_app_map_box_api_key)
