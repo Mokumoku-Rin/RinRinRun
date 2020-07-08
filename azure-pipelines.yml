@@ -59,13 +59,13 @@ stages:
         DockerImageTag: 'latest'
         AppSettings: '-WEBSITES_PORT $(server_port)'
         AdditionalArguments: >-
-          -GOOGLE_APPLICATION_CREDENTIALS $(google_application_credentials)
-          -DB_HOST $(db_host)
-          -DB_USER $(db_user)
-          -DB_PASSWORD $(db_password)
-          -SERVER_ENV $(server_env)
-          -SERVER_HOST $(server_host)
-          -SERVER_PORT $(server_port)
+          -GOOGLE_APPLICATION_CREDENTIALS:$(google_application_credentials)
+          -DB_HOST:$(db_host)
+          -DB_USER:$(db_user)
+          -DB_PASSWORD:$(db_password)
+          -SERVER_ENV:$(server_env)
+          -SERVER_HOST:$(server_host)
+          -SERVER_PORT:$(server_port)
     - task: Docker@2
       displayName: 'Build $(clientRepository) image'
       inputs:
@@ -87,5 +87,5 @@ stages:
         DockerImageTag: 'latest'
         AppSettings: '-WEBSITES_PORT $(server_port)'
         AdditionalArguments: 
-          -VUE_APP_API_ENDPOINT $(vue_app_api_endpoint)
-          -VUE_APP_MAP_BOX_API_KEY $(vue_app_map_box_api_key)
+          -VUE_APP_API_ENDPOINT:$(vue_app_api_endpoint)
+          -VUE_APP_MAP_BOX_API_KEY:$(vue_app_map_box_api_key)
