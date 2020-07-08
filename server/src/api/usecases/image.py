@@ -19,30 +19,36 @@ def decode_base64_to_ndarray(image):
     return img
 
 
+def image_processing(image):
+    resize_img = cv2.resize(image, (500, 500))
+    gray_img = cv2.cvtColor(resize_img, cv2.COLOR_BGR2GRAY)
+    return gray_img
+
+
 def calc_image_similarity(user_base64_image, landmark_id):
 
     user_image = decode_base64_to_ndarray(user_base64_image)
-    user_image_gray = cv2.cvtColor(user_image, cv2.COLOR_BGR2GRAY)
+    user_compare_image = image_processing(user_image)
 
     origin_filename = get_image_url(landmark_id)['img_path']
     origin_raw_image = fetch_landmark_image(origin_filename)
     origin_image = convert_binary_to_ndarray(origin_raw_image)
-    origin_image_gray = cv2.cvtColor(
-        origin_image, cv2.COLOR_BGR2GRAY)
+    origin_compare_image = image_processing(origin_image)
 
-    # ORB検出器を使う
-    orb = cv2.ORB_create()
+    # AKAZE検出器を使う
+    akaze = cv2.AKAZE_create()
 
     # kpが特徴量, desが特徴量ベクトル
-    kp1, des1 = orb.detectAndCompute(user_image_gray, None)
-    kp2, des2 = orb.detectAndCompute(origin_image_gray, None)
+    kp1, des1 = akaze.detectAndCompute(user_compare_image, None)
+    kp2, des2 = akaze.detectAndCompute(origin_compare_image, None)
 
     bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
 
     # 特徴量ベクトル同士をBrute-Forceでマッチング
     matches = bf.match(des1, des2)
 
-    dist = [m.distance for m in matches]
+    # 距離が100以下のものだけを抽出
+    dist = [m.distance for m in matches if m.distance < 100]
 
     # 特徴量のマッチ数が0のとき、無限を返す
     if len(dist) == 0:

@@ -7,7 +7,7 @@ class LandmarkService:
     async def ImageCompare(image_request):
         similarity = calc_image_similarity(
             image_request.img, image_request.landmark_id)
-        threshold = 55
+        threshold = 89
         print("DEBUG sim:", similarity)
         # similarityは、一致度が高いほど0に近くなるため
         if similarity < threshold:
@@ -18,7 +18,6 @@ class LandmarkService:
     async def post_landmark(name, description, img_path, pos):
         add_landmark(name, description, img_path, pos)
         return 'OK'
-    
 
     @staticmethod
     async def fetch_all_landmarks():
