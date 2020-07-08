@@ -12,7 +12,9 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '00a28f2e-6da2-471c-b814-b25ef866b969'
   containerRegistry: 'kakemori.azurecr.io'
-  tag: '$(Build.BuildId)'
+  tag: |
+    $(Build.BuildId)
+    latest
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
