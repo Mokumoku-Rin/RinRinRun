@@ -12,6 +12,9 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '00a28f2e-6da2-471c-b814-b25ef866b969'
   containerRegistry: 'kakemori.azurecr.io'
+  apiRepository: 'kakemori-api'
+  clientRepository: 'kakemori-vue'
+  dockerfileName: 'Dockerfile.production'
   tag: |
     $(Build.BuildId)
     latest
@@ -36,31 +39,61 @@ stages:
         filecontent: '$(key)'
         endWithNewLine: true
     - task: Docker@2
-      displayName: Build kakemori-api image
+      displayName: 'Build $(apiRepository) image'
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: 'kakemori-api'
+        repository: '$(apiRepository)'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/server/Dockerfile.production'
+        Dockerfile: '$(Build.SourcesDirectory)/server/$(dockerfileName)'
         buildContext: '$(Build.SourcesDirectory)/server/'
-        arguments: "\
+        tags: '$(tag)'
+    - task: AzureRmWebAppDeployment@4
+      displayName: 'Deploy $(apiRepository) to Azure App Service'
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure for Students(5e2a8428-1101-4017-aac2-4052d518b5a2)'
+        appType: 'webAppContainer'
+        WebAppName: 'kakemori-api'
+        DockerNamespace: '$(containerRegistry)'
+        DockerRepository: '$(apiRepository)'
+        DockerImageTag: 'latest'
+        ConfigurationSettings: 'WEBSITES_PORT=$(server_port)'
+        AppSettings: "\
           GOOGLE_APPLICATION_CREDENTIALS='$(google_application_credentials)',\
           DB_HOST='$(db_host)',\
           DB_USER='$(db_user)',\
           DB_PASSWORD='$(db_password)',\
           SERVER_ENV='$(server_env)',\
           SERVER_HOST='$(server_host)',\
-          SERVER_PORT='$(server_port)'"
-        tags: '$(tag)'
+          SERVER_PORT=$(server_port)"
     - task: Docker@2
-      displayName: Build kakemori-vue image
+      displayName: 'Build $(clientRepository) image'
       inputs:
         containerRegistry: '$(dockerRegistryServiceConnection)'
-        repository: 'kakemori-vue'
+        repository: '$(clientRepository)'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/client/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/client/$(dockerfileName)'
         buildContext: '$(Build.SourcesDirectory)/client'
         arguments: "\
           VUE_APP_API_ENDPOINT='$(vue_app_api_endpoint)',\
           VUE_APP_MAP_BOX_API_KEY='$(vue_app_api_endpoint)'"
         tags: '$(tag)'
+    - task: AzureRmWebAppDeployment@4
+      displayName: 'Deploy $(clientRepository) to Azure App Service'
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: 'Azure for Students(5e2a8428-1101-4017-aac2-4052d518b5a2)'
+        appType: 'webAppContainer'
+        WebAppName: 'kakemori'
+        DockerNamespace: '$(containerRegistry)'
+        DockerRepository: '$(clientRepository)'
+        DockerImageTag: 'latest'
+        ConfigurationSettings: 'WEBSITES_PORT=$(server_port)'
+        AppSettings: "\
+          GOOGLE_APPLICATION_CREDENTIALS='$(google_application_credentials)',\
+          DB_HOST='$(db_host)',\
+          DB_USER='$(db_user)',\
+          DB_PASSWORD='$(db_password)',\
+          SERVER_ENV='$(server_env)',\
+          SERVER_HOST='$(server_host)',\
+          SERVER_PORT=$(server_port)"
