@@ -57,8 +57,8 @@ stages:
         DockerNamespace: '$(containerRegistry)'
         DockerRepository: '$(apiRepository)'
         DockerImageTag: 'latest'
-        AppSettings: >-
-          -WEBSITES_PORT $(server_port)
+        AppSettings: '-WEBSITES_PORT $(server_port)'
+        AdditionalArguments: >-
           -GOOGLE_APPLICATION_CREDENTIALS $(google_application_credentials)
           -DB_HOST $(db_host)
           -DB_USER $(db_user)
@@ -85,7 +85,7 @@ stages:
         DockerNamespace: '$(containerRegistry)'
         DockerRepository: '$(clientRepository)'
         DockerImageTag: 'latest'
-        AppSettings: >-
-          -WEBSITES_PORT $(server_port)
+        AppSettings: '-WEBSITES_PORT $(server_port)'
+        AdditionalArguments: 
           -VUE_APP_API_ENDPOINT $(vue_app_api_endpoint)
           -VUE_APP_MAP_BOX_API_KEY $(vue_app_map_box_api_key)
