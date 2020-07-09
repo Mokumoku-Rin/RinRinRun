@@ -38,6 +38,10 @@ stages:
         filepath: 'server/key.json'
         filecontent: '$(key)'
         endWithNewLine: true
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: 'sed "1a ENV VUE_APP_MAP_BOX_API_KEY=$(vue_app_api_endpoint)" $(Build.SourcesDirectory)/client/$(dockerfileName)'
     - task: Docker@2
       displayName: 'Build $(apiRepository) image'
       inputs:
