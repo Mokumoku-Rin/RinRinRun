@@ -11,10 +11,13 @@ resources:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '00a28f2e-6da2-471c-b814-b25ef866b969'
-  imageRepository: 'kakemoriapi'
   containerRegistry: 'kakemori.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/server/Dockerfile.production'
-  tag: '$(Build.BuildId)'
+  apiRepository: 'kakemori-api'
+  clientRepository: 'kakemori-vue'
+  dockerfileName: 'Dockerfile.production'
+  tag: |
+    $(Build.BuildId)
+    latest
   
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -28,12 +31,33 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+    - task: file-creator@5
+      displayName: Make key.json
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
+        fileoverwrite: true
+        filepath: 'server/key.json'
+        filecontent: '$(key)'
+        endWithNewLine: true
+    - task: Bash@3
+      displayName: Add vue_app_map_box_api_key to Dockerfile.production
+      inputs:
+        targetType: 'inline'
+        script: 'sed "1a ENV VUE_APP_MAP_BOX_API_KEY=$(vue_app_map_box_api_key)" $(Build.SourcesDirectory)/client/$(dockerfileName)'
+    - task: Docker@2
+      displayName: 'Build $(apiRepository) image'
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(apiRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/server/$(dockerfileName)'
+        buildContext: '$(Build.SourcesDirectory)/server/'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: 'Build $(clientRepository) image'
+      inputs:
+        containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(clientRepository)'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/client/$(dockerfileName)'
+        buildContext: '$(Build.SourcesDirectory)/client/'
+        tags: '$(tag)'
