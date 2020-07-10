@@ -148,6 +148,7 @@ export default {
   methods: {
     confirmExit() {
       if(window.confirm("ランニングを中止しますか？\n中止をすると計測されたデータは破棄されます。")) {
+        this.$store.commit('setIsRuning', false)
         router.push('/home')
       }
     },
@@ -188,6 +189,7 @@ export default {
     clearHistory(){
       this.$store.commit('clearMyGPSLocation')
       this.$store.commit('clearMyRunTimeList')
+      this.$store.commit('resetMyRunStartTime')
     },
     successGetGPS(position){
       const nowGPS = [position.coords.latitude, position.coords.longitude]
