@@ -154,6 +154,21 @@ export default {
         return {id: nearestID, distance: nearestDistance}
       }
       return false
+    },
+    getNowRank(){
+      let rank = 1
+      for(const ghost of  this.ghostData){
+        let ghostLandmarkVisitCount = 0
+        for(const landmarkVisit of ghost.landmark_visits){
+          if(landmarkVisit.time < this.elapsedTime){
+            ghostLandmarkVisitCount ++
+          }
+        }
+        if(this.$store.state.myRunCheckedLandmarkID.length < ghostLandmarkVisitCount){
+          rank ++
+        }
+      }
+      return rank
     }
   },
   mounted: function () {
