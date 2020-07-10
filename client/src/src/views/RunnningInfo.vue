@@ -167,6 +167,7 @@ export default {
     },
     startRunning(){
       if(this.$store.state.isRunning === false){
+        this.$store.commit('clearRunningData')
         this.clearHistory()
       }
       if(this.isIntervalSet === false){
