@@ -141,6 +141,7 @@ export default {
     }
   },
   created() {
+    this.$store.commit('clearRunningData')
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = parseInt(this.$route.query.course_id)
     this.page_info.title = this.$store.state.runningCourseData.name

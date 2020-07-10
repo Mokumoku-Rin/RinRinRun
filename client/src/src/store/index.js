@@ -51,6 +51,17 @@ export default new Vuex.Store({
     },
     setRunnigCourseData(state, data){
       state.runningCourseData = data
+    },
+    // この実装よくないけど、応急処置
+    clearRunningData(state){
+      state.myGPSLocations = []
+      state.myRunTimeList = []
+      state.myRunStartTime = -1
+      state.myRunNowDistance = 0
+      state.myRunCheckedLandmarkID = []
+      state.isRunning = false
+      state.myLandmarkVisits = []
+      state.runningCourseData = null
     }
   },
   actions: {
