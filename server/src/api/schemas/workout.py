@@ -34,3 +34,13 @@ class Data(BaseModel):
 class WorkoutBasedOnDateResponse(BaseModel):
     date: str
     datas: List[Data]
+
+class WorkoutResult(BaseModel):
+    total_time: int #ms
+    total_distance: int # metre
+
+
+class WorkoutByCourseIdResponse(BaseModel):
+    course_id: str
+    results: List[WorkoutResult]
+

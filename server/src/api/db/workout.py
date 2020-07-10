@@ -40,3 +40,8 @@ def get_based_on_date(uid, date):
     sql = "SELECT total_time, total_distance, ST_AsGeoJSON(geo_linestring) FROM workout_histories WHERE user_id = %s AND DATE(created_at) = %s"
     result = execute_fetchall(sql, (uid, date))
     return result
+
+def get_by_course_id(cid):
+    sql = "SELECT * FROM workout_histories WHERE course_id = %s"
+    result = execute_fetchall(sql, (cid))
+    return result

@@ -4,7 +4,8 @@ from db.course import update_mean_record, update_played_count
 from db.user import update_user_total_record
 from db.workout import (get_based_on_date, get_mean_total_record,
                         get_totaldist_timelist_poslist, insert_landmark_visit,
-                        insert_workout_history)
+                        insert_workout_history,
+                        get_by_course_id)
 
 
 def get_workout_list_for_ghost(uid_list, course_id) -> (list, list):
@@ -92,3 +93,17 @@ def select_history_based_on_date(uid, date):
         i['geo_json'] = json.loads(i.pop('ST_AsGeoJSON(geo_linestring)'))
         workout_history_based_on_date.append(i)
     return workout_history_based_on_date
+
+def get_all_by_course_id(cid):
+    workouts = get_by_course_id(cid)
+    if len(workouts) == 0:
+        return []
+
+    needed = []
+    for workout in workouts:
+        needed.append({
+            "user_id": workout["user_id"],
+            "total_time": workout["total_time"],
+            "total_distance": workout["total_distance"]
+        })
+    return needed
