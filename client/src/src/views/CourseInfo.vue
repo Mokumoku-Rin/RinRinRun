@@ -9,11 +9,11 @@
           <div class="course_info_statistics_wrapper">
             <section class="course_info_statistics">
               <h3 class="course_info_statistics_title">最短活動距離</h3>
-              <p class="course_info_statistics_text">{{course_info.shortest_distance}}<span class="course_info_statistics_unit">km</span></p>
+              <p class="course_info_statistics_text">{{course_info.shortest_distance}}<span class="course_info_statistics_unit">m</span></p>
             </section>
             <section class="course_info_statistics">
               <h3 class="course_info_statistics_title">平均活動距離</h3>
-              <p class="course_info_statistics_text">{{course_info.mean_distance}}<span class="course_info_statistics_unit">km</span></p>
+              <p class="course_info_statistics_text">{{course_info.mean_distance}}<span class="course_info_statistics_unit">m</span></p>
             </section>
             <section class="course_info_statistics">
               <h3 class="course_info_statistics_title">最速タイム</h3>

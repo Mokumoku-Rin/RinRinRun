@@ -18,7 +18,7 @@
         </section>
         <section class="running_goal_section">
           <h2 class="running_goal_title">距離</h2>
-          <p class="running_goal_text">{{page_info.distance}}<span class="running_goal_unit">km</span></p>
+          <p class="running_goal_text">{{page_info.distance}}<span class="running_goal_unit">m</span></p>
         </section>
         <section class="running_goal_section">
           <h2 class="running_goal_title">時間</h2>

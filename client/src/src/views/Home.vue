@@ -17,7 +17,7 @@
         <header class="today_top section">
           <section class="today_distance">
             <h2 class="today_data_title">距離</h2>
-            <p class="today_data_text">{{today_data.distance}}<span class="today_data_unit">km</span></p>
+            <p class="today_data_text">{{today_data.distance}}<span class="today_data_unit">m</span></p>
           </section>
         </header>
         <div class="today_main section">

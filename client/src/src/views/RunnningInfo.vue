@@ -10,7 +10,7 @@
           <div class="running_info_statistics_wrapper">
             <div class="running_info_statistics">
               <h4 class="running_info_statistics_title">走った距離</h4>
-              <p class="running_info_statistics_text">{{page_info.run_distance}}<span class="running_info_statistics_unit">km</span></p>
+              <p class="running_info_statistics_text">{{page_info.run_distance}}<span class="running_info_statistics_unit">m</span></p>
             </div>
             <div class="running_info_statistics">
               <h4 class="running_info_statistics_title">現在の順位</h4>
@@ -198,7 +198,8 @@ export default {
 
       this.$store.commit('addMyRunTimeList', this.getElapssedTime())
 
-      this.page_info.run_distance = this.$calDistance(this.$store.state.myGPSLocations) / 1000
+      const distMetre = this.$calDistance(this.$store.state.myGPSLocations)
+      this.page_info.run_distance = Math.round(distMetre)
       console.log('success')
     },
     gpsIntervalFunc(){
