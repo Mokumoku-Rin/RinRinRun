@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <statusBar :leftLink='{path: "/choice-course", query: { search_type: this.page_info.search_type } }' :center="page_info.title"></statusBar>
+    <statusBar :leftLink='{path: "/choice-course", query: { search_type: this.page_info.search_type } }' :center="course_info.name"></statusBar>
     <main>
       <div class="course_info section">
         <article class="course_info_section">
@@ -189,8 +189,8 @@ export default {
       },
       course_info: {
         id: 0,
-        name: 'テストコース',
-        description: 'コース説明コース説明コース説明コース説明コース説明コース説明コース説明コース説明コース説明コース説明コース説明コース説明',
+        name: '',
+        description: '',
         mean_distance: 0,
         shortest_distance: 0,
         mean_time: 0,
@@ -203,7 +203,7 @@ export default {
     this.course_info.id = this.$route.query.course_id
     // idから情報を取得するコード
     this.$getApi('/session/course/'+this.course_info.id+'/', {}, (res)=>{
-      this.course_info.name = res.data.neme
+      this.course_info.name = res.data.name
       this.course_info.description = res.data.description
       this.course_info.mean_distance = res.data.mean_distance
       this.course_info.mean_time = res.data.mean_time
