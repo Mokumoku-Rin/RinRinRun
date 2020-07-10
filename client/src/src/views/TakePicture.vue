@@ -135,7 +135,7 @@ export default {
   created() {
     this.landmark_info.id = this.$route.query.landmark_id
     this.page_info.course_id = this.$route.query.course_id
-    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+    for(const landmark of this.$store.state.runningCourseData.landmarks){
       if(landmark.id == this.landmark_info.id){
         this.landmark_info.name = landmark.name
         this.page_info.title = this.landmark_info.name + 'の撮影'

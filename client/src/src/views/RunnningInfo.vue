@@ -20,9 +20,7 @@
         </article>
         <section class="running_info_section">
           <h2 class="running_info_title">撮影場所とゴーストの情報</h2>
-          <div class="running_info_map">
-            <rin-rin-map :courseID="this.page_info.course_id" :myLocation="myLocation" :elapsedTime="mapElapsedTime" style="height:500px;" className="" ref="map"/>
-          </div>
+            <rin-rin-map :courseID="this.page_info.course_id" :myLocation="myLocation" :elapsedTime="mapElapsedTime" className="running_info_map" ref="map"/>
         </section>
       </div>
     </main>
@@ -145,7 +143,7 @@ export default {
   created() {
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = parseInt(this.$route.query.course_id)
-    this.page_info.title = this.$store.state.runnigCourseData.name
+    this.page_info.title = this.$store.state.runningCourseData.name
   },
   methods: {
     confirmExit() {

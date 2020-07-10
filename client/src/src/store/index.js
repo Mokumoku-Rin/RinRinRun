@@ -12,7 +12,7 @@ export default new Vuex.Store({
     myRunCheckedLandmarkID: [],
     isRunning: false,
     myLandmarkVisits: [],
-    runnigCourseData: null,
+    runningCourseData: null,
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -50,7 +50,7 @@ export default new Vuex.Store({
       state.myLandmarkVisits.length = 0
     },
     setRunnigCourseData(state, data){
-      state.runnigCourseData = data
+      state.runningCourseData = data
     }
   },
   actions: {

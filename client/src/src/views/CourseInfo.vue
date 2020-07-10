@@ -221,7 +221,7 @@ export default {
           if(urlCallbackCount === editedCourseData.landmarks.length){
             this_ref.$store.commit('setRunnigCourseData', editedCourseData)
             this_ref.course_info.landmarks = editedCourseData.landmarks
-            console.log(this_ref.$store.state.runnigCourseData)
+            console.log(this_ref.$store.state.runningCourseData)
           }
         }).catch(function(error) {
           console.log(error)

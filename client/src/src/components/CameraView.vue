@@ -45,7 +45,7 @@ export default {
 
     // findがうまく動作しないため
     
-    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+    for(const landmark of this.$store.state.runningCourseData.landmarks){
       if(parseInt(landmark.id)  == this.landmarkID){
         overLayImage.src = landmark.img_url
         overLayContext.drawImage(overLayImage,0, 0, 512, 512, 0, 0, 512, 512)
@@ -90,7 +90,7 @@ export default {
 
         // before destoryが呼ばれないときがあるみたいなので一応
         this.videoStream.getTracks().forEach(track => track.stop())
-        if(this.$store.state.myLandmarkVisits.length === this.$store.state.runnigCourseData.landmarks.length){
+        if(this.$store.state.myLandmarkVisits.length === this.$store.state.runningCourseData.landmarks.length){
           //ゴールノーページへ
           router.push('/running-goal')
         }else{

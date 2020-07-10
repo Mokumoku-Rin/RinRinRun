@@ -69,7 +69,7 @@ export default {
     statusBar
   },
   created() {
-    for(const landmark of this.$store.state.runnigCourseData.landmarks){
+    for(const landmark of this.$store.state.runningCourseData.landmarks){
       if(landmark.id === this.$route.query.landmark_id){
         this.landmark_info = landmark
         break

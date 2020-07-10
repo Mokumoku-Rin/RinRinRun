@@ -137,7 +137,7 @@ export default {
       accessToken: process.env.VUE_APP_MAP_BOX_API_KEY
      }).addTo(this.map);
      
-    this.landmarks = this.$store.state.runnigCourseData.landmarks
+    this.landmarks = this.$store.state.runningCourseData.landmarks
     this.setMapLandmark()
     
     this.$getApi('/session/course/'+this.courseID+'/ghost', {}, (response)=>{

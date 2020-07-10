@@ -12,7 +12,7 @@
         </div>
         <section class="running_goal_section">
           <h2 class="running_goal_title">走ったコース</h2>
-          <dispMap :courseID="this.$store.state.runnigCourseData.id" :routes="[this.$store.state.myGPSLocations]" className="running_goal_map"/>
+          <dispMap :courseID="this.$store.state.runningCourseData.id" :routes="[this.$store.state.myGPSLocations]" className="running_goal_map"/>
           <!-- <div class="running_goal_map">
           </div> -->
         </section>
@@ -149,7 +149,7 @@ export default {
           "time_list": time_list,
           "total_distance": distance,
           "total_time": this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time,
-          "course_id": this.$store.state.runnigCourseData.id
+          "course_id": this.$store.state.runningCourseData.id
         },
         "landmark_visits": this.$store.state.myLandmarkVisits, 
         "geo_json":geoJson
