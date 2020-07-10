@@ -218,6 +218,7 @@ export default {
           }
         }
       }
+      this.page_info.ranking = this.$refs.map.getNowRank()
     },
     stopWatchFunc(){
       this.page_info.run_time = this.getElapssedTime()
