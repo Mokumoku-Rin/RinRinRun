@@ -25,7 +25,7 @@ app.include_router(
 if __name__ == "__main__":
     print("Firebase Admin:", firebase.get_app().name, "is running")
     server_host = os.environ["SERVER_HOST"]
-    server_port = os.environ["SERVER_ROOT"]
+    server_port = os.environ["SERVER_PORT"]
     print("host:" + str(server_host))
     print("port:" + str(server_port))
     uvicorn.run(app, host=os.environ["SERVER_HOST"], port=os.environ["SERVER_PORT"])
