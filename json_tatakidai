@@ -157,3 +157,16 @@ courseの登録Post
 {
     "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
 }
+
+workout results
+{
+  "course_id": int,
+  "results": [
+    {
+      "user_name": string,
+      "total_time": int (ms)
+      "total_distance": int (metre)
+    }
+    ...
+  ]
+}
