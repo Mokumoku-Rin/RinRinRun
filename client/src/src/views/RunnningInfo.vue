@@ -150,6 +150,7 @@ export default {
     confirmExit() {
       if(window.confirm("ランニングを中止しますか？\n中止をすると計測されたデータは破棄されます。")) {
         this.$store.commit('setIsRuning', false)
+        this.$store.commit('clearRunningData')
         router.push('/home')
       }
     },
