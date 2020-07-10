@@ -42,7 +42,7 @@ stages:
       displayName: Add vue_app_map_box_api_key to Dockerfile.production
       inputs:
         targetType: 'inline'
-        script: 'sed "1a ENV VUE_APP_MAP_BOX_API_KEY=$(vue_app_map_box_api_key)" $(Build.SourcesDirectory)/client/$(dockerfileName)'
+        script: 'sed "1a ENV VUE_APP_MAP_BOX_API_KEY=$(vue_app_map_box_api_key) VUE_APP_API_ENDPOINT=$(vue_app_api_endpoint)" $(Build.SourcesDirectory)/client/$(dockerfileName)'
     - task: Docker@2
       displayName: 'Build $(apiRepository) image'
       inputs:
