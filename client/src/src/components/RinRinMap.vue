@@ -54,6 +54,38 @@ export default {
       }
       this.existDrawed.length = 0
     },
+    setGhostPath(){
+      if (this.ghostData) {
+        const selected = [];
+        for (let i = 0; i < this.ghostData.length; i++) {
+          let c;
+          for (c = getRandomColors(); selected.includes(c); c = getRandomColors()) {
+            getRandomColors(); // ルーレット廻し（ただのLintエラー回避）
+          }
+          this.ghostData[i].color = c;
+        }
+      }
+      function getRandomColors() {
+        const colors = [
+          "aqua",
+          "aquamarine",
+          "blue",
+          "brown",
+          "chartreuse",
+          "crimson",
+          "darkgreen",
+          "darkslateblue",
+          "gold",
+          "green",
+          "greenyellow",
+          'hotpink',
+          "lightgreen",
+          "orange",
+          "orangered",
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
+      }
+    },
     setMapLandmark(){
       for(let index=0;  index < this.landmarks.length; index++){
         const landmark = this.landmarks[index]
@@ -90,7 +122,7 @@ export default {
 
           if(dispRouteList.length > 1){
               this.existDrawed.push( L.polyline(dispRouteList,{
-                "color": "#FF0000",
+                "color": ghost.color,
                 "weight": 5,
                 "opacity": 0.6
               }).addTo(this.map) )
@@ -99,6 +131,7 @@ export default {
         }
       }
       this.map.setView(this.myLocation)
+
     },
     nearestLandmark(){
       if(!this.landmarks)return false
@@ -140,9 +173,12 @@ export default {
     this.landmarks = this.$store.state.runningCourseData.landmarks
     this.setMapLandmark()
     
+    
     this.$getApi('/session/course/'+this.courseID+'/ghost', {}, (response)=>{
       this.ghostData = response.data.ghosts
+      this.setGhostPath()
     })
+
 
   },
   watch: {
