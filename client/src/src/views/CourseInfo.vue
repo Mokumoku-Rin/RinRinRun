@@ -219,7 +219,7 @@ export default {
           urlCallbackCount++
           editedCourseData.landmarks[index].img_url = url
           if(urlCallbackCount === editedCourseData.landmarks.length){
-            this_ref.$store.commit('setRunnigCourseData', editedCourseData)
+            this_ref.$store.commit('setRunningCourseData', editedCourseData)
             this_ref.course_info.landmarks = editedCourseData.landmarks
             console.log(this_ref.$store.state.runningCourseData)
           }

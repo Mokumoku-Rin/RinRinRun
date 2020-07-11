@@ -49,7 +49,7 @@ export default new Vuex.Store({
     clearMyLandmarkVisits(state){
       state.myLandmarkVisits.length = 0
     },
-    setRunnigCourseData(state, data){
+    setRunningCourseData(state, data){
       state.runningCourseData = data
     },
     // この実装よくないけど、応急処置
