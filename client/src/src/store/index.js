@@ -13,6 +13,7 @@ export default new Vuex.Store({
     isRunning: false,
     myLandmarkVisits: [],
     runningCourseData: null,
+    mapRelocationFlag: true
   },
   mutations: {
     addMyGPSLocation(state, location){
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     },
     setRunningCourseData(state, data){
       state.runningCourseData = data
+    },
+    setMapRelocationFlag(state, value){
+      state.mapRelocationFlag = value
     },
     // この実装よくないけど、応急処置
     clearRunningData(state){

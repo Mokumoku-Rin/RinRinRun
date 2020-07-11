@@ -130,8 +130,9 @@ export default {
           this.existDrawed.push(L.marker(dispNowGPS, {icon: L.icon({iconUrl: ghostPath, iconSize: [30, 30]})}).addTo(this.map))
         }
       }
-      this.map.setView(this.myLocation)
-
+      if(this.$store.state.mapRelocationFlag){
+        this.map.setView(this.myLocation)
+      }
     },
     nearestLandmark(){
       if(!this.landmarks)return false
@@ -169,6 +170,9 @@ export default {
         }
       }
       return rank
+    },
+    setLocation(latitude, longitude){
+      this.map.setView([latitude, longitude])
     }
   },
   mounted: function () {

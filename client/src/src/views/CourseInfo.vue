@@ -26,10 +26,12 @@
           </div>
         </article>
         <section class="course_info_section">
-          <h2 class="course_info_title">撮影場所</h2>
-          <p class="course_info_description">
+          <h2 class="course_info_title" style="margin-bottom:0px">撮影場所</h2>
+          <p class="course_info_description" style="margin-top:0px">
             撮影スポット周辺に移動すると、スポットの撮影ができるようになります。
           </p>
+          自動でマップを更新する<input type="checkbox" v-model="reLocationFlag"/>
+          <button class="go_sojo_location_btn" v-on:click="goToSojo">SOJOに移動</button>
           <dispMap :courseID="parseInt(course_info.id)" className="course_info_map" :showMyLocation="true" ref="map"/>
         </section>
         <section class="course_info_section">
@@ -167,6 +169,17 @@
   color: $red;
   margin-left: .5rem;
 }
+
+.go_sojo_location_btn{
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  color: $orange;
+  border: solid 1px $orange;
+  background-color: transparent;
+  border-radius: 3px;
+  margin-left: 10px;
+}
 </style>
 
 <script>
@@ -196,6 +209,16 @@ export default {
         mean_time: 0,
         shortest_time: 0,
         landmarks: null
+      }
+    }
+  },
+  computed: {
+    reLocationFlag: {
+      get () {
+        return this.$store.state.mapRelocationFlag
+      },
+      set (value) {
+        this.$store.commit('setMapRelocationFlag', value)
       }
     }
   },
@@ -266,6 +289,10 @@ export default {
           console.log(idDistance.distance)
         }
       }
+    },
+    goToSojo(){
+      this.$store.commit('setMapRelocationFlag', false)
+      this.$refs.map.setLocation(34.878031, 135.575573)
     }
   },
   beforeDestroy: function () {
