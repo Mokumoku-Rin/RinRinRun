@@ -1,11 +1,11 @@
 <template>
 <div class="home">
-  <div class="root">
-    <p>カメラ</p>
+  <statusBar center="ランドマークの登録"></statusBar>
+  <main class="main">
     <video ref="video" id="src-video" playsinline />
-    <br>
-    <button @click="takePhoto">写真を撮る</button>
-    <hr>
+    <div class="button_warapper">
+      <button class="take_photo" @click="takePhoto">写真を撮る</button>
+    </div>
     <p>画像</p>
     <canvas ref="takedPhotoCanvas" id="taked-ptoto-canvas"></canvas>
     <p>座標</p>
@@ -15,13 +15,16 @@
     <p>ランドマークの説明</p>
     <textarea v-model="landmarkDesc" id="landmark-desc-text-area"/>
     <hr>
-    <button @click="postToServer">サーバに投稿</button>
-  </div>
+    <div class="button_warapper">
+      <button class="post_photo" @click="postToServer">サーバに投稿</button>
+    </div>
+  </main>
 </div>
 </template>
 
 <script>
 import firebase from 'firebase/app'
+import statusBar from '@/components/StatusBar.vue'
 
 export default {
   data() {
@@ -34,6 +37,9 @@ export default {
       gpsTimerObj: null,
       location: 'not set'
     }
+  },
+  components: {
+    statusBar
   },
   methods: {
     takePhoto(){
@@ -151,17 +157,49 @@ function generateUuid() {
 </script>
 
 <style lang="scss">
+@import "@/assets/scss/base/_variables.scss";
 @import "@/assets/scss/modules/_home.scss";
 
-.root{
-  overflow: auto; 
-  height: 100%;
+.main {
+  background: $white;
+  overflow-y: scroll;
+}
+
+.button_warapper {
+  text-align: center;
+}
+
+.take_photo {
+  background-color: #D62828;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 2%;
+  border-color: #D62828;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: .75rem 0;
+  width: 80%;
+}
+
+.post_photo {
+  background-color: rgb(65, 195, 255);
+  text-align: center;
+  border: 1px solid;
+  border-radius: 2%;
+  border-color: #D62828;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: .75rem 0;
+  width: 80%;
+  margin-bottom: 1rem;
 }
 
 #taked-ptoto-canvas{
   height: 512px;
   width: 512px;
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
 #landmark-desc-text-area{
