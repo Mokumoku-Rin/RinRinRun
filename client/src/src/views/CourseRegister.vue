@@ -1,15 +1,19 @@
 <template>
 <div class="home">
-  <div id="root">
+  <statusBar center="コースの登録"></statusBar>
+  <main class="main">
     <div v-for="landmark of landmarks"  v-bind:key="landmark.id">
-      <input type="checkbox" @change="changeCheck(landmark.id)">
-      <span style="font-size: 1.5em;">{{ landmark.name }}</span><br>
+      <label class="landmark_label">
+        <input type="checkbox" @change="changeCheck(landmark.id)">
+        {{ landmark.name }}
+      </label>
+      <!-- <span style="font-size: 1.5em;"></span><br> -->
       <p>{{ landmark.description }}</p>
-      <img :src="landmark.img_url" :alt="landmark.name" style="height: 200px;">
+      <img class="landmark_img" :src="landmark.img_url" :alt="landmark.name" style="height: 200px;">
       <hr>
     </div>
-    <hr>
     <p>登録情報</p>
+    <hr>
     <p>ランドマークID</p>
     <ul>
       <li v-for="item of checkedLandmark" v-bind:key="item">
@@ -21,13 +25,16 @@
     <p>コースの説明</p>
     <textarea v-model="courseDesc" id="course-desc-text-area"/>
     <hr>
-    <button @click="postToServer">サーバに投稿</button>
-  </div>
+    <div class="button_warapper">
+      <button class="post_course" @click="postToServer">サーバに投稿</button>
+    </div>
+  </main>
 </div>
 </template>
 
 <script>
 import firebase from 'firebase/app'
+import statusBar from '@/components/StatusBar.vue'
 
 export default {
   data() {
@@ -37,6 +44,9 @@ export default {
       courseTitle: "",
       courseDesc: ""
     }
+  },
+  components: {
+    statusBar
   },
   created(){
     this.$getApi('/session/landmark/', {}, (res)=>{
@@ -94,10 +104,37 @@ export default {
 
 <style lang="scss">
 @import "@/assets/scss/modules/_home.scss";
+@import "@/assets/scss/base/_variables.scss";
 
-#root{
-  overflow: auto; 
-  height: 100%;
+.main {
+  background: $white;
+  overflow-y: scroll;
+}
+
+.button_warapper {
+  text-align: center;
+}
+
+.landmark_label {
+  font-size: 1.5em;
+}
+
+.post_course {
+  background-color: rgb(65, 195, 255);
+  text-align: center;
+  border: 1px solid;
+  border-radius: 2%;
+  border-color: #D62828;
+  color: white;
+  font-weight: 700;
+  font-size: 1.25rem;
+  padding: .75rem 0;
+  width: 80%;
+  margin-bottom: 1rem;
+}
+
+.landmark_img {
+  margin-left: 5%;
 }
 
 #course-desc-text-area{
