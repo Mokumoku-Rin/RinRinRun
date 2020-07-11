@@ -1,5 +1,11 @@
 <template>
-  <div id='map' v-bind:class="className"></div>
+  <div>
+    <div id='map' v-bind:class="className"></div>
+    <div v-if="this.showMyLocation">
+      <input type="radio" name="test1" id="総情" checked="checked"><label for="総情">総情</label>
+      <input type="radio" name="test1" id="実際"><label for="実際">実際の位置</label>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,6 +51,7 @@ export default {
     }
   },
   mounted: function () {
+    console.log('location pathname: ', location.pathname)
     const mapDefaultZoomLevel = 17
     //MAP読み込み
     this.map = L.map('map').setView(SOJO_GPS_POSITION, mapDefaultZoomLevel)
@@ -74,8 +81,11 @@ export default {
         this.map.removeLayer(eLayer)
       }
       this.existDrawedRunner.length = 0
-
-      this.location = [position.coords.latitude, position.coords.longitude]
+      if (document.getElementById("総情").checked){
+        this.location = SOJO_GPS_POSITION
+      }else{
+        this.location = [position.coords.latitude, position.coords.longitude]
+      }
       this.existDrawedRunner.push(L.marker(this.location, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
 
       this.map.setView(this.location)

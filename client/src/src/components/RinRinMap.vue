@@ -1,5 +1,9 @@
 <template>
-  <div id='map' v-bind:class="className"></div>
+  <div>
+    <div id='map' v-bind:class="className"></div>
+    <input type="radio" name="test1" id="総情" checked="checked"><label for="総情">総情</label>
+    <input type="radio" name="test1" id="実際"><label for="実際">実際の位置</label>
+  </div>
 </template>
 
 <script>
@@ -101,7 +105,9 @@ export default {
       console.log('re render')
       this.removeLayerDrawed()
       this.setMapLandmark()
-
+      if (document.getElementById("総情").checked){
+        this.myLocation = SOJO_GPS_POSITION
+      }
       this.existDrawed.push(L.marker(this.myLocation, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
       if(this.ghostData){
         for(let index = 0; index < this.ghostData.length; index++){
