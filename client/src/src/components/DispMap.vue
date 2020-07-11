@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <div id='map' v-bind:class="className"></div>
     <div v-if="this.showMyLocation">
       <input type="radio" name="test1" id="総情" checked="checked"><label for="総情">総情</label>
