@@ -141,6 +141,7 @@ export default {
     }
   },
   created() {
+    this.$store.commit('clearRunningData')
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = parseInt(this.$route.query.course_id)
     this.page_info.title = this.$store.state.runningCourseData.name
@@ -148,6 +149,8 @@ export default {
   methods: {
     confirmExit() {
       if(window.confirm("ランニングを中止しますか？\n中止をすると計測されたデータは破棄されます。")) {
+        this.$store.commit('setIsRuning', false)
+        this.$store.commit('clearRunningData')
         router.push('/home')
       }
     },
@@ -165,6 +168,7 @@ export default {
     },
     startRunning(){
       if(this.$store.state.isRunning === false){
+        this.$store.commit('clearRunningData')
         this.clearHistory()
       }
       if(this.isIntervalSet === false){
@@ -188,6 +192,7 @@ export default {
     clearHistory(){
       this.$store.commit('clearMyGPSLocation')
       this.$store.commit('clearMyRunTimeList')
+      this.$store.commit('resetMyRunStartTime')
     },
     successGetGPS(position){
       const nowGPS = [position.coords.latitude, position.coords.longitude]
@@ -218,6 +223,7 @@ export default {
           }
         }
       }
+      this.page_info.ranking = this.$refs.map.getNowRank()
     },
     stopWatchFunc(){
       this.page_info.run_time = this.getElapssedTime()
