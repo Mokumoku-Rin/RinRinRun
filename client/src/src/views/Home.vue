@@ -2,7 +2,7 @@
   <div class="home with-navibar">
     <statusBar center="今日の記録" :avatar="account.avatar" :rightFunc="confirmLogout"></statusBar>
     <main>
-      <article class="today__no_data section" v-show="isEmpty(today_data)">
+      <article class="today__no_data section" v-if="isEmpty(today_data)">
         <h2 class="title">記録がありません</h2>
         <router-link to="/search-course">
           <p class="message has-text-red">
@@ -13,7 +13,7 @@
         <img src="@/assets/img/jogging.svg" alt="ジョギング">
       </article>
 
-      <div class="today__has_data" v-show="!isEmpty(today_data)">
+      <div class="today__has_data" v-else>
         <header class="today_top section">
           <section class="today_distance">
             <h2 class="today_data_title">距離</h2>
