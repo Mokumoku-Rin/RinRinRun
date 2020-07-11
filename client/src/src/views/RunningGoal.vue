@@ -11,6 +11,10 @@
           </p>
         </div>
         <section class="running_goal_section">
+          <h2 class="running_goal_title">ランク</h2>
+          <p class="running_goal_text">{{page_info.rank}}</p>
+        </section>
+        <section class="running_goal_section">
           <h2 class="running_goal_title">走ったコース</h2>
           <dispMap :courseID="this.$store.state.runningCourseData.id" :routes="[this.$store.state.myGPSLocations]" className="running_goal_map"/>
           <!-- <div class="running_goal_map">
@@ -103,7 +107,8 @@ export default {
       page_info: {
         distance: this.$calDistance(this.$store.state.myGPSLocations),
         time: this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time,
-        calorie: calCalorie(this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time / 1000 / 3600) // この辺直した方がいい
+        calorie: calCalorie(this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time / 1000 / 3600), // この辺直した方がいい
+        rank: ''
       }
     }
   },
@@ -156,12 +161,28 @@ export default {
       }
       console.log(postJson)
       this.$postApi('/session/workout/', postJson)
+    },
+    setRank(){
+      this.$getApi(`/session/workout/course/${this.$store.state.runningCourseData.id}/`, {}, (res)=>{
+        let rankTmp = 1
+        for(const userData of res.data.results){
+          if(userData.total_time < this.$store.state.myLandmarkVisits[this.$store.state.myLandmarkVisits.length - 1].time){
+            rankTmp++
+          } 
+        }
+        if(res.data.results.length < 1){
+          this.page_info.rank = `${rankTmp}位`
+        }else{
+          this.page_info.rank = `${rankTmp} / ${res.data.results.length + 1}位`
+        }
+      })
     }
   },
   created(){
+    this.setRank()
     this.sendResult()
     this.$store.commit('setIsRuning', false)
-  }
+  },
 }
 
 // 消費カロリー(kcal) ＝ メッツ * 体重kg * 運動時間 * 1.05
