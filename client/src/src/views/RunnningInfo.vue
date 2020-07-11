@@ -19,7 +19,9 @@
           </div>
         </article>
         <section class="running_info_section">
-          <h2 class="running_info_title">撮影場所とゴーストの情報</h2>
+          <h2 class="running_info_title" style="margin-bottom:0px">撮影場所とゴーストの情報</h2>
+            自動でマップを更新する<input type="checkbox" v-model="reLocationFlag"/>
+            <button class="go_sojo_location_btn" v-on:click="goToSojo">SOJOに移動</button>
             <rin-rin-map :courseID="this.page_info.course_id" :myLocation="myLocation" :elapsedTime="mapElapsedTime" className="running_info_map" ref="map"/>
         </section>
       </div>
@@ -100,6 +102,18 @@
   top: 0;
   left: 0;
 }
+
+.go_sojo_location_btn{
+  display: inline-block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  color: $orange;
+  border: solid 1px $orange;
+  background-color: transparent;
+  border-radius: 3px;
+  margin-left: 10px;
+  margin-bottom: 5px;
+}
 </style>
 
 <script>
@@ -144,6 +158,16 @@ export default {
     this.page_info.search_type = this.$route.query.search_type
     this.page_info.course_id = parseInt(this.$route.query.course_id)
     this.page_info.title = this.$store.state.runningCourseData.name
+  },
+  computed: {
+    reLocationFlag: {
+      get () {
+        return this.$store.state.mapRelocationFlag
+      },
+      set (value) {
+        this.$store.commit('setMapRelocationFlag', value)
+      }
+    }
   },
   methods: {
     confirmExit() {
@@ -230,6 +254,10 @@ export default {
       const tempDate = new Date()
       return tempDate.getTime() - this.$store.state.myRunStartTime
     },
+    goToSojo(){
+      this.$store.commit('setMapRelocationFlag', false)
+      this.$refs.map.setLocation(34.878031, 135.575573)
+    }
   },
   mounted(){
     this.startRunning()

@@ -60,7 +60,7 @@ export default {
 
     if(this.showMyLocation){
       this.gpsIntervalFunc()
-      this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 5000) //5000 is ms
+      this.gpsTimerObj = setInterval(this.gpsIntervalFunc, 500) //500 is ms
     }
 
     this.render()
@@ -78,7 +78,9 @@ export default {
       this.location = [position.coords.latitude, position.coords.longitude]
       this.existDrawedRunner.push(L.marker(this.location, {icon: L.icon({iconUrl: myRunnerPath, iconSize: [30, 30]})}).addTo(this.map))
 
-      this.map.setView(this.location)
+      if(this.$store.state.mapRelocationFlag){
+        this.map.setView(this.location)
+      }
       console.log('success')
     },
     nearestLandmark(){
@@ -97,6 +99,9 @@ export default {
         return {id: nearestID, distance: nearestDistance}
       }
       return false
+    },
+    setLocation(latitude, longitude){
+      this.map.setView([latitude, longitude])
     },
     render(){
       for(const eLayer of this.existDrawedPinRoute){
