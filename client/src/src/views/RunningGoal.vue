@@ -183,6 +183,9 @@ export default {
     this.sendResult()
     this.$store.commit('setIsRuning', false)
   },
+  beforeDestroy: function () {
+    this.$store.commit('clearRunningData')
+  }
 }
 
 // 消費カロリー(kcal) ＝ メッツ * 体重kg * 運動時間 * 1.05
