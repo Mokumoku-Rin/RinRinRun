@@ -6,24 +6,24 @@ Vue.use(VueRouter)
 
 const routes = [
   // --------------dev---------------
-  {
-    path: '/',
-    name: 'DevHome',
-    component: () => import('../views/DevHome.vue')
-  },
-  {
-    path: '/home',
-    name: 'Home',
-    component: () => import('../views/Home.vue')
-  },
-  //--------------------------------
-
-  // -------producrtion-------------
   // {
   //   path: '/',
+  //   name: 'DevHome',
+  //   component: () => import('../views/DevHome.vue')
+  // },
+  // {
+  //   path: '/home',
   //   name: 'Home',
   //   component: () => import('../views/Home.vue')
   // },
+  //--------------------------------
+
+  // -------producrtion-------------
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('../views/Home.vue')
+  },
   // ------------------------------
   {
     path: '/friends',
