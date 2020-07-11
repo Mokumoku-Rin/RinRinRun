@@ -13,9 +13,8 @@
   bottom: 0;
   left: 0;
   right: 0;
+  top: 92.2vh;
   background: $white;
-  padding: 1rem 1.5rem;
-  border-top: 1px solid $black;
   pointer-events: none;
   width: 50vw;
 

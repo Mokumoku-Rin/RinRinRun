@@ -14,9 +14,9 @@
     </main>
     <div class="camera_button_container">
       <cameraButton :func="takePhoto" :active="page_info.active_button"></cameraButton>
-      <cameraButton :func="takePhotoDebug" :active="page_info.active_button"></cameraButton>
+      <cameraButton :func="takePhotoDebug" :active="true"></cameraButton>
     </div>
-    <collation :active="page_info.active_collation"></collation>
+    <!--<collation :active="page_info.active_collation"></collation>-->
   </div>
 </template>
 
@@ -91,7 +91,7 @@
 
 .camera_button_container {
   position: absolute;
-  top: 89vh;
+  top: 92.2vh;
   width: 100vw;
   height: 20vh;
   display: flex;
@@ -101,7 +101,7 @@
 <script>
 import statusBar from '@/components/StatusBar.vue'
 import cameraButton from '@/components/CameraButton.vue'
-import collation from '@/components/Collation.vue'
+//import collation from '@/components/Collation.vue'
 import CameraView from '@/components/CameraView.vue'
 
 import router from '@/router'
@@ -110,7 +110,7 @@ export default {
   components:{
     statusBar,
     cameraButton,
-    collation,
+    //collation,
     CameraView
   },
   data() {
@@ -126,7 +126,7 @@ export default {
       },
       landmark_info: {
         id: 0,
-        name: 'ランドマークテスト1',
+        name: '',
         position: [0, 0],
         img_url: '#'
       }
