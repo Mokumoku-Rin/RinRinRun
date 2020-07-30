@@ -1,8 +1,16 @@
+走り終わった後
 {
   "properties":{
-    "time_list": [int 経過時間(ms), "1": int 経過時間(ms), 2....],
-    "total_distance": int ランニング距離(m)
+    "time_list": string "経過時間(ms),経過時間(ms)", //カンマ区切りの文字列
+    "total_distance": int ランニング距離(m),
+    "total_time": int 経過時間(ms)
   },
+  "landmark_visits": [
+    {
+      "id": int,
+      "time": int
+    },...
+  ]
   "geo_json": {
     "type": "LineString",
     "coordinates": [
@@ -14,46 +22,43 @@
 
 コース情報
 {
+  "id": int コースID
   "name": string コース名,
   "discription": string コースの説明
   "mean_distance": int 平均ランニング距離(m),
-  "mean_time": int 平均でかかった時間(m),
+  "mean_time": int 平均でかかった時間(ms),
   "landmarks": [
     { 
-      "id": string ランドマークのID
+      "id": int ランドマークのID
       "name": string ランドマーク名,
-      "positoin": [float, float],
-      "img_url: string imgのURL,
+      "pos": [float, float],
+      "img_pathl: string imgのfirebase storageのpath,
       "discription": string ランドマークの説明
     },
-    {
-      "name": string ランドマーク名,
-      "positoin": [float, float],
-      "img_url: string imgのURL,
-      "discription": string ランドマークの説明
-    }, ....
+    ...
   ]
 }
 
 ランニング時
 {
-  "ghost":[
+  "ghosts":[
     {
       "name": string ユーザ名,
       "img_url": string ユーザの画像,
       "time_list": [int 経過時間(ms), int 経過時間(ms),...],
-      "position_list": [[float, float], [float, float],....],
+      "pos_list": [[float, float], [float, float],....],
       "total_distance": int ランニング距離(m),
-      "rating": int ユーザのレーティングポイント //なくてもいいかも
+      "total_time": int 時間(ms)
+      "score": int, ユーザのレーティングポイント //なくてもいいかも
+      "landmark_visits":[
+        {
+          "id": int,
+          "time": int, (ms)
+        },
+        ... 
+      ]
     },
-    {
-      "name": string ユーザ名,
-      "img_url": string ユーザの画像,
-      "time_list": [int 経過時間(ms), int 経過時間(ms),...],
-      "position_list": [[float, float], [float, float],....],
-      "total_distance": int ランニング距離(m),
-      "rating": int ユーザのレーティングポイント //なくてもいいかも
-    }
+    ...
   ]
 }
 
@@ -61,6 +66,107 @@
 ユーザ登録時
 {
     token: string token,
-    img_uel: string: “”,
+    img_url: string: “”,
     name: string: “”
  }
+
+
+画像検証時
+{
+  "landmark_id": int ランドマークID,
+  "course_id": int コースID,
+  "img": base64 検証用の画像
+}
+
+画像検証時に返却するデータ
+{
+  "result": "string" //OKかNGが入ってくる
+}
+
+
+指定した日の記録を取得 (リクエスト)
+{
+  "date": string 'yyyy-mm-dd'
+}
+
+指定した日の記録を取得 (レスポンス)
+{
+  "date": string 'yyyy-mm-dd',
+  "datas": [
+    {
+      "total_distance": int ランニング距離(m),
+      "total_time": int 経過時間(ms),
+      "geo_json": {
+        "type": "LineString",
+        "coordinates": [
+          [float,float],
+          [float,float]
+        ]
+      }
+    },
+    {
+      "total_distance": int ランニング距離(m),
+      "total_time": int 経過時間(ms),
+      "geo_json": {
+        "type": "LineString",
+        "coordinates": [
+          [float,float],
+          [float,float]
+        ]
+      }
+    }, ...
+  ]
+}
+
+
+landmarkデータのPost
+{
+    "name": string "ランドマークの名前",
+    "description": string "ランドマークの説明",
+    "img_path": string "画像のパス"
+    "pos": string "float, float"
+}
+
+landmarkデータのレスポンス
+{
+    "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
+}
+
+landmark全件取得時のjson
+{
+    "landmarks": [
+        {
+            "id": int
+            "name": string,
+            "description": string
+            "img_path": string
+        },
+        ...
+    ]
+}
+
+
+courseの登録Post
+{
+  "name": "string",
+  "description": "string",
+  "landmarks": [ int, id, id, id, id.... ]
+}
+ 
+ course登録時のレスポンス
+{
+    "result": "string" //OKを返す 本当は確認のためにdatabaseから返したほうがいいのかもしれん
+}
+
+workout results
+{
+  "course_id": int,
+  "results": [
+    {
+      "user_name": string,
+      "total_time": int (ms)
+      "total_distance": int (metre)
+    }
+    ...
+  ]
+}
